@@ -1,0 +1,8 @@
+git config --global user.name "Brand Jeremias - brajer00"
+git config --global user.email "jeremias.brand@unibas.ch"
+git clone https://git.scicore.unibas.ch/macrostomum/macpipe_trans.git
+cd macpipe_trans
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
