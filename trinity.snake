@@ -1,0 +1,15 @@
+configfile: "config.json"
+
+
+rule trim_and_trinity:
+    input:
+        forward =  lambda wildcards: config["basedir"] + "/data/" + config["data"][wildcards.data]['forward'],
+        reverse =  lambda wildcards: config["basedir"] + "/data/" + config["data"][wildcards.data]['reverse']
+    output:
+        assembly = "Trinity.fasta"
+    params: adapters = config["adapters_fasta"]
+    threads: 36
+    shell:
+        "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq --max_memory 100G --trimmomatic --CPU 32 --left {input.forward} -o {data}\
+--right {input.reverse}"
+ 

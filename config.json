@@ -1,0 +1,13 @@
+{
+    "basedir": "/home/jeremias/dev/macpipe_trans",
+    "samples": {
+        "Sample1": ["Sample1"],
+        "Sample2": ["Sample2"]
+    },
+    "data": {
+        "Sample1": {"forward": "Mcla_R1_subsample.fastq.gz", "reverse": "Mcla_R2_subsamples.fastq.gz"},
+        "Sample2": {"forward": "Mcla2_R1_subsample.fastq.gz", "reverse": "Mcla2_R2_subsamples.fastq.gz"}
+
+    },
+    "adapters_fasta": "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
+}

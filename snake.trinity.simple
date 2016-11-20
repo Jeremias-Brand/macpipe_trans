@@ -1,0 +1,11 @@
+rule trim_and_trinity:
+    input:
+        forward =  "/home/jeremias/dev/macpipe_trans/data/{sample}_R1_subsample.fastq.gz"
+        reverse =  "/home/jeremias/dev/macpipe_trans/data/{sample}_R2_subsample.fastq.gz"
+    output:
+        assembly = "{sample}.trinity.Trinity.fasta"
+    params: adapters = "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
+    threads: 36
+    shell:
+        "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq --max_memory 100G --trimmomatic --CPU 32 --left {input.forward} -o {sample}\
+ 14 --right {input.reverse}"
