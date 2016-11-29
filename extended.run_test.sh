@@ -1,6 +1,23 @@
+"""
+Author: J. Brand
+Affiliation: Unibas
+Aim: Workflow for transcriptome assembly, annotation and assessment
+Date: 20. Nov. 2016
+Run: snakemake   -s Snakefile
+Latest modification:
+  - add more flexible input
+  - use JSON as input
+  - add reporting
+"""
+
 # This is a template script to run trinity
 # Using a JSON file as input will be better
 # Sample is a wildcard equivalent to .+
+rule All: # this top rule is here to define the goal of the script
+    input:
+        "{sample}trinotate_annotation_report.xls"
+    log:"snakemake.report.log"
+
 
 rule trim_and_trinity:
     input:
@@ -11,7 +28,7 @@ rule trim_and_trinity:
         #trinity_name="{sample}.trinity"
     params: adapters="/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
     threads: 36 # threads only works if --cores is set to the actual number of cores when running the snakemake
-    message: "Executing somecommand with {threads} threads on the following files {sample}."
+    message: "Executing with {threads} threads on the following files {sample}."
     # We also want a logfile
     log: "logs/{sample}.trinity.log"
     shell:  "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq --trimmomatic --CPU {threads} --max_memory 240G \
@@ -20,6 +37,7 @@ rule trim_and_trinity:
             --right {input.reverse} \
             --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' && \
             mv {wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}.Trinity.fasta"
+
 
 rule run_Transdecoder:
     input:
@@ -54,6 +72,7 @@ rule build_db:
         --transcript_fasta {input.assembly}  --transdecoder_pep {input.transPep}
         """
 
+
 rule run_trinotate:
     input:
         sqlDb="{sample}.Trinotate.sqlite",
@@ -79,17 +98,18 @@ rule run_trinotate:
         --gene_to_trans_map {input.geneMap}
         """
 
-# rule annotate_db:
-#     input:
 
-#     output:
-#         "{sample}trinotate_annotation_report.xls"
-#     shell:
-#         """
-#         Trinotate Trinotate.sqlite LOAD_swissprot_blastp swissprot.blastp.outfmt6
-#         Trinotate Trinotate.sqlite LOAD_swissprot_blastx swissprot.blastx.outfmt6
-#         Trinotate Trinotate.sqlite LOAD_pfam TrinotatePFAM.out
-#         Trinotate Trinotate.sqlite LOAD_tmhmm tmhmm.out
-#         Trinotate Trinotate.sqlite LOAD_signalp signalp.out
-#         Trinotate Trinotate.sqlite report -E 0.0001 > {wildcards.sample}trinotate_annotation_report.xls
-#         """
+rule annotate_db:
+    input:
+        "{sample}.Trinotate.sqlite"
+    output:
+        "{sample}trinotate_annotation_report.xls"
+    shell:
+        """
+        Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_swissprot_blastp swissprot.blastp.outfmt6
+        Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_swissprot_blastx swissprot.blastx.outfmt6
+        Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_pfam TrinotatePFAM.out
+        Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_tmhmm tmhmm.out
+        Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_signalp signalp.out
+        Trinotate {wildcards.sample}.Trinotate.sqlite report -E 0.0001 > {wildcards.sample}trinotate_annotation_report.xls
+        """
