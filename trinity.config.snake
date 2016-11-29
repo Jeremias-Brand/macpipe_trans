@@ -23,6 +23,22 @@ configfile: "config.yaml"
 #     log:"snakemake.report.log"
 
 
+rule parse_values:
+    input:
+        forward=lambda wildcards: config["samples"][wildcards.samples],
+        reverse=lambda wildcards: config["samples"][wildcards.samples]
+    output:
+        expand("{sample}.Trinity.fasta", sample=config["samples"])
+        #trinity_name="{sample}.trinity"
+    params: adapters="/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
+    threads: 36 # threads only works if --cores is set to the actual number of cores when running the snakemake
+    # message: "Executing with {threads} threads on the following files {sample}."
+    # We also want a logfile
+    log: expand("logs/{sample}.trinity.log", sample=config["samples"])
+    shell:  "echo {input.forward} \
+            echo {input.reverse}"
+
+
 rule trim_and_trinity:
     input:
         forward=expand("/home/jeremias/dev/macpipe_trans/data/{sample}_R1_subsample.fastq.gz", sample=config["samples"]),
@@ -32,15 +48,13 @@ rule trim_and_trinity:
         #trinity_name="{sample}.trinity"
     params: adapters="/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
     threads: 36 # threads only works if --cores is set to the actual number of cores when running the snakemake
-    message: "Executing with {threads} threads on the following files {sample}."
+    # message: "Executing with {threads} threads on the following files {sample}."
     # We also want a logfile
-    log: "logs/{sample}.trinity.log"
-    shell:  "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq --trimmomatic --CPU {threads} --max_memory 240G \
-            --output {wildcards.sample}'.trinity' \
-            --left {input.forward}  \
-            --right {input.reverse} \
-            --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' && \
-            mv {wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}.Trinity.fasta"
+    log: expand("logs/{sample}.trinity.log", sample=config["samples"])
+    shell:  "echo {input.forward} \
+            echo {input.reverse}"
+
+
 
 
 # rule run_Transdecoder:
