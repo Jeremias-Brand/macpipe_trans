@@ -1,0 +1,1 @@
+snakemake -np -s trinity.config2.snake --dag | dot -Tpng > dag1.png
