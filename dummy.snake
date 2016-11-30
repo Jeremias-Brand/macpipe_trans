@@ -1,3 +1,5 @@
+configfile: "config.yaml"
+
 from os.path import join
 
 # Globals ---------------------------------------------------------------------
@@ -6,7 +8,7 @@ from os.path import join
 GENOME = 'genome.fa'
 
 # Full path to a folder that holds all of your FASTQ files.
-FASTQ_DIR = 'data/'
+FASTQ_DIR = config["datadir"]
 
 # A Snakemake regular expression matching the forward mate FASTQ files.
 SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1_subsample.fastq.gz'))
