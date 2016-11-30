@@ -1,0 +1,228 @@
+"""
+Author: J. Brand
+Affiliation: Unibas
+Aim: Workflow for transcriptome assembly, annotation and assessment
+Date: 20. Nov. 2016
+Run: snakemake   -s Snakefile
+Latest modification:
+  - add more flexible input
+  - add reporting
+  - add checks for gzip
+  - integrate gzip of intermediate results
+
+"""
+# Uses a yaml file as input
+configfile: "config.yaml"
+
+from os.path import join
+# Globals ---------------------------------------------------------------------
+
+# define global things here
+
+# Full path to a folder that holds all of your FASTQ files.
+FASTQ_DIR = config["fastqdir"]
+
+# A Snakemake regular expression matching the forward mate FASTQ files.
+SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq'))
+
+# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
+PATTERN_R1 = '{sample}_R1.fq'
+PATTERN_R2 = '{sample}_R2.fq'
+
+# Rules -----------------------------------------------------------------------
+
+rule all:
+    input:
+        'trinity.summary.txt',
+        "trans.sentinel"
+
+# This is a template script to run trinity
+# Using a JSON file as input will be better
+# Sample is a wildcard equivalent to .+
+# rule All: # this top rule is here to define the goal of the script
+#     input:
+#         "{sample}trinotate_annotation_report.xls"
+#     log:"snakemake.report.log"
+
+
+rule run_rcorrector:
+    input:
+        forward=join(FASTQ_DIR, PATTERN_R1),
+        reverse=join(FASTQ_DIR, PATTERN_R2)
+    output:
+        FASTQ_DIR + "{sample}_R1.cor.fq",
+        FASTQ_DIR + "{sample}_R2.cor.fq"
+    params:
+        outdir=config["fastqdir"]
+    shell:
+        "~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
+        -od {params.outdir}  -1 {input.forward}  -2 {input.reverse}"
+
+
+rule trim_and_trinity:
+    input:
+        forward= FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse= FASTQ_DIR + "{sample}_R2.cor.fq"
+    output:
+        "{sample}.Trinity.fasta",
+        "{sample}.shell.log"
+    params: adapters=config["adapters_fasta"],
+            outdir=config["fastqdir"]
+    threads: 26 # threads only works if --cores is set to the actual number of cores when running the snakemake
+    # message: expand("Executing with {threads} threads on the following files {sample}.", sample=SAMPLES)
+    # We also want a logfile
+    # log: expand("logs/{sample}.trinity.log", sample=SAMPLES)
+    shell:  "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq \
+            --trimmomatic --CPU {threads} --max_memory 150G \
+            --output {wildcards.sample}'.trinity' \
+            --left   {input.forward}  \
+            --right  {input.reverse} \
+            --normalize_reads  --normalize_max_read_cov 30 \
+            --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' > {wildcards.sample}.shell.log && \
+            mv {wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}.Trinity.fasta"
+
+rule cat_trinity_shell:
+    input:
+        expand("{sample}.shell.log", sample=SAMPLES)
+    output:
+        "trinity.summary.txt"
+    run:
+        with open(output[0], 'w') as out:
+            for i in input:
+                sample = i.split('.')[0]
+                for line in open(i):
+                    out.write(sample + ' ' + line)
+
+rule run_transrate:
+    input:
+        assembly="{sample}.Trinity.fasta",
+        forward= FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse= FASTQ_DIR + "{sample}_R2.cor.fq"
+    output:
+        "{sample}.transrate.log"
+    params:
+        transDir= config["transrateDir"]
+    threads: 40
+    shell:
+        "transrate --assembly {input.assembly} \
+        --output {params.transDir}{wildcards.sample}.transrate \
+        --threads {threads} \
+        --left {input.forward} \
+        --right {input.reverse} >> {params.transDir}{wildcards.sample}.transrate.log"
+
+rule cat_transrate:
+    input:
+        expand("{sample}.transrate.log", sample=SAMPLES)
+    output:
+        "trans.sentinel"
+    shell:
+        "touch trans.sentinel"
+
+# rule run_busco:
+#     input:
+
+#     output:
+#     params:
+#         py="/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
+#     threads: 24
+#     shell:
+#     "{params.py} ~/bin/BUSCO_v1.1b1.py -f -o $OUTNAME"_busco" -in $OUTDIR$OUTNAME"_Trinity.fasta" -l $BuscoLib -m trans -c {threads} \
+#     "
+
+# cd $BUSCODIR
+# /home/jeremias/.linuxbrew/bin/python3.5 ~/bin/BUSCO_v1.1b1.py -f -o $OUTNAME"_busco" -in $OUTDIR$OUTNAME"_Trinity.fasta" -l $BuscoLib -m trans -c 26
+# /home/jeremias/.linuxbrew/bin/python3.5 ~/bin/BUSCO_v1.1b1.py -f -o $OUTNAME"_good_transrate_busco" -in $TRANSRATEDIR$OUTNAME"_Trinity.fasta" -l $BuscoLib -m trans -c 26
+
+
+
+
+# READDIR=$PWD"/"
+# OUTDIR=$PWD"/"
+# TRANSRATEDIR=$PWD"/transrate/"
+# BUSCODIR=$PWD"/busco/"
+# BuscoLib='/home/jeremias/soft/BUSCO_v1.1b1/libs/eukaryota'
+# R1=$1
+# R2=$2
+# OUTNAME="Mpus_normalized"
+# # make directories for the trinity run and then put a logfiel in it.
+# # This version is modified to nomalize reads since Brain Haas suggested that in a github bug report that ran into the same error.
+
+# # commented out for testing
+# # output file of trinity is unhelpfully always named Trinity.fasta
+# # This copies the assembly into the base directory and renames it with the run name
+# cp Rcorr_trinity.Trinity.fasta Mpus_normalized_Trinity.fasta
+# # transrate run on the same assembly
+# transrate --assembly $OUTDIR$OUTNAME"_Trinity.fasta" \
+# --output $TRANSRATEDIR$OUTNAME --threads 26 --left $READDIR$R1 --right $READDIR$R2 >> $TRANSRATEDIR$OUTNAME".transrate.log"
+# Also does the BUSCO run
+# cd $BUSCODIR
+# /home/jeremias/.linuxbrew/bin/python3.5 ~/bin/BUSCO_v1.1b1.py -f -o $OUTNAME"_busco" -in $OUTDIR$OUTNAME"_Trinity.fasta" -l $BuscoLib -m trans -c 26
+# /home/jeremias/.linuxbrew/bin/python3.5 ~/bin/BUSCO_v1.1b1.py -f -o $OUTNAME"_good_transrate_busco" -in $TRANSRATEDIR$OUTNAME"_Trinity.fasta" -l $BuscoLib -m trans -c 26
+
+
+# # rule run_Transdecoder:
+#     input:
+#         "{sample}.Trinity.fasta"
+#     output:
+#         "{sample}.Trinity.fasta.transdecoder_dir/longest_orfs.pep"
+#     shell:
+#         "TransDecoder.LongOrfs -t {wildcards.sample}.Trinity.fasta"
+
+
+# rule creat_gene_mapping:
+#     input:
+#         "{sample}.Trinity.fasta"
+#     output:
+#         "{sample}.Trinity.fasta.gene_trans_map"
+#     shell:
+#         "/home/jeremias/soft/trinityrnaseq-2.2.0/util/support_scripts/get_Trinity_gene_to_trans_map.pl {wildcards.sample}.Trinity.fasta \
+#         > {wildcards.sample}.Trinity.fasta.gene_trans_map"
+
+
+# rule build_db:
+#     input:
+#         geneMap="{sample}.Trinity.fasta.gene_trans_map",
+#         assembly="{sample}.Trinity.fasta",
+#         transPep="{sample}.Trinity.fasta.transdecoder_dir/longest_orfs.pep"
+#     output:
+#         "{sample}.Trinotate.sqlite"
+#     shell:
+#         """
+#         cp /home/jeremias/soft/Trinotate-3.0.1/Trinotate.sqlite ./{wildcards.sample}.Trinotate.sqlite && \
+#         Trinotate {wildcards.sample}.Trinotate.sqlite init --gene_trans_map {input.geneMap} \
+#         --transcript_fasta {input.assembly}  --transdecoder_pep {input.transPep}
+#         """
+
+
+# rule run_trinotate:
+#     input:
+#         sqlDb="{sample}.Trinotate.sqlite",
+#         geneMap="{sample}.Trinity.fasta.gene_trans_map",
+#         assembly="{sample}.Trinity.fasta"
+#     output:
+#         "{sample}.Trinity.fasta.transdecoder.gff3",
+#         "{sample}.Trinity.fasta.rnammer.gff"
+#     threads: 36
+#     shell:
+#         """
+#         autoTrinotate.pl --CPU {threads} --conf ~/soft/Trinotate-3.0.1/config.trinotate.txt \
+#         --Trinotate_sqlite {input.sqlDb} \
+#         --transcripts {input.assembly} \
+#         --gene_to_trans_map {input.geneMap}
+#         """
+
+
+# rule annotate_db:
+#     input:
+#         "{sample}.Trinotate.sqlite"
+#     output:
+#         "{sample}trinotate_annotation_report.xls"
+#     shell:
+#         """
+#         Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_swissprot_blastp swissprot.blastp.outfmt6
+#         Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_swissprot_blastx swissprot.blastx.outfmt6
+#         Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_pfam TrinotatePFAM.out
+#         Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_tmhmm tmhmm.out
+#         Trinotate {wildcards.sample}.Trinotate.sqlite LOAD_signalp signalp.out
+#         Trinotate {wildcards.sample}.Trinotate.sqlite report -E 0.0001 > {wildcards.sample}trinotate_annotation_report.xls
+#         """
