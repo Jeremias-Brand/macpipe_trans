@@ -26,3 +26,8 @@ output used software
 - python
 - bash
 - snakemake?
+
+
+# Pipelines to add
+    - Annotation pipline
+        - using indipendent and dependent input
