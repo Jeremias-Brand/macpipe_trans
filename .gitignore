@@ -2,3 +2,4 @@ Mcla*
 .snakemake/*
 chkpt*
 swissprot*
+.Rproj.user
