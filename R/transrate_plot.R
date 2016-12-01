@@ -7,6 +7,7 @@
 # contigs.csv provides per contig details on mapping and coverage
 library(dplyr)
 library(ggplot2)
+library(cowplot)
 assemblies <- read.table(file = "assemblies.csv", sep= ",",
                          header = T, stringsAsFactors = F)
 
@@ -26,6 +27,35 @@ assemblies %>% mutate(assembly_name = filename_from_path(assembly))
 
 contigs <- read.table(file = "contigs.csv", sep= ",",
                          header = T, stringsAsFactors = F)
+
+# cowplot provides better formatting
+# https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html
+test_set <- contigs[1:1000,]
+
+line <- ggplot(test_set) +
+  geom_point(aes(x= reorder(factor(contig_name), coverage), y=coverage)) +
+  scale_y_log10()
+
+hist <- qplot(test_set$coverage, geom="histogram", log="yx", fill="blue") 
+
+# cowplot also has a easier output function
+save_plot("hist.test.pdf", hist)
+
+
+plot_grid(hist, line)
+plot_grid(hist, line, line, labels = c("F", "U"))
+
+plotA <- plot_grid(hist, line, line, ncol=1, labels = c("F", "U"))
+# This does not work, we need to tell it about the layout
+save_plot("dd.pdf", plotA)
+
+
+save_plot("dd.pdf", plotA,
+          nrow = 3,
+          ncol = 1)
+
+
+
 
 contigs <- arrange(contigs, coverage)
 
