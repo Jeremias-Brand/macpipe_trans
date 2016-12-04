@@ -2,4 +2,5 @@
 fastqdir: "/home/jeremias/dev/macpipe_trans/data/"
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
 BuscoLib: "/home/jeremias/soft/BUSCO_v1.1b1/libs/eukaryota"
-transrateDir: "/home/jeremias/dev/macpipe_trans/transrate/"
+transrateDir: "/home/jeremias/dev/macpipe_test/transrate/"
+homedir: "/home/jeremias/dev/macpipe_trans/"
