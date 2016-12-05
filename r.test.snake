@@ -1,0 +1,20 @@
+# Full path to a folder that holds all of your FASTQ files.
+from os.path import join
+FASTQ_DIR = "data/"
+
+# A Snakemake regular expression matching the forward mate FASTQ files.
+SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq'))
+
+# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
+PATTERN_R1 = '{sample}_R1.fq'
+PATTERN_R2 = '{sample}_R2.fq'
+
+
+
+rule test_R:
+    input:
+        expand("data/{sample}_R1.fq", sample = SAMPLES)
+    output:
+        "R/{sample}.r.sentinel"
+    script:
+        "R/script.test.R"

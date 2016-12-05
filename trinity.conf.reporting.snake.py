@@ -112,7 +112,7 @@ rule run_transrate:
         forward= FASTQ_DIR + "{sample}_R1.cor.fq",
         reverse= FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
-        "{sample}.transrate.log"
+        "transrate/{sample}.transrate.log"
     log:
     	"logs/transrate/{sample}.log"
     params:
@@ -132,11 +132,19 @@ rule run_transrate:
 
 rule cat_transrate:
     input:
-        expand("{sample}.transrate.log", sample=SAMPLES)
+        expand("transrate/{sample}.transrate.log", sample=SAMPLES)
     output:
         "trans.sentinel"
     shell:
         "touch trans.sentinel"
+
+# TODO add busco rule
+
+# TODO rule decision on assembly
+
+# TODO rename assembly headers
+
+# TODO 
 
 
 # TODO report file should contain:
@@ -146,7 +154,7 @@ rule cat_transrate:
 # timestamp
 rule report:
     input:
-        expand("{sample}.transrate.log", sample=SAMPLES)
+        expand("transrate/{sample}.transrate.log", sample=SAMPLES)
     output:
         "report.html"
     run:
@@ -167,11 +175,14 @@ rule report:
 
 
 # Finishing up --------------------------------------------------------------
-onsuccess:
-    print("Workflow finished, no error")
+# onsuccess:
+#     print("Workflow finished, no error")
 
-onerror:
-    print("An error occurred with the snakemake run")
-    # here it would be good to include timstamping
-    # TODO config for email
-    shell("mail -s "an error occurred" jeremias.brand@unibas.ch < {log}")
+# onerror:
+#     print("An error occurred with the snakemake run")
+#     # here it would be good to include timstamping
+#     # TODO config for email
+#     shell:
+#     	"mail -s "an error occurred" jeremias.brand@unibas.ch < {log}"
+
+# TODO add separate snakefile for annotation
