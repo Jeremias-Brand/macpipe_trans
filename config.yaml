@@ -1,6 +1,15 @@
 # a yaml file to specify input to the pipline
-fastqdir: "/home/jeremias/dev/macpipe_trans/data/"
+
+# dirs
+fastqdir:       "/home/jeremias/dev/macpipe_trans/data/"
+transrateDir:   "/home/jeremias/dev/macpipe_trans/transrate/"
+homedir:        "/home/jeremias/dev/macpipe_trans/"
+
+# path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
-BuscoLib: "/home/jeremias/soft/BUSCO_v1.1b1/libs/eukaryota"
-transrateDir: "/home/jeremias/dev/macpipe_test/transrate/"
-homedir: "/home/jeremias/dev/macpipe_trans/"
+py3:            "/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
+
+# path to the busco database    
+BuscoLib:       "/home/jeremias/soft/busco/eukaryota_odb9"
+# path to BUSCO executable
+BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"

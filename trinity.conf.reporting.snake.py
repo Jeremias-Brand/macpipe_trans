@@ -29,7 +29,9 @@ def save_mkdir( dirs ):
 			print("Creating directory: " + d)
 
 
-dirs = ["logs", "logs/trinity", "logs/transrate", "logs/rcorrector", "trinity", "transrate"]
+dirs = ["logs", "logs/trinity", "logs/transrate",
+        "logs/rcorrector", "trinity", "transrate",
+        "busco", "logs/busco"]
 save_mkdir(dirs)
 
 # Globals ---------------------------------------------------------------------
@@ -67,79 +69,140 @@ rule all:
 
 rule run_rcorrector:
     input:
-        forward=join(FASTQ_DIR, PATTERN_R1),
-        reverse=join(FASTQ_DIR, PATTERN_R2)
+        forward = join(FASTQ_DIR, PATTERN_R1),
+        reverse = join(FASTQ_DIR, PATTERN_R2)
     output:
         FASTQ_DIR + "{sample}_R1.cor.fq",
         FASTQ_DIR + "{sample}_R2.cor.fq"
     log:
     	"logs/rcorrector/{sample}.log"
     params:
-        outdir=config["fastqdir"]
+        outdir = config["fastqdir"]
     shell:
-        "~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
-        -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}"
+        """
+        ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
+        -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
+        """
 
 
 rule trim_and_trinity:
     input:
-        forward= FASTQ_DIR + "{sample}_R1.cor.fq",
-        reverse= FASTQ_DIR + "{sample}_R2.cor.fq"
+        forward = FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse = FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
         "{sample}.Trinity.fasta",
         "logs/trinity/{sample}.shell.log"
     log:
         "logs/trinity/{sample}.log"
-    params: adapters=config["adapters_fasta"],
-            outdir=config["fastqdir"]
+    params:
+        adapters =  config["adapters_fasta"],
+        outdir   =  config["fastqdir"]
     threads: 28  # threads only works if --cores is set to the actual number of cores when running the snakemake
     # message: expand("Executing with {threads} threads on the following files {sample}.", sample=SAMPLES)
     # We also want a logfile
     # log: expand("logs/{sample}.trinity.log", sample=SAMPLES)
-    shell:  "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq \
-            --trimmomatic --CPU {threads} --max_memory 150G \
-            --output 'trinity/'{wildcards.sample}'.trinity' \
-            --left   {input.forward}  \
-            --right  {input.reverse} \
-            --normalize_reads  --normalize_max_read_cov 30 \
-            --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' > ./logs/trinity/{wildcards.sample}.shell.log 2> {log} && \
-            mv trinity/{wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}.Trinity.fasta"
-
+    shell:  
+        """
+        /home/jeremias/soft/trinityrnaseq-2.2.0/Trinity --seqType fq \
+        --trimmomatic --CPU {threads} --max_memory 150G \
+        --output 'trinity/'{wildcards.sample}'.trinity' \
+        --left   {input.forward}  \
+        --right  {input.reverse} \
+        --normalize_reads  --normalize_max_read_cov 30 \
+        --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' > ./logs/trinity/{wildcards.sample}.shell.log 2> {log} && \
+        mv trinity/{wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}.Trinity.fasta
+        """
 
 rule run_transrate:
     input:
-        assembly="{sample}.Trinity.fasta",
-        forward= FASTQ_DIR + "{sample}_R1.cor.fq",
-        reverse= FASTQ_DIR + "{sample}_R2.cor.fq"
+        assembly =  "{sample}.Trinity.fasta",
+        forward  =  FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse  =  FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
-        "transrate/{sample}.transrate.log"
+        "logs/transrate/{sample}.transrate.log"
     log:
     	"logs/transrate/{sample}.log"
     params:
-        transDir= config["transrateDir"],
-        dataDir= config["fastqdir"],
-        homeDir= config["homedir"]
+        transDir =  config["transrateDir"],
+        dataDir  =  config["fastqdir"],
+        homeDir  =  config["homedir"]
     threads: 28
     shell:
-        "transrate --assembly {params.homeDir}{input.assembly} \
+        """
+        transrate --assembly {params.homeDir}{input.assembly} \
         --output {params.transDir}{wildcards.sample}.transrate \
         --threads {threads} \
         --left {input.forward} \
-        --right {input.reverse} > {params.transDir}{wildcards.sample}.transrate.log 2> {log}"
+        --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
+        """
 
 # TODO
 # transrate plotting
 
 rule cat_transrate:
     input:
-        expand("transrate/{sample}.transrate.log", sample=SAMPLES)
+        expand("logs/transrate/{sample}.transrate.log", sample = SAMPLES)
     output:
         "trans.sentinel"
     shell:
         "touch trans.sentinel"
 
-# TODO add busco rule
+# add busco rule
+rule busco:
+    input:
+        assembly =   "{sample}.Trinity.fasta"
+    output:
+        out      =   config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt"
+    params:
+        outdir   =   config["homedir"] + "busco/",
+        py3      =   config["py3"],
+        BUSCO    =   config["BUSCO"],   
+        BuscoLib =   config["BuscoLib"],
+        homedir  =   config["homedir"]   
+    threads: 14
+    log:
+        "logs/busco/{sample}.log"
 
+    shell:
+        # cd {params.outdir}
+        """
+        python  {params.BUSCO} -f \
+                -i {params.homedir}{input.assembly} \
+                -o {wildcards.sample}.busco              \
+                -l  {params.BuscoLib}    \
+                -m  tran -c {threads} &>> {log} && \
+        mv  run_{wildcards.sample}.busco busco/
+
+        """
+
+
+rule busco_on_transrate:
+    # run busco on transrate optimized assembly
+    input:
+        assembly =   "transrate/{sample}.transrate/{sample}.Trinity/good.{sample}.Trinity.fasta"
+    output:
+        out      =   config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.busco.txt"
+    params:
+        outdir   =   config["homedir"] + "busco/",
+        py3      =   config["py3"],
+        BUSCO    =   config["BUSCO"],   
+        BuscoLib =   config["BuscoLib"],
+        homedir  =   config["homedir"]   
+    threads: 14
+    log:
+        "logs/busco/{sample}.log"
+
+    shell:
+        # cd {params.outdir}
+        """
+        python  {params.BUSCO} -f \
+                -i {params.homedir}{input.assembly} \
+                -o {wildcards.sample}.good.busco              \
+                -l  {params.BuscoLib}    \
+                -m  tran -c {threads} &>> {log} && \
+        mv  run_{wildcards.sample}.good.busco busco/
+
+        """
 # TODO rule decision on assembly
 
 # TODO rename assembly headers
@@ -154,7 +217,9 @@ rule cat_transrate:
 # timestamp
 rule report:
     input:
-        expand("transrate/{sample}.transrate.log", sample=SAMPLES)
+        expand("logs/transrate/{sample}.transrate.log", sample=SAMPLES),
+        expand( config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt", sample=SAMPLES),
+        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.busco.txt", sample=SAMPLES)
     output:
         "report.html"
     run:
