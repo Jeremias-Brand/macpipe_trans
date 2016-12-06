@@ -15,11 +15,15 @@ Latest modification:
 # import statements
 from os.path import join
 import os
+import time
+
+
 
 # Uses a yaml file as input
 configfile: "config.yaml"
 
 # Preparation------------------------------------------------------------------
+TIMESTAMP = time.strftime("%Y%m%d")
 
 # check if the necessary dirs exist and if not creates them
 def save_mkdir( dirs ):
@@ -119,7 +123,8 @@ rule run_transrate:
         forward  =  FASTQ_DIR + "{sample}_R1.cor.fq",
         reverse  =  FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
-        "logs/transrate/{sample}.transrate.log"
+        "logs/transrate/{sample}.transrate.log",
+        "transrate/{sample}.transrate/{sample}.Trinity/good.{sample}.Trinity.fasta"
     log:
     	"logs/transrate/{sample}.log"
     params:
@@ -136,6 +141,15 @@ rule run_transrate:
         --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
         """
 
+rule gather_transrate:
+    input:
+        assembly = expand("transrate/{samples}.transrate/assemblies.csv", samples=SAMPLES)
+        contigs  = expand("transrate/{samples}.transrate/{samples}.Trinity/contigs.csv", samples=SAMPLES)
+    output:
+        assembly = 
+    shell:
+        """
+        cp {
 # TODO
 # transrate plotting
 
@@ -154,11 +168,11 @@ rule busco:
     output:
         out      =   config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt"
     params:
-        outdir   =   config["homedir"] + "busco/",
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],   
         BuscoLib =   config["BuscoLib"],
-        homedir  =   config["homedir"]   
+        homedir  =   config["homedir"],
+        folder   =   "run_{sample}.busco"
     threads: 14
     log:
         "logs/busco/{sample}.log"
@@ -166,12 +180,12 @@ rule busco:
     shell:
         # cd {params.outdir}
         """
-        python  {params.BUSCO} -f \
+        {params.py3}  {params.BUSCO} -f \
                 -i {params.homedir}{input.assembly} \
                 -o {wildcards.sample}.busco              \
                 -l  {params.BuscoLib}    \
                 -m  tran -c {threads} &>> {log} && \
-        mv  run_{wildcards.sample}.busco busco/
+        mv  {params.folder}  busco/
 
         """
 
@@ -181,26 +195,27 @@ rule busco_on_transrate:
     input:
         assembly =   "transrate/{sample}.transrate/{sample}.Trinity/good.{sample}.Trinity.fasta"
     output:
-        out      =   config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.busco.txt"
+        out      =   config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt"
     params:
         outdir   =   config["homedir"] + "busco/",
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],   
         BuscoLib =   config["BuscoLib"],
-        homedir  =   config["homedir"]   
+        homedir  =   config["homedir"],   
+        folder   =   "run_{sample}.good.busco"
     threads: 14
     log:
-        "logs/busco/{sample}.log"
+        "logs/busco/{sample}.good.log"
 
     shell:
         # cd {params.outdir}
         """
-        python  {params.BUSCO} -f \
+        {params.py3}  {params.BUSCO} -f \
                 -i {params.homedir}{input.assembly} \
                 -o {wildcards.sample}.good.busco              \
                 -l  {params.BuscoLib}    \
                 -m  tran -c {threads} &>> {log} && \
-        mv  run_{wildcards.sample}.good.busco busco/
+        mv  {params.folder}  busco/
 
         """
 # TODO rule decision on assembly
@@ -219,7 +234,7 @@ rule report:
     input:
         expand("logs/transrate/{sample}.transrate.log", sample=SAMPLES),
         expand( config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt", sample=SAMPLES),
-        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.busco.txt", sample=SAMPLES)
+        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt", sample=SAMPLES)
     output:
         "report.html"
     run:
