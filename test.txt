@@ -1,2 +1,0 @@
-Mcla genome.fa data/Mcla_R1_subsample.fastq.gz data/Mcla_R2_subsample.fastq.gz
-Mcla2 genome.fa data/Mcla2_R1_subsample.fastq.gz data/Mcla2_R2_subsample.fastq.gz
