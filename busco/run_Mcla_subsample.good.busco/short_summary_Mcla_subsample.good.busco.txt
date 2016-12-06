@@ -1,0 +1,15 @@
+# BUSCO version is: 2.0 
+# The lineage dataset is: eukaryota_odb9 (Creation date: 2016-11-02, number of species: 100, number of BUSCOs: 303)
+# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/transrate/Mcla_subsample.transrate/Mcla_subsample.Trinity/good.Mcla_subsample.Trinity.fasta -o Mcla_subsample.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+#
+# Summarized benchmarking in BUSCO notation for file /home/jeremias/dev/macpipe_trans/transrate/Mcla_subsample.transrate/Mcla_subsample.Trinity/good.Mcla_subsample.Trinity.fasta
+# BUSCO was run in mode: tran
+
+	C:4.0%[S:2.0%,D:2.0%],F:10.6%,M:85.4%,n:303
+
+	12	Complete BUSCOs (C)
+	6	Complete and single-copy BUSCOs (S)
+	6	Complete and duplicated BUSCOs (D)
+	32	Fragmented BUSCOs (F)
+	259	Missing BUSCOs (M)
+	303	Total BUSCO groups searched

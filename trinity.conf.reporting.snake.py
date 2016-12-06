@@ -35,7 +35,7 @@ def save_mkdir( dirs ):
 
 dirs = ["logs", "logs/trinity", "logs/transrate",
         "logs/rcorrector", "trinity", "transrate",
-        "busco", "logs/busco"]
+        "transrate/summary", "busco", "logs/busco"]
 save_mkdir(dirs)
 
 # Globals ---------------------------------------------------------------------
@@ -142,14 +142,31 @@ rule run_transrate:
         """
 
 rule gather_transrate:
+    # move all transrate results to same folder for easier summary later
     input:
-        assembly = expand("transrate/{samples}.transrate/assemblies.csv", samples=SAMPLES)
-        contigs  = expand("transrate/{samples}.transrate/{samples}.Trinity/contigs.csv", samples=SAMPLES)
+        assembly = "transrate/{sample}.transrate/assemblies.csv",
+        contigs  = "transrate/{sample}.transrate/{sample}.Trinity/contigs.csv"
     output:
-        assembly = 
+        assembly = "transrate/summary/{sample}.assemblies.csv",
+        contigs  = "transrate/summary/{sample}.contigs.csv"
     shell:
         """
-        cp {
+        cp {input.assembly} {output.assembly} 
+        cp {input.contigs}  {output.contigs}
+   
+        """
+
+        # assembly = "transrate/summary/" + TIMESTAMP + "assemblies.csv" 
+
+rule summarize_transrate_assembly:
+    input: 
+        expand("transrate/summary/{sample}.assemblies.csv",sample=SAMPLES)
+    output:
+        "transrate/summary/cat.transrate.assemblies"
+    shell:
+        """
+        cat {input} > transrate/summary/cat.transrate.assemblies
+        """
 # TODO
 # transrate plotting
 
@@ -234,7 +251,8 @@ rule report:
     input:
         expand("logs/transrate/{sample}.transrate.log", sample=SAMPLES),
         expand( config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt", sample=SAMPLES),
-        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt", sample=SAMPLES)
+        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt", sample=SAMPLES),
+        "transrate/summary/cat.transrate.assemblies"
     output:
         "report.html"
     run:

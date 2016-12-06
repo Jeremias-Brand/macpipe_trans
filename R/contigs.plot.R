@@ -1,16 +1,26 @@
 #!/home/jeremias/.linuxbrew/bin/R
 # load and if necessary install packages
+# We need to expicitly tell R to use cairo for the server.
+options(bitmapType='cairo')
+X11.options(type="cairo")
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(dplyr, tidyr, ggplot2, cowplot)
 
+
 opt <- options("scipen" = 20) # don't use sci notation
+
+# Snakemake provides the piplein imput with the snakemake@ command
+# R is counting from 1!
+# load the input file
+input_file = snakemake@input[[1]]
+# get the sample name from the input filename
+filename <- tail(strsplit(input_file, "/")[[1]], 1)
+sample_name <- strsplit(filename, ".contigs.csv")[[1]]
 
 
 # prepare plots ----------------------------------------------------------------
-contigs <- read.table(file = "contigs.csv", sep= ",",
+contigs <- read.table(file = input_file, sep= ",",
                       header = T, stringsAsFactors = F)
-
-contigs <- contigs[1:1000,]
 
 # histogram showing the distribution of coverage
 cov_dist_plot <- ggplot(data= contigs) +
@@ -47,9 +57,6 @@ len1k_dist_plot <- ggplot(data= filter(contigs, length < 1000)) +
 # output plots -----------------------------------------------------------------
 
 #TODO integrate Nex90N50 into this plot
-
-
-
 arranged.plot <- plot_grid(cov_dist_plot, len_dist_plot, NULL,len1k_dist_plot,
                            ncol = 2, nrow =2 )
 # cowplot does not have a title function
@@ -59,24 +66,24 @@ out.plot <- plot_grid(title, arranged.plot,
           ncol=1, rel_heights=c(0.1, 1)) # rel height controls the title margin
 
 # This does not work, we need to tell it about the layout
-save_plot("Sample.png", out.plot, base_width = 8, base_height = 8)
+save_plot(paste0(sample_name, ".png"), out.plot, base_width = 8, base_height = 8)
 
 
 
 
-save_plot("hist.test.pdf", hist)
-
-
-plot_grid(hist, line)
-plot_grid(hist, line, phred_plot, ncol = 1)
-
-plot_grid(hist, line, line, labels = c("F", "U"))
-
-plotA <- plot_grid(hist, line, line, ncol=1, labels = c("F", "U"))
-# This does not work, we need to tell it about the layout
-save_plot("dd.pdf", plotA)
-
-
-save_plot("dd.pdf", plotA,
-          nrow = 3,
-          ncol = 1)
+# save_plot("hist.test.pdf", hist)
+# 
+# 
+# plot_grid(hist, line)
+# plot_grid(hist, line, phred_plot, ncol = 1)
+# 
+# plot_grid(hist, line, line, labels = c("F", "U"))
+# 
+# plotA <- plot_grid(hist, line, line, ncol=1, labels = c("F", "U"))
+# # This does not work, we need to tell it about the layout
+# save_plot("dd.pdf", plotA)
+# 
+# 
+# save_plot("dd.pdf", plotA,
+#           nrow = 3,
+#           ncol = 1)
