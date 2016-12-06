@@ -9,14 +9,14 @@ Latest modification:
   - add reporting
   - add checks for gzip
   - integrate gzip of intermediate results
-  - add a plock to run if fail or succeed
-
+  - add a block to run if fail or succeed
+  - add evironment file for bioconda
 """
 # import statements
+from snakemake.utils import report
 from os.path import join
 import os
 import time
-
 
 
 # Uses a yaml file as input
@@ -58,7 +58,6 @@ PATTERN_R2 = '{sample}_R2.fq'
 
 rule all:
     input:
-        "trans.sentinel",
         "report.html"
 
 # This is a template script to run trinity
@@ -123,8 +122,9 @@ rule run_transrate:
         forward  =  FASTQ_DIR + "{sample}_R1.cor.fq",
         reverse  =  FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
-        "logs/transrate/{sample}.transrate.log",
-        "transrate/{sample}.transrate/{sample}.Trinity/good.{sample}.Trinity.fasta"
+        "transrate/{sample}.transrate/{sample}.Trinity/good.{sample}.Trinity.fasta",
+        "transrate/{sample}.transrate/assemblies.csv",
+        "transrate/{sample}.transrate/{sample}.Trinity/contigs.csv"
     log:
     	"logs/transrate/{sample}.log"
     params:
@@ -144,15 +144,15 @@ rule run_transrate:
 rule gather_transrate:
     # move all transrate results to same folder for easier summary later
     input:
-        assembly = "transrate/{sample}.transrate/assemblies.csv",
-        contigs  = "transrate/{sample}.transrate/{sample}.Trinity/contigs.csv"
+        a = "transrate/{sample}.transrate/assemblies.csv",
+        c  = "transrate/{sample}.transrate/{sample}.Trinity/contigs.csv"
     output:
-        assembly = "transrate/summary/{sample}.assemblies.csv",
-        contigs  = "transrate/summary/{sample}.contigs.csv"
+        a = "transrate/summary/{sample}.assemblies.csv",
+        c = "transrate/summary/{sample}.contigs.csv"
     shell:
         """
-        cp {input.assembly} {output.assembly} 
-        cp {input.contigs}  {output.contigs}
+        cp {input.a} {output.a} 
+        cp {input.c}  {output.c}
    
         """
 
@@ -189,13 +189,13 @@ rule plot_transrate_contigs:
     script:
         "R/contigs.plot.R"
 
-rule cat_transrate:
-    input:
-        expand("logs/transrate/{sample}.transrate.log", sample = SAMPLES)
-    output:
-        "trans.sentinel"
-    shell:
-        "touch trans.sentinel"
+# rule cat_transrate:
+#     input:
+#         expand("logs/transrate/{sample}.transrate.log", sample = SAMPLES)
+#     output:
+#         "trans.sentinel"
+#     shell:
+#         "touch trans.sentinel"
 
 # add busco rule
 rule busco:
@@ -259,8 +259,8 @@ rule gather_busco:
     # move all transrate results to same folder for easier summary later
     # we do not need the expand statement here because plot busco will just call this function many times
     input:
-        normal   = "busco/run_{sample}.busco/short_summary_{sample}.busco.txt",
-        good     = "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt"
+        normal   = config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt",
+        good     = config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt"
     output:
         normal   = "busco/summary/short_summary_{sample}.busco.txt",
         good     = "busco/summary/short_summary_{sample}.good.busco.txt"
@@ -302,29 +302,26 @@ rule plot_busco:
 # timestamp
 rule report:
     input:
-        expand("logs/transrate/{sample}.transrate.log", sample=SAMPLES),
-        expand( config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt", sample=SAMPLES),
-        expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt", sample=SAMPLES),
-        "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
-        expand("{sample}.png", sample=SAMPLES),
-        "busco/summary/run_" + TIMESTAMP + "_busco.png"
+        busco_png ="busco/summary/run_" + TIMESTAMP + "_busco.png",
+        transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
+        assembly_plot = expand("{sample}.png", sample=SAMPLES)
     output:
         "report.html"
     run:
-        from snakemake.utils import report
-        with open(input[0]) as trans.logs:
-            print(trans.logs)
-
+        # from snakemake.utils import report
+        #with open(input[0]) as trans.logs:
+        #    print(trans.logs)
         report("""
-        An example variant calling workflow
+        Report on macpipe_trans run
         ===================================
+       
+        
+        .. image:: {input.busco_png}
+        
+                
+        assembly_plot_
+        """, output[0], **input)
 
-        Reads were mapped to the Yeast
-        reference genome and variants were called jointly with
-        SAMtools/BCFtools.
-
-        This resulted in {n_calls} variants (see Table T1_).
-        """, output[0], T1=input[0])
 
 
 # Finishing up --------------------------------------------------------------
