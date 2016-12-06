@@ -13,3 +13,5 @@ py3:            "/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
 BuscoLib:       "/home/jeremias/soft/busco/eukaryota_odb9"
 # path to BUSCO executable
 BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
+# path to BUSCO.plotting function
+BUSCO_p:        "/home/jeremias/soft/busco/BUSCO_plot.py"

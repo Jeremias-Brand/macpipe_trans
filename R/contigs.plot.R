@@ -61,29 +61,9 @@ arranged.plot <- plot_grid(cov_dist_plot, len_dist_plot, NULL,len1k_dist_plot,
                            ncol = 2, nrow =2 )
 # cowplot does not have a title function
 # So we can just use a grid to place the title on top
-title <- ggdraw() + draw_label("Sample assembly statistic", fontface='bold')
+title <- ggdraw() + draw_label(paste0(sample_name, "assembly statistics"), fontface='bold')
 out.plot <- plot_grid(title, arranged.plot,
           ncol=1, rel_heights=c(0.1, 1)) # rel height controls the title margin
 
 # This does not work, we need to tell it about the layout
 save_plot(paste0(sample_name, ".png"), out.plot, base_width = 8, base_height = 8)
-
-
-
-
-# save_plot("hist.test.pdf", hist)
-# 
-# 
-# plot_grid(hist, line)
-# plot_grid(hist, line, phred_plot, ncol = 1)
-# 
-# plot_grid(hist, line, line, labels = c("F", "U"))
-# 
-# plotA <- plot_grid(hist, line, line, ncol=1, labels = c("F", "U"))
-# # This does not work, we need to tell it about the layout
-# save_plot("dd.pdf", plotA)
-# 
-# 
-# save_plot("dd.pdf", plotA,
-#           nrow = 3,
-#           ncol = 1)

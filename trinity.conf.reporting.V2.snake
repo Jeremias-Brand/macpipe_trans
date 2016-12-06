@@ -178,8 +178,9 @@ rule summarize_transrate_assembly:
                     lines = infile.readlines()
                     outfile.write(lines[1])
 
-# TODO
 # transrate plotting
+# TODO change locations of file to something sensible
+# ownimgg directory? 
 rule plot_transrate_contigs:
     input:
         "transrate/summary/{sample}.contigs.csv"
@@ -254,10 +255,44 @@ rule busco_on_transrate:
 
         """
 # TODO rule decision on assembly
+rule gather_busco:
+    # move all transrate results to same folder for easier summary later
+    # we do not need the expand statement here because plot busco will just call this function many times
+    input:
+        normal   = "busco/run_{sample}.busco/short_summary_{sample}.busco.txt",
+        good     = "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt"
+    output:
+        normal   = "busco/summary/short_summary_{sample}.busco.txt",
+        good     = "busco/summary/short_summary_{sample}.good.busco.txt"
+    shell:
+        """
+        cp {input.normal} {output.normal} 
+        cp {input.good}   {output.good}
+   
+        """
+rule plot_busco:
+    input:
+        normal   = expand("busco/summary/short_summary_{sample}.busco.txt", sample=SAMPLES),
+        good     = expand("busco/summary/short_summary_{sample}.good.busco.txt", sample=SAMPLES)
+    output:
+        png      = "busco/summary/run_" + TIMESTAMP + "_busco.png",
+        R        = "busco/summary/run_" + TIMESTAMP + "_busco.R"
+    params:
+        py3      = config["py3"],
+        BUSCO_p  = config["BUSCO_p"]
+    shell:
+        """
+        {params.py3} {params.BUSCO_p} --working_directory busco/summary && \
+        mv busco/summary/busco_figure.png {output.png} && \
+        mv busco/summary/busco_figure.R {output.R} 
+        """
 
 # TODO rename assembly headers
-
 # TODO 
+# add plotting for BUSCO
+# The default plotting does not work and we have to add 
+# options(bitmapType='cairo') 
+# at the beginning of the script. -.-
 
 
 # TODO report file should contain:
@@ -271,7 +306,8 @@ rule report:
         expand( config["homedir"] + "busco/run_{sample}.busco/short_summary_{sample}.busco.txt", sample=SAMPLES),
         expand( config["homedir"] + "busco/run_{sample}.good.busco/short_summary_{sample}.good.busco.txt", sample=SAMPLES),
         "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
-        expand("{sample}.png", sample=SAMPLES)
+        expand("{sample}.png", sample=SAMPLES),
+        "busco/summary/run_" + TIMESTAMP + "_busco.png"
     output:
         "report.html"
     run:
