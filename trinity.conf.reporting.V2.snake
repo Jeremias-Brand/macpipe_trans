@@ -353,9 +353,12 @@ rule report:
 # Finishing up --------------------------------------------------------------
 onsuccess:
     print("Workflow finished, no error")
-onerror:
-    print("An error occurred with the snakemake run")
-    # here it would be good to include timstamping
-    shell("mail -s 'Error in Snakemake run' jeremias.brand@unibas.ch < {log}")
+
+# onerror:
+#     print("An error occurred with the snakemake run")
+#     # here it would be good to include timstamping
+#     # TODO config for email
+#     shell:
+#     	"mail -s "an error occurred" jeremias.brand@unibas.ch < {log}"
 
 # TODO add separate snakefile for annotation
