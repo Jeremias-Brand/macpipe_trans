@@ -11,6 +11,10 @@ Latest modification:
   - integrate gzip of intermediate results
   - add a block to run if fail or succeed
   - add evironment file for bioconda
+  - plotting of busco automated
+  - combine transrate
+  - move transcriptomes to better places
+  - add trinity version to software.versions file
 """
 # import statements
 from snakemake.utils import report
@@ -94,7 +98,7 @@ rule trim_and_trinity:
         forward  = FASTQ_DIR + "{sample}_R1.cor.fq",
         reverse  = FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
-        assembly = expand("{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
+        assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
         log      = expand("logs/trinity/{{sample}}_{T}.shell.log", T=TIMESTAMP)
     log:
         expand("logs/trinity/{{sample}}_{T}.log", T=TIMESTAMP)
@@ -115,12 +119,13 @@ rule trim_and_trinity:
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 \
         --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
-        mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly}
+        mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
+        sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}
         """
 
 rule run_transrate:
     input:
-        assembly =  expand("{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
+        assembly =  expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
         forward  =  FASTQ_DIR + "{sample}_R1.cor.fq",
         reverse  =  FASTQ_DIR + "{sample}_R2.cor.fq"
     output:
@@ -207,7 +212,7 @@ rule plot_transrate_contigs:
 # add busco rule
 rule busco:
     input:
-        assembly =   expand("{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
+        assembly =   expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
         out      =   expand(config["homedir"] + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP)
     params:
@@ -215,7 +220,6 @@ rule busco:
         BUSCO    =   config["BUSCO"],
         BuscoLib =   config["BuscoLib"],
         homedir  =   config["homedir"],
-        folder   =   expand("run_{{sample}}_{T}.busco", T=TIMESTAMP)
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.log", T=TIMESTAMP)
@@ -228,7 +232,7 @@ rule busco:
                 -o {wildcards.sample}_{TIMESTAMP}.busco              \
                 -l  {params.BuscoLib}    \
                 -m  tran -c {threads} &>> {log} && \
-        mv  {params.folder}  busco/
+        mv  run_{wildcards.sample}_{TIMESTAMP}.busco  busco/
 
         """
 
@@ -238,27 +242,28 @@ rule busco_on_transrate:
     input:
         assembly =   expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
-        out      =   config["homedir"] + expand("busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
+        out      =   expand(config["homedir"] + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP),
+        outass   =   expand("trinity/{{sample}}_{T}_transrate_optimized.Trinity.fasta", T=TIMESTAMP)
     params:
         outdir   =   config["homedir"] + "busco/",
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],
         BuscoLib =   config["BuscoLib"],
         homedir  =   config["homedir"],
-        folder   =   expand("run_{{sample}}_{T}.good.busco", T=TIMESTAMP)
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.good.log", T=TIMESTAMP)
-
+# I move the assessed transrate assembly over to the trinity folder
     shell:
         # cd {params.outdir}
         """
         {params.py3}  {params.BUSCO} -f \
                 -i {params.homedir}{input.assembly} \
-                -o {wildcards.sample}.good.busco              \
+                -o {wildcards.sample}_{TIMESTAMP}.good.busco              \
                 -l  {params.BuscoLib}    \
                 -m  tran -c {threads} &>> {log} && \
-        mv  {params.folder}  busco/
+        mv  run_{wildcards.sample}_{TIMESTAMP}.good.busco  busco/ && \
+        mv {input.assembly} {output.outass}
 
         """
 # TODO rule decision on assembly
@@ -266,8 +271,8 @@ rule gather_busco:
     # move all transrate results to same folder for easier summary later
     # we do not need the expand statement here because plot busco will just call this function many times
     input:
-        normal   = config["homedir"] + expand("busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
-        good     = config["homedir"] + expand("busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
+        normal   = expand(config["homedir"] + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
+        good     = expand(config["homedir"] + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
     output:
         normal   = expand("busco/summary/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
         good     = expand("busco/summary/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
@@ -302,7 +307,7 @@ rule plot_busco:
 # at the beginning of the script. -.-
 rule versions:
     output:
-        log         = "logs/software.versions"
+        log         = "logs/run_" + TIMESTAMP + "_software.versions"
     params:
         trinity     = config["trinity"],
         transrate   = config["transrate"],
@@ -310,6 +315,7 @@ rule versions:
         time        = TIMESTAMP
     shell:
         """
+        touch {output.log}
         echo "These are the versions of software used for run: {params.time}" &>> {output.log}
         date  &>> {output.log}
         python --version &>> {output.log}
@@ -320,7 +326,7 @@ rule versions:
         perl -e 'print $];' &>> {output.log}
         {params.BUSCO} --version &>> {output.log}
         echo "transrate version:" {params.transrate} --version &>> {output.log}
-        {params.trinity} --version &>> {output.log}
+#        {params.trinity}  >> {output.log}
         """
 # TODO report file should contain:
 # plot of coverage
@@ -332,7 +338,7 @@ rule report:
         busco_png           = "busco/summary/run_" + TIMESTAMP + "_busco.png",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
-        versions            = "logs/software.versions"
+        versions            = "logs/run_" + TIMESTAMP + "_software.versions"
     output:
         "report.html"
     run:

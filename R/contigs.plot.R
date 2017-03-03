@@ -66,4 +66,4 @@ out.plot <- plot_grid(title, arranged.plot,
           ncol=1, rel_heights=c(0.1, 1)) # rel height controls the title margin
 
 # This does not work, we need to tell it about the layout
-save_plot(paste0(sample_name, ".png"), out.plot, base_width = 8, base_height = 8)
+save_plot(paste0("transrate/summary/", sample_name, ".png"), out.plot, base_width = 8, base_height = 8)
