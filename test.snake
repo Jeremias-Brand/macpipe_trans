@@ -1,0 +1,36 @@
+import time
+from snakemake.utils import report
+from os.path import join
+import os
+
+TIMESTAMP = time.strftime("%Y%m%d")
+SAMPLES, = glob_wildcards(join('test', 'text{sample}.txt'))
+
+print(SAMPLES)
+rule all:
+    input:
+        "report.file"
+
+
+rule makeit:
+    input:
+        expand("test/text{sample}.txt", sample=SAMPLES)
+    output:
+        file = expand("text{sample}_{T}.txt", sample = SAMPLES, T=TIMESTAMP),
+        report = "report.file"
+    shell:
+        """
+        cp {input} {output.file}
+        touch report.file
+        """
+
+#rule summary:
+#    input:
+#        "text{sample}_T.txt"
+#    output:
+#        "report.file"
+#    shell:
+#        """
+#        touch report.file
+#        """
+
