@@ -1,0 +1,16 @@
+import time
+TIMESTAMP = time.strftime("%Y%m%d")
+
+rule all:
+    input:
+        expand("text_{T}.txt", T=TIMESTAMP)
+
+rule makeit:
+    input:
+        something = "text.txt"
+    output:
+        expand("text_{T}.txt", T=TIMESTAMP)
+    shell:
+        """
+        cp {input} {output}
+        """

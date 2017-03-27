@@ -5,9 +5,10 @@
 # Transrate produces two main output file that should be plotted:
 # assembles.csv gives stats on the transrate score
 # contigs.csv provides per contig details on mapping and coverage
-library(dplyr)
-library(ggplot2)
-library(cowplot)
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr, ggplot2, cowplot)
+
 assemblies <- read.table(file = "assemblies.csv", sep= ",",
                          header = T, stringsAsFactors = F)
 
@@ -34,9 +35,13 @@ test_set <- contigs[1:1000,]
 
 line <- ggplot(test_set) +
   geom_point(aes(x= reorder(factor(contig_name), coverage), y=coverage)) +
-  scale_y_log10()
+  scale_y_log10() + scale_x_log10()
 
 hist <- qplot(test_set$coverage, geom="histogram", log="yx", fill="blue") 
+
+ggplot(test_set) +
+  geom_histogram(aes(coverage), color = "blue", fill="red", binwidth = 1) +
+  scale_x_log10() + scale_x_log10()
 
 # cowplot also has a easier output function
 save_plot("hist.test.pdf", hist)
@@ -68,7 +73,7 @@ contig_plot +
 
 contigs %>% 
   select(coverage, contig_name) %>%
-  transmute(cov = round(coverage/10, 0)) %>%
+  transmute(cov = round(coverage/10, 0)*10) %>%
   group_by(cov) %>%
   summarise(N = n()) -> cov_count
 
@@ -76,8 +81,12 @@ cov_plot <- ggplot(data = cov_count, aes(cov, N, group = 1))
 
 cov_plot + geom_point() + scale_x_log10()
 
+cov_plot + geom_point() + scale_x_log10()
+
+
+
 ggplot(data= contigs) +
-  geom_histogram(coverage)
+  geom_histogram(round(coverage, 0))
 opt <- options("scipen" = 20)
 
 qplot(contigs$coverage, geom="histogram", log="yx", fill="blue") 
