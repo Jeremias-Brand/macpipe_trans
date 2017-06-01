@@ -4,9 +4,12 @@ Affiliation: Unibas
 Aim: Workflow for transcriptome assembly, annotation and assessment
 Date: 20. Nov. 2016
 Run: snakemake   -s Snakefile
+<<<<<<< HEAD
 
 This version is tailored to smaller read numbers and does not use rcorrector.
 Here I 
+=======
+>>>>>>> origin/master
 Latest modification:
   - add more flexible input
   - add reporting
@@ -23,7 +26,11 @@ import time
 
 
 # Uses a yaml file as input
+<<<<<<< HEAD
 configfile: "config.macpipe.trans.small.yaml"
+=======
+configfile: "config.yaml"
+>>>>>>> origin/master
 
 # Preparation------------------------------------------------------------------
 TIMESTAMP = time.strftime("%Y%m%d")
@@ -57,14 +64,44 @@ PATTERN_R1 = '{sample}_R1.fq'
 PATTERN_R2 = '{sample}_R2.fq'
 
 # Rules -----------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/master
 rule all:
     input:
         "report.html"
 
+<<<<<<< HEAD
 rule trim_and_trinity:
     input:
         forward = FASTQ_DIR + "{sample}_R1.fq",
         reverse = FASTQ_DIR + "{sample}_R2.fq"
+=======
+rule run_rcorrector:
+    input:
+        forward = join(FASTQ_DIR, PATTERN_R1),
+        reverse = join(FASTQ_DIR, PATTERN_R2)
+    output:
+        FASTQ_DIR + "{sample}_R1.cor.fq",
+        FASTQ_DIR + "{sample}_R2.cor.fq"
+    log:
+    	"logs/rcorrector/{sample}.log"
+    params:
+        outdir = config["fastqdir"]
+    shell:
+        """
+        ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
+        -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
+        """
+
+rule trim_and_trinity:
+    input:
+        forward = FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse = FASTQ_DIR + "{sample}_R2.cor.fq"
+>>>>>>> origin/master
     output:
         "{sample}_TIMESTAMP.Trinity.fasta",
         "logs/trinity/{sample}_{TIMESTAMP}.shell.log"
@@ -73,33 +110,55 @@ rule trim_and_trinity:
     params:
         adapters =  config["adapters_fasta"],
         outdir   =  config["fastqdir"],
+<<<<<<< HEAD
         trinity  =  config["trinity"],
         leading  =  config["trim_leading"],
         trailing  =  config["trim_trailing"],
         minlength  =  config["trim_minlength"]
     threads: 14  # threads only works if --cores is set to the actual number of cores when running the snakemake
+=======
+        trinity  =  config["trinity"]
+    threads: 28  # threads only works if --cores is set to the actual number of cores when running the snakemake
+>>>>>>> origin/master
     # message: expand("Executing with {threads} threads on the following files {sample}.", sample=SAMPLES)
     # We also want a logfile
     # log: expand("logs/{sample}.trinity.log", sample=SAMPLES)
     shell:
         """
         {params.trinity} --seqType fq \
+<<<<<<< HEAD
         --trimmomatic --CPU {threads} --max_memory 80G \
+=======
+        --trimmomatic --CPU {threads} --max_memory 150G \
+>>>>>>> origin/master
         --output 'trinity/'{wildcards.sample}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 \
+<<<<<<< HEAD
         --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:{params.leading} TRAILING:{params.trailing} MINLEN:{params.minlength}' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
         mv trinity/{wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}_{TIMESTAMP}.Trinity.fasta
         """
 # This part here renames the trinity file
 
+=======
+        --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:2 TRAILING:2 MINLEN:25' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
+        mv trinity/{wildcards.sample}.trinity/Trinity.fasta {wildcards.sample}_{TIMESTAMP}.Trinity.fasta
+        """
+
+# This part here renames the trinity file
+>>>>>>> origin/master
 
 rule run_transrate:
     input:
         assembly =  "{sample}_TIMESTAMP.Trinity.fasta",
+<<<<<<< HEAD
         forward  =  FASTQ_DIR + "{sample}_R1.fq",
         reverse  =  FASTQ_DIR + "{sample}_R2.fq"
+=======
+        forward  =  FASTQ_DIR + "{sample}_R1.cor.fq",
+        reverse  =  FASTQ_DIR + "{sample}_R2.cor.fq"
+>>>>>>> origin/master
     output:
         "transrate/{sample}_TIMESTAMP.transrate/{sample}_TIMESTAMP.Trinity/good.{sample}_TIMESTAMP.Trinity.fasta",
         "transrate/{sample}_TIMESTAMP.transrate/assemblies.csv",
@@ -121,7 +180,10 @@ rule run_transrate:
         --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
         """
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 rule gather_transrate:
     # move all transrate results to same folder for easier summary later
     # First I used the same wildcard input output names for this rule as I did
@@ -140,6 +202,10 @@ rule gather_transrate:
 
         """
 
+<<<<<<< HEAD
+=======
+        # assembly = "transrate/summary/" + TIMESTAMP + "assemblies.csv"
+>>>>>>> origin/master
 
 rule summarize_transrate_assembly:
     input:
@@ -161,7 +227,10 @@ rule summarize_transrate_assembly:
                     lines = infile.readlines()
                     outfile.write(lines[1])
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 # transrate plotting
 # TODO change locations of file to something sensible
 # ownimgg directory?
@@ -175,6 +244,16 @@ rule plot_transrate_contigs:
     script:
         "R/contigs.plot.R"
 
+<<<<<<< HEAD
+=======
+# rule cat_transrate:
+#     input:
+#         expand("logs/transrate/{sample}.transrate.log", sample = SAMPLES)
+#     output:
+#         "trans.sentinel"
+#     shell:
+#         "touch trans.sentinel"
+>>>>>>> origin/master
 
 # add busco rule
 rule busco:
@@ -221,6 +300,10 @@ rule busco_on_transrate:
     threads: 14
     log:
         "logs/busco/{sample}_TIMESTAMP.good.log"
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     shell:
         # cd {params.outdir}
         """
@@ -232,8 +315,11 @@ rule busco_on_transrate:
         mv  {params.folder}  busco/
 
         """
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 # TODO rule decision on assembly
 rule gather_busco:
     # move all transrate results to same folder for easier summary later
@@ -250,8 +336,11 @@ rule gather_busco:
         cp {input.good}   {output.good}
 
         """
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 rule plot_busco:
     input:
         normal   = expand("busco/summary/short_summary_{sample}_TIMESTAMP.busco.txt", sample=SAMPLES),
@@ -269,7 +358,10 @@ rule plot_busco:
         mv busco/summary/busco_figure.R {output.R}
         """
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 # TODO rename assembly headers
 # TODO
 # add plotting for BUSCO
@@ -303,8 +395,11 @@ rule versions:
 # busco and transrate stats
 # software versions
 # timestamp
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 rule report:
     input:
         busco_png           = "busco/summary/run_" + TIMESTAMP + "_busco.png",
@@ -325,6 +420,10 @@ rule report:
         """, output[0], **input)
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 # Finishing up --------------------------------------------------------------
 onsuccess:
     print("Workflow finished, no error")
@@ -332,4 +431,8 @@ onerror:
     print("An error occurred with the snakemake run")
     # here it would be good to include timstamping
     shell("mail -s 'Error in Snakemake run' jeremias.brand@unibas.ch < {log}")
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 # TODO add separate snakefile for annotation

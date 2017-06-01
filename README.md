@@ -31,3 +31,5 @@ output used software
 # Pipelines to add
     - Annotation pipline
         - using indipendent and dependent input
+    - Ex90N50 plotting
+

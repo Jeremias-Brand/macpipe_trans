@@ -1,6 +1,0 @@
-# a yaml file to specify input to the pipline
-
-samples:
-    A: Mcla
-    B: Mcla2
-    
