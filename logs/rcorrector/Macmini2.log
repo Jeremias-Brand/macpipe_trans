@@ -1,0 +1,13 @@
+Put the kmers into bloom filter
+/home/jeremias/soft/rcorrector/jellyfish/bin/jellyfish bc -m 31 -s 100000000 -C -t 30 -o tmp_36b74bb80579f773461bcfd9424db6b6.bc /home/jeremias/dev/macpipe_trans/data/Macmini2_R1.fq /home/jeremias/dev/macpipe_trans/data/Macmini2_R2.fq 
+Count the kmers in the bloom filter
+/home/jeremias/soft/rcorrector/jellyfish/bin/jellyfish count -m 31 -s 100000 -C -t 30 --bc tmp_36b74bb80579f773461bcfd9424db6b6.bc -o tmp_36b74bb80579f773461bcfd9424db6b6.mer_counts /home/jeremias/dev/macpipe_trans/data/Macmini2_R1.fq /home/jeremias/dev/macpipe_trans/data/Macmini2_R2.fq 
+Dump the kmers
+/home/jeremias/soft/rcorrector/jellyfish/bin/jellyfish dump -L 2 tmp_36b74bb80579f773461bcfd9424db6b6.mer_counts > tmp_36b74bb80579f773461bcfd9424db6b6.jf_dump
+Error correction
+/home/jeremias/soft/rcorrector/rcorrector -k 31 -t 30 -od /home/jeremias/dev/macpipe_trans/data/  -p /home/jeremias/dev/macpipe_trans/data/Macmini2_R1.fq /home/jeremias/dev/macpipe_trans/data/Macmini2_R2.fq -c tmp_36b74bb80579f773461bcfd9424db6b6.jf_dump
+Stored 310756 kmers
+Weak kmer threshold rate: 0.010000 (estimated from 0.950/1 of the chosen kmers)
+Bad quality threshold is 0
+Processed 20000 reads
+	Corrected 1391 bases.

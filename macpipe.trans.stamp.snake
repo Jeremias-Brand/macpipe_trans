@@ -24,7 +24,7 @@ import time
 
 
 # Uses a yaml file as input
-configfile: "config.yaml"
+configfile: "config.dev.yaml"
 
 # Preparation------------------------------------------------------------------
 TIMESTAMP = time.strftime("%Y%m%d")
