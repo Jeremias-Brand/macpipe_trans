@@ -74,7 +74,7 @@ extract_busco_results <- function(filename) {
 ###############################################################################
 # gather all the results
 for (i in 1 : length(summaries)){
-  busco_res <- extract_busco_results(paste0("busco/", summaries[[i]]))
+  busco_res <- extract_busco_results(paste0(busco_folder, summaries[[i]]))
   for (res in 1 :length(busco_res)) {
     busco_table[i, res] = busco_res[res]
   }
