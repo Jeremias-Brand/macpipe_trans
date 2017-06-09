@@ -208,26 +208,6 @@ rule plot_transrate_contigs:
         "R/contigs.plot.R"
 
 
-rule summarize_transrate_assembly:
-    input:
-        expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
-    output:
-        "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv"
-    run:
-        assemblies = input
-        # generate first line we need in outfile:
-        with open(output[0], "w") as outfile:
-            with open(assemblies[0], "r") as infile:
-                lines = infile.readlines()
-                outfile.write(lines[0])
-        # now we open the outfile in appending mode to add all the results
-        with open(output[0], "a") as outfile:
-            for assembly in assemblies:
-                with open(assembly, "r") as infile:
-                    lines = infile.readlines()
-                    outfile.write(lines[1])
-
-
 # add busco rule
 rule busco:
     input:
@@ -305,7 +285,7 @@ rule gather_busco:
 
 rule plot_busco:
     input:
-        expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP),
+         expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP),
         busco_folder      = "busco/summary/",
         transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         normal            = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
