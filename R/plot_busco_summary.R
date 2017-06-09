@@ -191,10 +191,6 @@ busco_plot_score <- ggplot(joined_busco_table, aes(y = as.numeric(percentage), x
   guides(fill = guide_legend(override.aes = list(colour = NULL))) +
   guides(fill=guide_legend(nrow=2,byrow=TRUE))
 
-pdf("busco_single_pooled_transrate_score.pdf", width = 15, height = 35)
-busco_plot_score
-dev.off()
-
 
 pdf(file = snakemake@output[["busco_trans_pdf"]],
     width = pdf_width, height = pdf_height)
