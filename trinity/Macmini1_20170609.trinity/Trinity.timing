@@ -1,0 +1,5 @@
+Statistics:
+===========
+Trinity Version:      v2.2.0
+Compiler:             GCC
+Trinity Parameters:   --seqType fq --trimmomatic --CPU 14 --max_memory 150G --output trinity/Macmini1_20170609.trinity --left /home/jeremias/dev/macpipe_trans/data/Macmini1_R1.fq --right /home/jeremias/dev/macpipe_trans/data/Macmini1_R2.fq --normalize_reads --normalize_max_read_cov 30 --quality_trimming_params ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:30 TRAILING:30 MINLEN:25
