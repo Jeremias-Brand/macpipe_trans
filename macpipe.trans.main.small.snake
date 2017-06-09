@@ -305,14 +305,14 @@ rule gather_busco:
 
 rule plot_busco:
     input:
-        busco_folder = "busco/summary/",
+        busco_folder      = "busco/summary/",
         transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP),
-        normal   = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
-        good     = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
+        normal            = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
+        good              = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
     output:
-        busco_pdf        = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
-        busco_trans_pdf  = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf"
+        busco_pdf         = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        busco_trans_pdf   = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf"
     params:
         timestamp = TIMESTAMP
     script:
@@ -358,7 +358,7 @@ rule versions:
 rule report:
     input:
         busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
-        busco_trans_pdf  = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
+        busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions"
