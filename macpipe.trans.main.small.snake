@@ -333,7 +333,7 @@ rule versions:
 # timestamp
 rule report:
     input:
-        busco_png           = "busco/summary/run_" + TIMESTAMP + "_busco.png",
+        busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions"
