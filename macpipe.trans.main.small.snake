@@ -125,6 +125,7 @@ rule trim_and_trinity:
         sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}
         """
 
+
 rule run_transrate:
     input:
         assembly =  expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
@@ -151,6 +152,7 @@ rule run_transrate:
         --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
         """
 
+
 rule gather_transrate:
     # move all transrate results to same folder for easier summary later
     # First I used the same wildcard input output names for this rule as I did
@@ -168,6 +170,7 @@ rule gather_transrate:
         cp {input.c}  {output.c}
 
         """
+
 
         # assembly = "transrate/summary/" + TIMESTAMP + "assemblies.csv"
 
@@ -192,6 +195,7 @@ rule summarize_transrate_assembly:
                     lines = infile.readlines()
                     outfile.write(lines[1])
 
+
 # transrate plotting
 # TODO change locations of file to something sensible
 # ownimgg directory?
@@ -203,13 +207,26 @@ rule plot_transrate_contigs:
     script:
         "R/contigs.plot.R"
 
-# rule cat_transrate:
-#     input:
-#         expand("logs/transrate/{sample}.transrate.log", sample = SAMPLES)
-#     output:
-#         "trans.sentinel"
-#     shell:
-#         "touch trans.sentinel"
+
+rule summarize_transrate_assembly:
+    input:
+        expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
+    output:
+        "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv"
+    run:
+        assemblies = input
+        # generate first line we need in outfile:
+        with open(output[0], "w") as outfile:
+            with open(assemblies[0], "r") as infile:
+                lines = infile.readlines()
+                outfile.write(lines[0])
+        # now we open the outfile in appending mode to add all the results
+        with open(output[0], "a") as outfile:
+            for assembly in assemblies:
+                with open(assembly, "r") as infile:
+                    lines = infile.readlines()
+                    outfile.write(lines[1])
+
 
 # add busco rule
 rule busco:
@@ -225,7 +242,6 @@ rule busco:
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.log", T=TIMESTAMP)
-
     shell:
         # cd {params.outdir}
         """
@@ -255,7 +271,7 @@ rule busco_on_transrate:
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.good.log", T=TIMESTAMP)
-# I move the assessed transrate assembly over to the trinity folder
+    # I move the assessed transrate assembly over to the trinity folder
     shell:
         # cd {params.outdir}
         """
@@ -266,8 +282,9 @@ rule busco_on_transrate:
                 -m  tran -c {threads} &>> {log} && \
         mv  run_{wildcards.sample}_{TIMESTAMP}.good.busco  busco/ && \
         mv {input.assembly} {output.outass}
-
         """
+
+
 # TODO rule decision on assembly
 rule gather_busco:
     # move all transrate results to same folder for easier summary later
@@ -284,18 +301,23 @@ rule gather_busco:
         cp {input.good}   {output.good}
 
         """
+
+
 rule plot_busco:
     input:
         busco_folder = "busco/summary/",
+        transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
+        expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP),
         normal   = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
         good     = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
-
     output:
-        pdf      = "busco/summary/run_" + TIMESTAMP + "_busco.pdf"
+        busco_pdf        = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        busco_trans_pdf  = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf"
     params:
         timestamp = TIMESTAMP
     script:
         "R/plot_busco_summary.R"
+
 
 # TODO rename assembly headers
 # TODO
@@ -326,6 +348,8 @@ rule versions:
         echo "transrate version:" {params.transrate} --version &>> {output.log}
 #        {params.trinity}  >> {output.log}
         """
+
+
 # TODO report file should contain:
 # plot of coverage
 # busco and transrate stats
@@ -334,6 +358,7 @@ rule versions:
 rule report:
     input:
         busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        busco_trans_pdf  = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions"
@@ -347,7 +372,6 @@ rule report:
         #with open(input[0]) as trans_logs:
         #    print(trans_logs)
         #report("", output[0])
-
 
 
 # Finishing up --------------------------------------------------------------

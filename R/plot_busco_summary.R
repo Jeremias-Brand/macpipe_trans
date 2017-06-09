@@ -7,9 +7,10 @@ pacman::p_load(dplyr, tidyr, ggplot2, scales)
 
 
 # input_file = 
-busco_folder = snakemake@input[[1]] # path to the place where the busco files are stored
+busco_folder = snakemake@input[["busco_folder"]] # path to the place where the busco files are stored
+transrate_summary = snakemake@input[["transrate_summary"]]
 output_folder = busco_folder
-TIMESTAMP = snakemake@params[[1]]
+TIMESTAMP = snakemake@params[["timestamp"]]
 plot_basename = paste0("run_", TIMESTAMP, "_busco")
 
 ###############################################################################
@@ -117,7 +118,7 @@ busco_plot <- ggplot(tidy_busco_table, aes(y = as.numeric(percentage), x = assem
   guides(fill = guide_legend(override.aes = list(colour = NULL))) +
   guides(fill=guide_legend(nrow=2,byrow=TRUE))
 
-pdf(file = paste(output_folder, paste0(plot_basename, ".pdf"), sep="/"),
+pdf(file = snakemake@output[["busco_pdf"]],
     width = pdf_width, height = pdf_height)
 busco_plot
 dev.off()
@@ -128,69 +129,74 @@ dev.off()
 # Now I also want to add the results from the transrate run.
 # I generated this by running a mini snakemake script called quick_gater.snake
 # it allows to summarise all the assembly files in a folder
-# transrate_assembly_summary <- read.csv("transrate/run_2017045_assemblies.csv")
-# 
-# # I clean the name to extract just the identifier of a assembly
-# transrate_assembly_summary <- transrate_assembly_summary %>%
-#   mutate(tmp_name = gsub(".Trinity.fasta$","", assembly)) %>%
-#   mutate(tmp_name2 = gsub("^/.+/.+/.+/.+/","", tmp_name)) %>%
-#   mutate(assembly_name = as.factor(tmp_name2)) %>%
-#   select(-tmp_name, -tmp_name2) 
-# 
-# # I do the same thing for the busco data to have a clean dataset
-# tidy_busco_table_wide <- busco_table %>%
-#   mutate(tmp_name = gsub(".Trinity.fasta$","", assembly)) %>%
-#   mutate(assembly_name = as.factor(tmp_name)) %>%
-#   select(-tmp_name) 
-# 
-# # Join the two keeping only the ones for which I have a transrate score
-# joined_busco_table <- full_join(transrate_assembly_summary, tidy_busco_table_wide, by = "assembly_name")
-# 
-# # Combine the name with the scores to plot them on the busco table
-# joined_busco_table <- joined_busco_table %>%
-#   # roundsocre for readability
-#   mutate(score = round(score,3)) %>%
-#   # merge columns, carefull first argument is name of new column
-#   unite(assembly_name_stats, assembly_name, n_seqs, score, sep= " ") %>%
-#   select(assembly_name_stats, complete_single,
-#          complete_dublicated, fragmented, missing) %>%
-#   # put in long form
-#   gather(key = category, value = percentage, -assembly_name_stats) %>%
-#   mutate(category = factor(category, 
-#                 levels = c('missing', 'fragmented', 'complete_dublicated', 'complete_single')))
-#          
-# # Plotting again
-# 
-# busco_plot_score <- ggplot(joined_busco_table, aes(y = as.numeric(percentage), x = assembly_name_stats, fill = category)) +
-#   geom_bar(position = "fill", stat="identity") +
-#   scale_y_continuous(labels = percent_format()) + 
-#   coord_flip() + 
-#   theme_gray(base_size = 8) + 
-#   scale_fill_manual(values = my_colors,labels =c(" Missing (M)",
-#                                                  " Fragmented (F)  ",
-#                                                  " Complete (C) and duplicated (D)",
-#                                                  " Complete (C) and single-copy (S)  ")) +
-#   ggtitle(my_title) + 
-#   xlab("") + 
-#   ylab("\n%BUSCOs") + 
-#   theme(plot.title = element_text(family=my_family, colour = "black", size = rel(2.2)*my_size_ratio, face = "bold")) + 
-#   theme(legend.position="top",legend.title = element_blank()) + 
-#   theme(legend.text = element_text(family=my_family, size = rel(1.2)*my_size_ratio)) + 
-#   theme(panel.background = element_rect(color="#FFFFFF", fill="white")) + 
-#   theme(panel.grid.minor = element_blank()) + 
-#   theme(panel.grid.major = element_blank()) +
-#   theme(axis.text.y = element_text(family=my_family, colour = "black", size = rel(1.66)*my_size_ratio)) + 
-#   theme(axis.text.x = element_text(family=my_family, colour = "black", size = rel(1.66)*my_size_ratio)) + 
-#   theme(axis.line = element_line(size=1*my_size_ratio, colour = "black")) + 
-#   theme(axis.ticks.length = unit(.85, "cm")) + 
-#   theme(axis.ticks.y = element_line(colour="white", size = 0)) + 
-#   theme(axis.ticks.x = element_line(colour="#222222")) + 
-#   theme(axis.ticks.length = unit(0.4, "cm")) + 
-#   theme(axis.title.x = element_text(family=my_family, size=rel(1.2)*my_size_ratio)) + 
-#   guides(fill = guide_legend(override.aes = list(colour = NULL))) +
-#   guides(fill=guide_legend(nrow=2,byrow=TRUE))
-# 
-# pdf("busco_single_pooled_transrate_score.pdf", width = 15, height = 35)
-# busco_plot_score
-# dev.off()
-# 
+transrate_assembly_summary <- transrate_summary
+
+# I clean the name to extract just the identifier of a assembly
+transrate_assembly_summary <- transrate_assembly_summary %>%
+  mutate(tmp_name = gsub(".Trinity.fasta$","", assembly)) %>%
+  mutate(tmp_name2 = gsub("^/.+/.+/.+/.+/","", tmp_name)) %>%
+  mutate(assembly_name = as.factor(tmp_name2)) %>%
+  select(-tmp_name, -tmp_name2)
+
+# I do the same thing for the busco data to have a clean dataset
+tidy_busco_table_wide <- busco_table %>%
+  mutate(tmp_name = gsub(".Trinity.fasta$","", assembly)) %>%
+  mutate(assembly_name = as.factor(tmp_name)) %>%
+  select(-tmp_name)
+
+# Join the two keeping only the ones for which I have a transrate score
+joined_busco_table <- full_join(transrate_assembly_summary, tidy_busco_table_wide, by = "assembly_name")
+
+# Combine the name with the scores to plot them on the busco table
+joined_busco_table <- joined_busco_table %>%
+  # roundsocre for readability
+  mutate(score = round(score,3)) %>%
+  # merge columns, carefull first argument is name of new column
+  unite(assembly_name_stats, assembly_name, n_seqs, score, sep= " ") %>%
+  select(assembly_name_stats, complete_single,
+         complete_dublicated, fragmented, missing) %>%
+  # put in long form
+  gather(key = category, value = percentage, -assembly_name_stats) %>%
+  mutate(category = factor(category,
+                levels = c('missing', 'fragmented', 'complete_dublicated', 'complete_single')))
+
+# Plotting again
+
+busco_plot_score <- ggplot(joined_busco_table, aes(y = as.numeric(percentage), x = assembly_name_stats, fill = category)) +
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = percent_format()) +
+  coord_flip() +
+  theme_gray(base_size = 8) +
+  scale_fill_manual(values = my_colors,labels =c(" Missing (M)",
+                                                 " Fragmented (F)  ",
+                                                 " Complete (C) and duplicated (D)",
+                                                 " Complete (C) and single-copy (S)  ")) +
+  ggtitle(my_title) +
+  xlab("") +
+  ylab("\n%BUSCOs") +
+  theme(plot.title = element_text(family=my_family, colour = "black", size = rel(2.2)*my_size_ratio, face = "bold")) +
+  theme(legend.position="top",legend.title = element_blank()) +
+  theme(legend.text = element_text(family=my_family, size = rel(1.2)*my_size_ratio)) +
+  theme(panel.background = element_rect(color="#FFFFFF", fill="white")) +
+  theme(panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank()) +
+  theme(axis.text.y = element_text(family=my_family, colour = "black", size = rel(1.66)*my_size_ratio)) +
+  theme(axis.text.x = element_text(family=my_family, colour = "black", size = rel(1.66)*my_size_ratio)) +
+  theme(axis.line = element_line(size=1*my_size_ratio, colour = "black")) +
+  theme(axis.ticks.length = unit(.85, "cm")) +
+  theme(axis.ticks.y = element_line(colour="white", size = 0)) +
+  theme(axis.ticks.x = element_line(colour="#222222")) +
+  theme(axis.ticks.length = unit(0.4, "cm")) +
+  theme(axis.title.x = element_text(family=my_family, size=rel(1.2)*my_size_ratio)) +
+  guides(fill = guide_legend(override.aes = list(colour = NULL))) +
+  guides(fill=guide_legend(nrow=2,byrow=TRUE))
+
+pdf("busco_single_pooled_transrate_score.pdf", width = 15, height = 35)
+busco_plot_score
+dev.off()
+
+
+pdf(file = snakemake@output[["busco_trans_pdf"]],
+    width = pdf_width, height = pdf_height)
+busco_plot
+dev.off()
