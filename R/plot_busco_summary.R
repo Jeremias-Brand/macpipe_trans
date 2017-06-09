@@ -129,7 +129,7 @@ dev.off()
 # Now I also want to add the results from the transrate run.
 # I generated this by running a mini snakemake script called quick_gater.snake
 # it allows to summarise all the assembly files in a folder
-transrate_assembly_summary <- transrate_summary
+transrate_assembly_summary <- read.csv(transrate_summary)
 
 # I clean the name to extract just the identifier of a assembly
 transrate_assembly_summary <- transrate_assembly_summary %>%
@@ -160,6 +160,10 @@ joined_busco_table <- joined_busco_table %>%
   mutate(category = factor(category,
                 levels = c('missing', 'fragmented', 'complete_dublicated', 'complete_single')))
 
+#debugging:
+sink("debugbusco")
+joined_busco_table
+sink()
 # Plotting again
 
 busco_plot_score <- ggplot(joined_busco_table, aes(y = as.numeric(percentage), x = assembly_name_stats, fill = category)) +
