@@ -286,12 +286,12 @@ rule gather_busco:
         """
 rule plot_busco:
     input:
-        busco_folder = "busco/summary/"
+        busco_folder = "busco/summary/",
         normal   = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
         good     = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
 
     output:
-        pdf      = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        pdf      = "busco/summary/run_" + TIMESTAMP + "_busco.pdf"
     params:
         timestamp = TIMESTAMP
     script:
