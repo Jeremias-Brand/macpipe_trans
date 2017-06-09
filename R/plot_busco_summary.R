@@ -19,6 +19,7 @@ PATTERN = "short_summary_Mac[A-Za-z0-9]*.+.busco.txt" # most inclusive
 summaries <- list.files(path = busco_folder, pattern = PATTERN)
 # all the file names in the folder
 sink("debug.file_plot_busco_summary")
+summaries
 sink()
 my_output <- paste("busco/summary/","busco_figure.png",sep="/") 
 my_width <- 20
