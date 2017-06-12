@@ -62,7 +62,7 @@ PATTERN_R2 = '{sample}_R2.fq'
 
 rule all:
     input:
-        "report.html"
+        "report_" + TIMESTAMP + ".html"
 
 # This is a template script to run trinity
 # Using a JSON file as input will be better
@@ -315,7 +315,6 @@ rule versions:
         time        = TIMESTAMP
     shell:
         """
-        touch {output.log}
         echo "These are the versions of software used for run: {params.time}" &>> {output.log}
         date  &>> {output.log}
         python --version &>> {output.log}
@@ -326,7 +325,7 @@ rule versions:
         perl -e 'print $];' &>> {output.log}
         {params.BUSCO} --version &>> {output.log}
         echo "transrate version:" {params.transrate} --version &>> {output.log}
-#        {params.trinity}  >> {output.log}
+        echo {params.trinity}  >> {output.log}
         """
 
 
@@ -343,15 +342,15 @@ rule report:
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions"
     output:
-        "report.html"
-    shell:
-        """
-        touch report.html
-        """
-        #from snakemake.utils import report
-        #with open(input[0]) as trans_logs:
-        #    print(trans_logs)
-        #report("", output[0])
+        report_name         = "report_" + TIMESTAMP + ".html"
+    run:
+        from snakemake.utils import report
+        run_name = TIMESTAMP 
+        report(""" 
+        Results of the macpipe_trans run for transcriptome assembly and assessment.
+        Run timestamp/ID: {run_name}
+        """, output[0], **input)
+        
 
 
 # Finishing up --------------------------------------------------------------
