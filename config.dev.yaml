@@ -4,6 +4,10 @@
 fastqdir:       "/home/jeremias/dev/macpipe_trans/data/"
 transrateDir:   "/home/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
 homedir:        "/home/jeremias/dev/macpipe_trans/"
+# where the fastas for the fish_genes.py step are stored
+voucher_dir:    "/home/jeremias/dbs/vouchers/"
+# list with one file name per line selecting vouchers in voucher_dir
+vouchers:       "vouchers.config"   
 # path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
 py3:            "/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
