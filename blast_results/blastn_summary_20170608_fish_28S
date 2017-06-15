@@ -1,0 +1,89 @@
+Results from performing blastn of hits with:
+Macmini1_20170608_blast_FJ715306.1_Maclig_18S.fasta
+Macmini2_20170608_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_blast_FJ715306.1_Maclig_18S.fasta
+Macmini1_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+Macmini1_20170608_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_blast_KP730467.1_Maclig_16S.fasta
+Macmini2_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+
+ against:
+dbs/vouchers/Macrostomidae_28S.fasta
+
+               Shown is the name of the sequence followed by the top 4 blast hits.
+               
+
+We found 3 contigs that matched blast_results/Macmini1_20170608_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_20170608_DN35_c0_g1_i1 len= 322
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN8_c0_g1_i1 len= 294
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN149_c0_g1_i1 len= 253
+NO SEQUENCE FOUND
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_20170608_DN195_c0_g1_i1 len= 547
+NO SEQUENCE FOUND
+##Macmini2_20170608_DN90_c0_g1_i1 len= 390
+NO SEQUENCE FOUND
+
+We found 3 contigs that matched blast_results/Macmini2_20170608_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_20170608_DN237_c0_g1_i1 len= 612
+NO SEQUENCE FOUND
+##Macmini2_20170608_DN82_c0_g1_i1 len= 209
+NO SEQUENCE FOUND
+##Macmini2_20170608_DN49_c0_g1_i1 len= 206
+NO SEQUENCE FOUND
+
+We found 3 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_20170608_DN35_c0_g1_i1 len= 322
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN8_c0_g1_i1 len= 294
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN149_c0_g1_i1 len= 253
+NO SEQUENCE FOUND
+
+We found 1 contigs that matched blast_results/Macmini1_20170608_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_20170608_DN93_c0_g1_i1 len= 562
+NO SEQUENCE FOUND
+
+We found 1 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_20170608_DN93_c0_g1_i1 len= 562
+NO SEQUENCE FOUND
+
+We found 2 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_20170608_DN194_c0_g1_i1 len= 484
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN36_c0_g1_i1 len= 383
+NO SEQUENCE FOUND
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_20170608_DN195_c0_g1_i1 len= 547
+NO SEQUENCE FOUND
+##Macmini2_20170608_DN90_c0_g1_i1 len= 390
+NO SEQUENCE FOUND
+
+We found 1 contigs that matched blast_results/Macmini2_20170608_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_20170608_DN63_c0_g1_i1 len= 436
+NO SEQUENCE FOUND
+
+We found 1 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_20170608_DN63_c0_g1_i1 len= 436
+NO SEQUENCE FOUND
+
+We found 2 contigs that matched blast_results/Macmini1_20170608_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_20170608_DN194_c0_g1_i1 len= 484
+NO SEQUENCE FOUND
+##Macmini1_20170608_DN36_c0_g1_i1 len= 383
+NO SEQUENCE FOUND
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_20170608_DN237_c0_g1_i1 len= 612
+NO SEQUENCE FOUND
+##Macmini2_20170608_DN49_c0_g1_i1 len= 206
+NO SEQUENCE FOUND
