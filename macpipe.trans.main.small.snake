@@ -198,22 +198,21 @@ rule summarize_transrate_assembly:
 
 rule fish_4_genes:
     input:
-        assemblies = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
+        assemblies = expand("trinity/{sample}_{T}.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP),
         assembly_dir = "trinity/",
         voucher_dir = config["voucher_dir"],
         vouchers    = config["vouchers"],
-        timestamp   = TIMESTAMP
     output:
-        "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes"
+        "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
         "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S"
-
-    threads: 6
-
+    params:
+        timestamp = TIMESTAMP 
+    threads: 12 
     shell:
         """
         python3 scripts/fish_genes.py -a {input.assembly_dir} \
             -q {input.voucher_dir} \
-            -c {input.vouchers} -T {threads} -t {input.timestamp}
+            -c {input.vouchers} -T {threads} -t {params.timestamp}
 
         """
 

@@ -22,11 +22,12 @@ def make_nt_blastdb(infile, outname):
                               shell=False)
 
 
-def blastn(db, query, outfile, evalue="1e-40", threads="12", max_target_seqs="40"):
+def blastn(db, query, outfile, evalue="1e-40", threads=12, max_target_seqs="40"):
     """
     blasts query against db and prints the output in the specified format
     column 3 is the name of the sequence hit.
     """
+    threads = str(threads)
     if os.path.isfile(outfile):
         print("blastn error, " + outfile + " allready exists! \n skipping blast")
     else:
