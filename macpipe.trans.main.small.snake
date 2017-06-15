@@ -361,8 +361,8 @@ rule report:
         busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
-        versions            = "logs/run_" + TIMESTAMP + "_software.versions"
-        fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes"
+        versions            = "logs/run_" + TIMESTAMP + "_software.versions",
+        fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
         fish_28S            = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S"
     output:
         report_name         = "report_" + TIMESTAMP + ".html"
