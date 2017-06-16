@@ -37,3 +37,42 @@ INFO	303 Total BUSCO groups searched
 INFO	BUSCO analysis done. Total running time: 2.900928258895874 seconds
 INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini1_20170608.good.busco/
 
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/16/2017 17:53:45 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/transrate/Macmini1_20170608.transrate/Macmini1_20170608.Trinity/good.Macmini1_20170608.Trinity.fasta -o Macmini1_20170608.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/16/2017 17:53:45 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/16/2017 17:53:45
+INFO	[makeblastdb]	New DB name:   ./tmp/Macmini1_20170608.good.busco_3832440647
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/transrate/Macmini1_20170608.transrate/Macmini1_20170608.Trinity/good.Macmini1_20170608.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 212 sequences in 0.02232 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini1_20170608.good.busco/blast_output/tblastn_Macmini1_20170608.good.busco.tsv...
+INFO	****** Step 2/2, current time: 06/16/2017 17:53:47 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/16/2017 17:53:47 =>	0% of predictions performed (12 to be done)
+INFO	06/16/2017 17:53:47 =>	10% of predictions performed (5/12 candidate proteins)
+INFO	06/16/2017 17:53:47 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.7%[S:0.7%,D:0.0%],F:1.0%,M:98.3%,n:303
+INFO	2 Complete BUSCOs (C)
+INFO	2 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	3 Fragmented BUSCOs (F)
+INFO	298 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 2.861635208129883 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini1_20170608.good.busco/
+

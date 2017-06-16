@@ -5,11 +5,11 @@
 # Summarized benchmarking in BUSCO notation for file /home/jeremias/dev/macpipe_trans/trinity/Macmini2_20170608.Trinity.fasta
 # BUSCO was run in mode: tran
 
-	C:0.3%[S:0.3%,D:0.0%],F:1.7%,M:98.0%,n:303
+	C:0.3%[S:0.3%,D:0.0%],F:1.3%,M:98.4%,n:303
 
 	1	Complete BUSCOs (C)
 	1	Complete and single-copy BUSCOs (S)
 	0	Complete and duplicated BUSCOs (D)
-	5	Fragmented BUSCOs (F)
-	297	Missing BUSCOs (M)
+	4	Fragmented BUSCOs (F)
+	298	Missing BUSCOs (M)
 	303	Total BUSCO groups searched

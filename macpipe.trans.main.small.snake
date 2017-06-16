@@ -50,11 +50,11 @@ FASTQ_DIR = config["fastqdir"]
 
 # A Snakemake regular expression matching the forward mate FASTQ files.
 # we get a list with the names of all the files in the working directory
-SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq'))
+SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq.gz'))
 
 # Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
-PATTERN_R1 = '{sample}_R1.fq'
-PATTERN_R2 = '{sample}_R2.fq'
+PATTERN_R1 = '{sample}_R1.fq.gz'
+PATTERN_R2 = '{sample}_R2.fq.gz'
 
 # Rules -----------------------------------------------------------------------
 
@@ -94,8 +94,8 @@ rule all:
 
 rule trim_and_trinity:
     input:
-        forward  = FASTQ_DIR + "{sample}_R1.fq",
-        reverse  = FASTQ_DIR + "{sample}_R2.fq"
+        forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
+        reverse  = FASTQ_DIR + "{sample}_R2.fq.gz"
     output:
         assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
         log      = expand("logs/trinity/{{sample}}_{T}.shell.log", T=TIMESTAMP)
@@ -129,8 +129,8 @@ rule trim_and_trinity:
 rule run_transrate:
     input:
         assembly =  expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
-        forward  =  FASTQ_DIR + "{sample}_R1.fq",
-        reverse  =  FASTQ_DIR + "{sample}_R2.fq"
+        forward  =  FASTQ_DIR + "{sample}_R1.fq.gz",
+        reverse  =  FASTQ_DIR + "{sample}_R2.fq.gz"
     output:
         expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
         expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
@@ -306,7 +306,6 @@ rule gather_busco:
 rule plot_busco:
     input:
         expand("transrate/summary/{sample}_{T}.contigs.csv", T=TIMESTAMP, sample=SAMPLES),
-        busco_folder      = "busco/summary/",
         transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         normal            = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
         good              = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
@@ -314,7 +313,8 @@ rule plot_busco:
         busco_pdf         = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
         busco_trans_pdf   = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf"
     params:
-        timestamp = TIMESTAMP
+        timestamp = TIMESTAMP,
+        busco_folder      = "busco/summary/"
     script:
         "R/plot_busco_summary.R"
 

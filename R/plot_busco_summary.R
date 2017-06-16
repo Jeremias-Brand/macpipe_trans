@@ -7,7 +7,7 @@ pacman::p_load(dplyr, tidyr, ggplot2, scales)
 
 
 # input_file = 
-busco_folder = snakemake@input[["busco_folder"]] # path to the place where the busco files are stored
+busco_folder = snakemake@params[["busco_folder"]] # path to the place where the busco files are stored
 transrate_summary = snakemake@input[["transrate_summary"]]
 output_folder = busco_folder
 TIMESTAMP = snakemake@params[["timestamp"]]

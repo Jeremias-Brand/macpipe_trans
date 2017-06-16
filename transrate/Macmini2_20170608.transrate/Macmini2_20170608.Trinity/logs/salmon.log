@@ -1,22 +1,22 @@
-[2017-06-08 23:21:35.915] [fileLog] [info] quantification processed 0 fragments so far
+[2017-06-16 17:53:39.911] [fileLog] [info] quantification processed 0 fragments so far
 
-[2017-06-08 23:21:35.916] [fileLog] [info] quantification processed 2130 fragments so far
+[2017-06-16 17:53:39.911] [fileLog] [info] quantification processed 2119 fragments so far
 
-[2017-06-08 23:21:35.943] [jointLog] [info] 
+[2017-06-16 17:53:39.944] [jointLog] [info] 
 
 
 Completed first pass through the alignment file.
-Total # of mapped reads : 2130
-# of uniquely mapped reads : 1919
-# ambiguously mapped reads : 211
+Total # of mapped reads : 2119
+# of uniquely mapped reads : 1923
+# ambiguously mapped reads : 196
 
 
 
-[2017-06-08 23:21:35.957] [jointLog] [info] Computed 405 rich equivalence classes for further processing
-[2017-06-08 23:21:35.957] [jointLog] [info] starting optimizer
-[2017-06-08 23:21:35.958] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
-[2017-06-08 23:21:35.958] [jointLog] [info] iteration = 0 | max rel diff. = 15.1639
-[2017-06-08 23:21:35.971] [jointLog] [info] iteration = 29 | max rel diff. = 0.00959089
-[2017-06-08 23:21:35.971] [jointLog] [info] finished optimizer
-[2017-06-08 23:21:35.974] [jointLog] [info] Sampling alignments; outputting results to ./postSample.bam
+[2017-06-16 17:53:39.957] [jointLog] [info] Computed 375 rich equivalence classes for further processing
+[2017-06-16 17:53:39.957] [jointLog] [info] starting optimizer
+[2017-06-16 17:53:39.958] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2017-06-16 17:53:39.958] [jointLog] [info] iteration = 0 | max rel diff. = 1.84299
+[2017-06-16 17:53:39.961] [jointLog] [info] iteration = 16 | max rel diff. = 0.00987735
+[2017-06-16 17:53:39.961] [jointLog] [info] finished optimizer
+[2017-06-16 17:53:39.966] [jointLog] [info] Sampling alignments; outputting results to ./postSample.bam
 
