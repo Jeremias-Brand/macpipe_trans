@@ -140,13 +140,15 @@ def main():
                         help="""path to config file containing one bait per line, used with -q""")
     parser.add_argument("-T", "--threads", type=int,
                         help="number of threads available for blastn")
-    parser.add_argument("-t", "--timestamp", type=str, required=True,
-                        help="timestamp that will be printed in the outfile")
+    parser.add_argument("-o", "--out", type=str, required=True,
+                        help="Name and location of outfile")
+    parser.add_argument("-v", "--voucher", type=str, required=True,
+                        help="fasta with sequence to which the caught sequences in asseblies will be compared too.")
     args = parser.parse_args()
     """
     Checking what arguments have been supplied and supplying default if needed
     """
-    TIMESTAMP = args.timestamp
+    OUTFILE = args.out
     if(args.threads):
         THREADS = args.threads
     else:
@@ -164,6 +166,7 @@ def main():
     # collect all assemblies in the data folder
     assemblies_abs = glob.glob(assembly_dir + "*Trinity.fasta")
     assemblies = [x.rsplit("/", 1)[1] for x in assemblies_abs]
+    voucher = args.voucher
 
 
     """
@@ -211,10 +214,7 @@ def main():
     """
 
     hits = glob.glob("blast_results/*.fasta")
-    check_multiple_hits_against_db(hits, "dbs/vouchers/Macrostomidae_28S.fasta" ,
-     "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S", threads=THREADS)
-    check_multiple_hits_against_db(hits, "dbs/vouchers/Macrostomidae_4genes_db.fasta" ,
-     "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes", threads=THREADS)
+    check_multiple_hits_against_db(hits, voucher , OUTFILE, threads=THREADS)
 
 
 if __name__ == '__main__':

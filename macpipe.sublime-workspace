@@ -4,140 +4,53 @@
 		"selected_items":
 		[
 			[
+				"FASTQ",
+				"FASTQ_DIR"
+			],
+			[
 				"nu",
-				"numpy	module"
+				"numpy\tmodule"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html",
+			"file": "macpipe.trans.main.small.snake",
 			"settings":
 			{
-				"buffer_size": 283,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html.bku",
-			"settings":
-			{
-				"buffer_size": 433,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/CV.md",
-			"settings":
-			{
-				"buffer_size": 2799,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/CV.css",
-			"settings":
-			{
-				"buffer_size": 14520,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "bd\nsa\nspl\nstyl\nspw\nbrstl\n\nantrumcat\nstyletcat\nhyposperm\n\n",
-			"settings":
-			{
-				"buffer_size": 57,
-				"line_ending": "Unix",
-				"name": "bd"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/base-cv.html",
-			"settings":
-			{
-				"buffer_size": 759,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/main.css",
-			"settings":
-			{
-				"buffer_size": 13429,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
-			"settings":
-			{
-				"buffer_size": 5529,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/page.html",
-			"settings":
-			{
-				"buffer_size": 366,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_static/morphometry.md",
-			"settings":
-			{
-				"buffer_size": 2540,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "macpipe.trans.small_170601.snake",
-			"settings":
-			{
-				"buffer_size": 12061,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "data/trinity.conf.snake",
-			"settings":
-			{
-				"buffer_size": 8257,
+				"buffer_size": 15197,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "config.macpipe.trans.small.yaml",
+			"file": "config.dev.yaml",
 			"settings":
 			{
-				"buffer_size": 943,
+				"buffer_size": 1321,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "macpipe.trans.stamp.small.snake",
+			"file": "scripts/fish_genes.py",
 			"settings":
 			{
-				"buffer_size": 13816,
-				"line_ending": "Unix"
+				"buffer_size": 9075,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "macpipe.trans.small.snake",
+			"contents": "Package Control Messages\n========================\n\nSublimeGit\n----------\n\n  Welcome to SublimeGit\n  =====================\n  \n  SublimeGit is a full-featured, commercial plugin for integrating\n  git into Sublime Text 2 and 3. To read more about it, or purchase\n  a license, go to https://sublimegit.net.\n  \n  \n  Quickstart\n  ----------\n  Make sure to restart Sublime Text after installing SublimeGit.\n  \n  Run the command \"Git: Status\" to open the status view. This\n  is where you'll spend most of the time when interacting with\n  git through SublimeGit. From here you can stage/unstage files,\n  manage stashes, view diffs, and initiate a commit.\n  \n  Other commands are available in the command palette (cmd+shift+p\n  on OS X, ctrl+shift+p on Windows/Linux). They are all prefixed\n  with \"Git:\" and most of them do exactly what it says on the label.\n  \n  \n  Tutorial\n  --------\n  For the full tutorial, go to:\n  \n      https://docs.sublimegit.net/tutorial.html\n  \n  \n  Trouble Getting Started?\n  ------------------------\n  If you are on windows, or don't usually use git from the command\n  line, there might be some things you'll need to set up. Go here\n  for instructions on how to get set up:\n  \n      https://docs.sublimegit.net/quickstart.html\n  \n  \n  Issues, Questions or Bugs?\n  --------------------------\n  Send a mail to support@sublimegit.net, or report it in the issue\n  tracker:\n  \n      https://github.com/SublimeGit/SublimeGit/issues\n",
 			"settings":
 			{
-				"buffer_size": 11760,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "macpipe.trans.small.snake_from_server170601",
-			"settings":
-			{
-				"buffer_size": 12223,
-				"line_ending": "Unix"
+				"buffer_size": 1447,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
@@ -148,10 +61,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": " toggle li",
+		"height": 104.0,
+		"last_filter": "install",
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			],
 			[
 				" toggle li",
 				"SublimeLinter: Toggle Linter"
@@ -189,10 +110,6 @@
 				"Markdown Preview: Preview in Browser"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"inst",
 				"Package Control: Install Package"
 			],
@@ -217,7 +134,7 @@
 				"View: Toggle Menu"
 			]
 		],
-		"width": 401.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -240,8 +157,27 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans"
+	],
 	"file_history":
 	[
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/config.macpipe.trans.small.yaml",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/data/trinity.conf.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/main.css",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.stamp.small.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/base-cv.html",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.small_170601.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_static/morphometry.md",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/page.html",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html.bku",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.small.snake",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/CV.css",
+		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/CV.md",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.small.snake_from_server170601",
 		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/dev/macpipe_trans/macpipe.trans.stamp.small.snake",
 		"/run/user/1000/gvfs/sftp:host=131.152.125.111/home/jeremias/dev/macpipe_trans/config.macpipe.trans.small.yaml",
 		"/media/Shared/Dropbox/Bioinformatics/Reports/macpipe_trans/data/Mcla",
@@ -256,7 +192,6 @@
 		"/media/Shared/Dropbox/Bioinformatics/Reports/28S_2017/commands.txt",
 		"/media/Shared/Dropbox/Bioinformatics/Scripts/Python/hackerrank/30_day_of_code/05-strings.py",
 		"/media/Shared/Dropbox/Bioinformatics/Scripts/dotfiles/alcedo-2017-05-29/.vimrc",
-		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/CV.md",
 		"/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/minimal.html",
 		"/media/Shared/Dropbox/Bioinformatics/GIT/somefile2.py",
 		"/media/Shared/Dropbox/Documents/Courses/2017 Molecular computational evolution/practicals/BPP/ChenLi2001.bpp.ctl",
@@ -321,7 +256,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
@@ -335,6 +270,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"vouch",
+			"\"/\"",
+			"homedir",
+			"transrateDir",
+			"config[\"fastqdir\"]",
 			"???",
 			"NNN+",
 			"\\?+",
@@ -390,7 +330,7 @@
 			"Cluster",
 			"adaptors",
 			">",
-			"				",
+			"\t\t\t\t",
 			">",
 			"GATTTAAAAATTGCGCTGTTTTTTCCTTCTTTAACATTTTCATCAAACCATGCAGAATAGTGCCCCCTGC",
 			"keys",
@@ -442,381 +382,65 @@
 	"groups":
 	[
 		{
-			"selected": 14,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html",
+					"file": "macpipe.trans.main.small.snake",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 283,
+						"buffer_size": 15197,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								48,
-								48
+								8581,
+								8581
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3841.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 2,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
 				{
 					"buffer": 1,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/CV.html.bku",
+					"file": "config.dev.yaml",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 433,
+						"buffer_size": 1321,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15,
-								15
+								553,
+								553
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/CV.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2799,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								29,
-								29
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/CV.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 14520,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2166,
-								2166
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2109.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 57,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								57,
-								57
-							]
-						],
-						"settings":
-						{
-							"auto_name": "bd",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/base-cv.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 759,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								109,
-								109
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/css/main.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13429,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3793,
-								3793
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_config.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5529,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_layouts/page.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 366,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								59,
-								59
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/media/Shared/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/_static/morphometry.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2540,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2539,
-								2539
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "macpipe.trans.small_170601.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12061,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								337,
-								337
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "data/trinity.conf.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8257,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 513.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "config.macpipe.trans.small.yaml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 943,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.sublime-syntax"
+							"syntax": "Packages/AcademicMarkdown/AcademicYaml.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -826,99 +450,63 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "macpipe.trans.stamp.small.snake",
+					"buffer": 2,
+					"file": "scripts/fish_genes.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13816,
+						"buffer_size": 9075,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								9075,
+								9075
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"syntax": "Packages/Python/Python.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3780.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1447,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								305,
+								305
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "macpipe.trans.small.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11760,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4416,
-								4416
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2641.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 0,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 15,
-					"file": "macpipe.trans.small.snake_from_server170601",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12223,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2086,
-								2086
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1501.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -980,6 +568,18 @@
 		"selected_items":
 		[
 			[
+				"fis",
+				"scripts\\fish_genes.py"
+			],
+			[
+				"con",
+				"config.dev.yaml"
+			],
+			[
+				"macpie.tra",
+				"macpipe.trans.main.small.snake"
+			],
+			[
 				"",
 				"~/Dropbox/Documents/Courses/Molecular_Computational_Evolution/Notes_Computational_Biology.md"
 			],
@@ -1016,14 +616,14 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 241.0,
 	"status_bar_visible": true,
 	"template_settings":

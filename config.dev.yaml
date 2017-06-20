@@ -7,7 +7,9 @@ homedir:        "/home/jeremias/dev/macpipe_trans/"
 # where the fastas for the fish_genes.py step are stored
 voucher_dir:    "/home/jeremias/dbs/vouchers/"
 # list with one file name per line selecting vouchers in voucher_dir
-vouchers:       "vouchers.config"   
+vouchers:       "vouchers.config"
+ref_4genes:     "/home/jeremias/dbs/vouchers/Macrostomidae_4genes_db.fasta"
+ref_28S:        "/home/jeremias/dbs/vouchers/Macrostomidae_28S.fasta"
 # path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
 py3:            "/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
@@ -20,6 +22,7 @@ BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
 # path to BUSCO plotting function
 BUSCO_p:        "/home/jeremias/soft/busco/BUSCO_plot.py"
 # parameters
+trim_adapter: "2:40:15"
 trim_leading:   "30"
 trim_trailing:  "30"
 trim_minlength: "25"

@@ -35,18 +35,28 @@ def save_mkdir( dirs ):
 			os.mkdir(d)
 			print("Creating directory: " + d)
 
+def check_trailing_slash( path ):
+    if path[-1] != "/":
+        path = path + "/"
+    return path
 
 dirs = ["logs", "logs/trinity", "logs/transrate",
         "logs/rcorrector", "trinity", "transrate",
         "transrate/summary", "busco", "logs/busco"]
 save_mkdir(dirs)
 
+
 # Globals ---------------------------------------------------------------------
 
 # define global things here
 
 # Full path to a folder that holds all of your FASTQ files.
-FASTQ_DIR = config["fastqdir"]
+FASTQ_DIR = check_trailing_slash(config["fastqdir"])
+# loads all of the path into variable
+TRANSRATE_DIR = check_trailing_slash(config["transrateDir"])
+HOME_DIR = check_trailing_slash(config["homedir"])
+VOUCHER_DIR = check_trailing_slash(config["voucher_dir"])
+
 
 # A Snakemake regular expression matching the forward mate FASTQ files.
 # we get a list with the names of all the files in the working directory
@@ -55,6 +65,8 @@ SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq.gz'))
 # Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
 PATTERN_R1 = '{sample}_R1.fq.gz'
 PATTERN_R2 = '{sample}_R2.fq.gz'
+
+
 
 # Rules -----------------------------------------------------------------------
 
@@ -84,8 +96,7 @@ rule all:
 #     log:
 #     	"logs/rcorrector/{sample}.log"
 #     params:
-#         outdir = config["fastqdir"]
-#     shell:
+#         outdir = FASTQ_DIR
 #         """
 #         ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
 #         -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
@@ -103,8 +114,9 @@ rule trim_and_trinity:
         expand("logs/trinity/{{sample}}_{T}.log", T=TIMESTAMP)
     params:
         adapters =  config["adapters_fasta"],
-        outdir   =  config["fastqdir"],
+        outdir   =  FASTQ_DIR,
         trinity  =  config["trinity"],
+        trim_adapter = config["trim_adapter"]
         leading  =  config["trim_leading"],
         trailing  =  config["trim_trailing"],
         minlength  =  config["trim_minlength"]
@@ -120,7 +132,7 @@ rule trim_and_trinity:
         --left   {input.forward}  \
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 \
-        --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:2:40:15 LEADING:{params.leading} TRAILING:{params.trailing} MINLEN:{params.minlength}' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
+        --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:{params.trim_adapter} LEADING:{params.leading} TRAILING:{params.trailing} MINLEN:{params.minlength}' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
         mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}
         """
@@ -138,9 +150,9 @@ rule run_transrate:
     log:
     	expand("logs/transrate/{{sample}}_{T}.log", T=TIMESTAMP)
     params:
-        transDir  =  config["transrateDir"],
-        dataDir   =  config["fastqdir"],
-        homeDir   =  config["homedir"],
+        transDir  =  TRANSRATE_DIR,
+        dataDir   =  FASTQ_DIR,
+        homeDir   =  HOME_DIR,
         transrate =  config["transrate"]
     threads: 28
     shell:
@@ -200,19 +212,26 @@ rule fish_4_genes:
     input:
         assemblies = expand("trinity/{sample}_{T}.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP),
         assembly_dir = "trinity/",
-        voucher_dir = config["voucher_dir"],
+        voucher_dir = VOUCHER_DIR,
         vouchers    = config["vouchers"],
+        one = config["ref_4genes"],
+        four = config["ref_28S"]
     output:
-        "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
-        "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S"
+        one = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S",
+        four ="blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes"
     params:
         timestamp = TIMESTAMP 
     threads: 12 
     shell:
         """
-        python3 scripts/fish_genes.py -a {input.assembly_dir} \
-            -q {input.voucher_dir} \
-            -c {input.vouchers} -T {threads} -t {params.timestamp}
+        python3 scripts/fish_genes.py \
+            -a {input.assembly_dir} \
+            -q {input.voucher_dir} -c {input.vouchers} \
+            -v {output.one} -T {threads} \
+            -o {output.one} &&  python3 scripts/fish_genes.py \
+            -a {input.assembly_dir} \
+            -q {input.voucher_dir} -c {input.vouchers} \
+            -v {output.four} -T {threads} -o {output.four} 
 
         """
 
@@ -233,12 +252,12 @@ rule busco:
     input:
         assembly =   expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
-        out      =   expand(config["homedir"] + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP)
+        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP)
     params:
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],
         BuscoLib =   config["BuscoLib"],
-        homedir  =   config["homedir"],
+        homedir  =   HOME_DIR
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.log", T=TIMESTAMP)
@@ -260,14 +279,14 @@ rule busco_on_transrate:
     input:
         assembly =   expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
-        out      =   expand(config["homedir"] + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP),
+        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP),
         outass   =   expand("trinity/{{sample}}_{T}_transrate_optimized.Trinity.fasta", T=TIMESTAMP)
     params:
-        outdir   =   config["homedir"] + "busco/",
+        outdir   =   HOME_DIR + "busco/",
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],
         BuscoLib =   config["BuscoLib"],
-        homedir  =   config["homedir"],
+        homedir  =   HOME_DIR
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.good.log", T=TIMESTAMP)
@@ -290,8 +309,8 @@ rule gather_busco:
     # move all transrate results to same folder for easier summary later
     # we do not need the expand statement here because plot busco will just call this function many times
     input:
-        normal   = expand(config["homedir"] + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
-        good     = expand(config["homedir"] + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
+        normal   = expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
+        good     = expand(HOME_DIR + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
     output:
         normal   = expand("busco/summary/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
         good     = expand("busco/summary/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
