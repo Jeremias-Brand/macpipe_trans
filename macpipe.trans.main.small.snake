@@ -116,7 +116,7 @@ rule trim_and_trinity:
         adapters =  config["adapters_fasta"],
         outdir   =  FASTQ_DIR,
         trinity  =  config["trinity"],
-        trim_adapter = config["trim_adapter"]
+        trim_adapter = config["trim_adapter"],
         leading  =  config["trim_leading"],
         trailing  =  config["trim_trailing"],
         minlength  =  config["trim_minlength"]
@@ -214,8 +214,8 @@ rule fish_4_genes:
         assembly_dir = "trinity/",
         voucher_dir = VOUCHER_DIR,
         vouchers    = config["vouchers"],
-        one = config["ref_4genes"],
-        four = config["ref_28S"]
+        one = config["ref_28S"],
+        four = config["ref_4genes"]
     output:
         one = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S",
         four ="blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes"
@@ -227,11 +227,11 @@ rule fish_4_genes:
         python3 scripts/fish_genes.py \
             -a {input.assembly_dir} \
             -q {input.voucher_dir} -c {input.vouchers} \
-            -v {output.one} -T {threads} \
+            -v {input.one} -T {threads} \
             -o {output.one} &&  python3 scripts/fish_genes.py \
             -a {input.assembly_dir} \
             -q {input.voucher_dir} -c {input.vouchers} \
-            -v {output.four} -T {threads} -o {output.four} 
+            -v {input.four} -T {threads} -o {output.four} 
 
         """
 
