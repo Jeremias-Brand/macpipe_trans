@@ -1,17 +1,17 @@
             assembly_name_stats            category percentage
-1   Macmini1_20170608 273 0.073     complete_single        0.7
-2   Macmini2_20170608 274 0.087     complete_single        0.3
+1   Macmini1_20170608 270 0.074     complete_single        0.7
+2   Macmini2_20170608 268 0.093     complete_single        0.3
 3  good.Macmini1_20170608 NA NA     complete_single        0.7
 4  good.Macmini2_20170608 NA NA     complete_single        0.3
-5   Macmini1_20170608 273 0.073 complete_dublicated        0.0
-6   Macmini2_20170608 274 0.087 complete_dublicated        0.0
+5   Macmini1_20170608 270 0.074 complete_dublicated        0.0
+6   Macmini2_20170608 268 0.093 complete_dublicated        0.0
 7  good.Macmini1_20170608 NA NA complete_dublicated        0.0
 8  good.Macmini2_20170608 NA NA complete_dublicated        0.0
-9   Macmini1_20170608 273 0.073          fragmented        1.0
-10  Macmini2_20170608 274 0.087          fragmented        1.3
+9   Macmini1_20170608 270 0.074          fragmented        1.0
+10  Macmini2_20170608 268 0.093          fragmented        1.7
 11 good.Macmini1_20170608 NA NA          fragmented        1.0
-12 good.Macmini2_20170608 NA NA          fragmented        1.3
-13  Macmini1_20170608 273 0.073             missing       98.3
-14  Macmini2_20170608 274 0.087             missing       98.4
+12 good.Macmini2_20170608 NA NA          fragmented        1.7
+13  Macmini1_20170608 270 0.074             missing       98.3
+14  Macmini2_20170608 268 0.093             missing       98.0
 15 good.Macmini1_20170608 NA NA             missing       98.3
-16 good.Macmini2_20170608 NA NA             missing       98.4
+16 good.Macmini2_20170608 NA NA             missing       98.0

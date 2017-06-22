@@ -1,0 +1,6 @@
+Loading index from directory... 0s.  222305 bases, seed size 23
+Aligning.
+Total Reads    Aligned, MAPQ >= 10    Aligned, MAPQ < 10     Unaligned              Too Short/Too Many Ns  %Pairs	Reads/s   Time in Aligner (s)
+20,000         3,501 (17.50%)         392 (1.96%)            16,095 (80.47%)        12 (0.06%)             17.82%%	39,603    1
+Welcome to SNAP version 1.0beta.18.
+

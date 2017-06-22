@@ -3,3 +3,20 @@ Statistics:
 Trinity Version:      v2.2.0
 Compiler:             GCC
 Trinity Parameters:   --seqType fq --trimmomatic --CPU 14 --max_memory 150G --output trinity/Macmini1_20170608.trinity --left /home/jeremias/dev/macpipe_trans/data/Macmini1_R1.fq.gz --right /home/jeremias/dev/macpipe_trans/data/Macmini1_R2.fq.gz --normalize_reads --normalize_max_read_cov 30 --quality_trimming_params ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:30 TRAILING:30 MINLEN:25
+Paired mode
+ Input data
+  Left.fasta    1 MByte
+  Right.fasta   1 MByte
+  Number of unique KMERs: 933189
+  Number of reads:        0 Output data
+  Trinity.fasta 0 MByte
+
+Runtime
+=======
+Start:       Tue Jun 20 16:03:08 CEST 2017
+End:         Tue Jun 20 16:08:24 CEST 2017
+Trinity   316 seconds
+  Inchworm   55 seconds
+  Chrysalis  19 seconds
+  Butterfly  0 seconds
+  Rest       242 seconds
