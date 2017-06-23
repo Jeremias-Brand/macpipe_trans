@@ -1,0 +1,393 @@
+"""
+Author: J. Brand
+Affiliation: Unibas
+Aim: Workflow for transcriptome assembly, annotation and assessment
+Date: 20. Nov. 2016
+Run: snakemake   -s Snakefile
+Latest modification:
+  - add more flexible input
+  - add reporting
+  - add checks for gzip
+  - integrate gzip of intermediate results
+  - add a block to run if fail or succeed
+  - add evironment file for bioconda
+  - plotting of busco automated
+  - move transcriptomes to better places
+  - add trinity version to software.versions file
+"""
+# import statements
+from snakemake.utils import report
+from os.path import join
+import os
+import time
+
+
+# Uses a yaml file as input
+configfile: "config.dev.yaml"
+
+# Preparation------------------------------------------------------------------
+#TIMESTAMP = time.strftime("%Y%m%d")
+TIMESTAMP = "soap_20170623"
+# check if the necessary dirs exist and if not creates them
+def save_mkdir( dirs ):
+	for d in dirs:
+		if not os.path.isdir(d):
+			os.mkdir(d)
+			print("Creating directory: " + d)
+
+def check_trailing_slash( path ):
+    if path[-1] != "/":
+        path = path + "/"
+    return path
+
+dirs = ["logs", "logs/trinity", "logs/transrate",
+        "logs/rcorrector", "trinity", "transrate",
+        "transrate/summary", "busco", "logs/busco", "soap"]
+save_mkdir(dirs)
+
+
+# Globals ---------------------------------------------------------------------
+
+# define global things here
+
+# Full path to a folder that holds all of your FASTQ files.
+FASTQ_DIR = check_trailing_slash(config["fastqdir"])
+# loads all of the path into variable
+TRANSRATE_DIR = check_trailing_slash(config["transrateDir"])
+HOME_DIR = check_trailing_slash(config["homedir"])
+VOUCHER_DIR = check_trailing_slash(config["voucher_dir"])
+
+
+# A Snakemake regular expression matching the forward mate FASTQ files.
+# we get a list with the names of all the files in the working directory
+SAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq.gz'))
+
+# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
+PATTERN_R1 = '{sample}_R1.fq.gz'
+PATTERN_R2 = '{sample}_R2.fq.gz'
+
+
+
+# Rules -----------------------------------------------------------------------
+
+
+
+rule all:
+    input:
+        "report_" + TIMESTAMP + ".html"
+
+# This is a template script to run trinity
+# Using a JSON file as input will be better
+# Sample is a wildcard equivalent to .+
+# rule All: # this top rule is here to define the goal of the script
+#     input:
+#         "{sample}trinotate_annotation_report.xls"
+#     log:"snakemake.report.log"
+
+# TODO software version printout and link to report
+
+# rule run_rcorrector:
+#     input:
+#         forward = join(FASTQ_DIR, PATTERN_R1),
+#         reverse = join(FASTQ_DIR, PATTERN_R2)
+#     output:
+#         FASTQ_DIR + "{sample}_R1.cor.fq",
+#         FASTQ_DIR + "{sample}_R2.cor.fq"
+#     log:
+#     	"logs/rcorrector/{sample}.log"
+#     params:
+#         outdir = FASTQ_DIR
+#         """
+#         ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
+#         -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
+#         """
+rule trim_and_soap:
+    input:
+        forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
+        reverse  = FASTQ_DIR + "{sample}_R2.fq.gz"
+    output:
+        assembly = expand("soap/{{sample}}_{T}.scafSeq", T=TIMESTAMP),
+        log      = expand("logs/soap/{{sample}}_{T}.shell.log", T=TIMESTAMP),
+        config   = expand("soap/{{sample}}_{T}.config", T=TIMESTAMP)
+    log:
+        expand("logs/soap/{{sample}}_{T}.log", T=TIMESTAMP)
+    params:
+        T = TIMESTAMP 
+    threads: 14
+    shell:
+        # calculating the RPKM leads to seg fault
+        """
+        cp template_soap.config {output.config}
+        echo q1={input.forward} >> {output.config}
+        echo q2={input.reverse} >> {output.config}
+        SOAPdenovo-31mer all -s {output.config}  -K 31 -p {threads} -o soap/{wildcards.sample}_{params.T} &> {output.log} 
+        """        
+
+
+
+
+rule run_transrate:
+    input:
+        assembly = expand("soap/{{sample}}_{T}.scafSeq", T=TIMESTAMP),
+        forward  =  FASTQ_DIR + "{sample}_R1.fq.gz",
+        reverse  =  FASTQ_DIR + "{sample}_R2.fq.gz"
+    output:
+        expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}/good.{{sample}}_{T}.scafSeq", T=TIMESTAMP),
+        expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
+        expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}/contigs.csv", T=TIMESTAMP)
+    log:
+    	expand("logs/transrate/{{sample}}_{T}.log", T=TIMESTAMP)
+    params:
+        transDir  =  TRANSRATE_DIR,
+        dataDir   =  FASTQ_DIR,
+        homeDir   =  HOME_DIR,
+        transrate =  config["transrate"]
+    threads: 28
+    shell:
+        """
+        {params.transrate} --assembly {params.homeDir}{input.assembly} \
+        --output {params.transDir}{wildcards.sample}_{TIMESTAMP}.transrate \
+        --threads {threads} \
+        --left {input.forward} \
+        --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
+        """
+
+
+rule gather_transrate:
+    # move all transrate results to same folder for easier summary later
+    # First I used the same wildcard input output names for this rule as I did
+    # for the gather busco rule but that somehow caused it not to be plotted in the
+    # dag. More of a cosmetic issue.
+    input:
+        a = expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
+        c  = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}/contigs.csv", T=TIMESTAMP)
+    output:
+        a = expand("transrate/summary/{{sample}}_{T}.assemblies.csv", T=TIMESTAMP),
+        c = expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
+    shell:
+        """
+        cp {input.a} {output.a}
+        cp {input.c}  {output.c}
+
+        """
+
+
+        # assembly = "transrate/summary/" + TIMESTAMP + "assemblies.csv"
+
+# Here the assemblies are being summarized and we need to expanda list
+rule summarize_transrate_assembly:
+    input:
+        expand("transrate/summary/{sample}_{T}.assemblies.csv",sample=SAMPLES, T=TIMESTAMP)
+    output:
+        "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv"
+    run:
+        assemblies = input
+        #generate first line we need in outfile:
+        with open(output[0], "w") as outfile:
+            with open(assemblies[0], "r") as infile:
+                lines = infile.readlines()
+                outfile.write(lines[0])
+
+        # now we open the outfile in appending mode to add all the results
+        with open(output[0], "a") as outfile:
+            for assembly in assemblies:
+                with open(assembly, "r") as infile:
+                    lines = infile.readlines()
+                    outfile.write(lines[1])
+
+
+rule fish_4_genes:
+    input:
+        assemblies = expand("soap/{sample}_{T}.scafSeq", sample=SAMPLES, T=TIMESTAMP),
+        assembly_dir = "soap/",
+        voucher_dir = VOUCHER_DIR,
+        vouchers    = config["vouchers"],
+        one = config["ref_28S"],
+        four = config["ref_4genes"]
+    output:
+        one = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S",
+        four ="blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes"
+    params:
+        timestamp = TIMESTAMP 
+    threads: 12 
+    shell:
+        """
+        python3 scripts/fish_genes.py \
+            -a {input.assembly_dir} \
+            -q {input.voucher_dir} -c {input.vouchers} \
+            -v {input.one} -T {threads} \
+            -o {output.one} &&  python3 scripts/fish_genes.py \
+            -a {input.assembly_dir} \
+            -q {input.voucher_dir} -c {input.vouchers} \
+            -v {input.four} -T {threads} -o {output.four} 
+
+        """
+
+# transrate plotting
+# TODO change locations of file to something sensible
+# ownimgg directory?
+rule plot_transrate_contigs:
+    input:
+        expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
+    output:
+        expand("{{sample}}_{T}.png", T=TIMESTAMP)
+    script:
+        "R/contigs.plot.R"
+
+
+# add busco rule
+rule busco:
+    input:
+        assembly =   expand("soap/{{sample}}_{T}.scafSeq", T=TIMESTAMP)
+    output:
+        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP)
+    params:
+        py3      =   config["py3"],
+        BUSCO    =   config["BUSCO"],
+        BuscoLib =   config["BuscoLib"],
+        homedir  =   HOME_DIR
+    threads: 14
+    log:
+        expand("logs/busco/{{sample}}_{T}.log", T=TIMESTAMP)
+    shell:
+        # cd {params.outdir}
+        """
+        {params.py3}  {params.BUSCO} -f \
+                -i {params.homedir}{input.assembly} \
+                -o {wildcards.sample}_{TIMESTAMP}.busco              \
+                -l  {params.BuscoLib}    \
+                -m  tran -c {threads} &>> {log} && \
+        mv  run_{wildcards.sample}_{TIMESTAMP}.busco  busco/
+
+        """
+
+
+rule busco_on_transrate:
+    # run busco on transrate optimized assembly
+    input:
+        assembly =   expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}/good.{{sample}}_{T}.scafSeq", T=TIMESTAMP)
+    output:
+        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP),
+        outass   =   expand("soap/{{sample}}_{T}_transrate_optimized.scafSeq", T=TIMESTAMP)
+    params:
+        outdir   =   HOME_DIR + "busco/",
+        py3      =   config["py3"],
+        BUSCO    =   config["BUSCO"],
+        BuscoLib =   config["BuscoLib"],
+        homedir  =   HOME_DIR
+    threads: 14
+    log:
+        expand("logs/busco/{{sample}}_{T}.good.log", T=TIMESTAMP)
+    # I move the assessed transrate assembly over to the trinity folder
+    shell:
+        # cd {params.outdir}
+        """
+        {params.py3}  {params.BUSCO} -f \
+                -i {params.homedir}{input.assembly} \
+                -o {wildcards.sample}_{TIMESTAMP}.good.busco              \
+                -l  {params.BuscoLib}    \
+                -m  tran -c {threads} &>> {log} && \
+        mv  run_{wildcards.sample}_{TIMESTAMP}.good.busco  busco/ && \
+        mv {input.assembly} {output.outass}
+        """
+
+
+# TODO rule decision on assembly
+rule gather_busco:
+    # move all transrate results to same folder for easier summary later
+    # we do not need the expand statement here because plot busco will just call this function many times
+    input:
+        normal   = expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
+        good     = expand(HOME_DIR + "busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
+    output:
+        normal   = expand("busco/summary/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
+        good     = expand("busco/summary/short_summary_{{sample}}_{T}.good.busco.txt", T=TIMESTAMP)
+    shell:
+        """
+        cp {input.normal} {output.normal}
+        cp {input.good}   {output.good}
+
+        """
+
+
+rule plot_busco:
+    input:
+        expand("transrate/summary/{sample}_{T}.contigs.csv", T=TIMESTAMP, sample=SAMPLES),
+        transrate_summary = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
+        normal            = expand("busco/summary/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
+        good              = expand("busco/summary/short_summary_{sample}_{T}.good.busco.txt", sample=SAMPLES, T=TIMESTAMP)
+    output:
+        busco_pdf         = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        busco_trans_pdf   = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf"
+    params:
+        timestamp = TIMESTAMP,
+        busco_folder      = "busco/summary/"
+    script:
+        "R/plot_busco_summary.R"
+
+
+# TODO rename assembly headers
+# TODO
+# add plotting for BUSCO
+# The default plotting does not work and we have to add
+# options(bitmapType='cairo')
+# at the beginning of the script. -.-
+rule versions:
+    output:
+        log         = "logs/run_" + TIMESTAMP + "_software.versions"
+    params:
+        trinity     = config["trinity"],
+        transrate   = config["transrate"],
+        BUSCO       = config["BUSCO"],
+        time        = TIMESTAMP
+    shell:
+        """
+        echo "These are the versions of software used for run: {params.time}" &>> {output.log}
+        date  &>> {output.log}
+        python --version &>> {output.log}
+        hmmscan -h | grep -E '^\#\ H' &>> {output.log}
+        blastn -h | grep Nucleotide &>> {output.log}
+        embossversion &>> {output.log}
+        echo "perl version: " &>> {output.log}
+        perl -e 'print $];' &>> {output.log}
+        {params.BUSCO} --version &>> {output.log}
+        echo "transrate version:" {params.transrate} --version &>> {output.log}
+        echo {params.trinity}  >> {output.log}
+        """
+
+
+# TODO report file should contain:
+# plot of coverage
+# busco and transrate stats
+# software versions
+# timestamp
+rule report:
+    input:
+        busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
+        busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
+        transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
+        assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
+        versions            = "logs/run_" + TIMESTAMP + "_software.versions",
+        fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
+        fish_28S            = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S"
+    output:
+        report_name         = "report_" + TIMESTAMP + ".html"
+    run:
+        from snakemake.utils import report
+        run_name = TIMESTAMP 
+        report(""" 
+        Results of the macpipe_trans run for transcriptome assembly and assessment.
+        Run timestamp/ID: {run_name}
+        """, output[0], **input)
+        
+
+
+# Finishing up --------------------------------------------------------------
+onsuccess:
+    print("Workflow finished, no error")
+onerror:
+    print("An error occurred with the snakemake run")
+    # here it would be good to include timstamping
+    shell("mail -s 'Error in Snakemake run' jeremias.brand@unibas.ch < {log}")
+
+# TODO add separate snakefile for annotation
