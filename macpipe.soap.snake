@@ -101,10 +101,31 @@ rule all:
 #         ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
 #         -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
 #         """
-rule trim_and_soap:
+rule trimmomatic:
     input:
         forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
         reverse  = FASTQ_DIR + "{sample}_R2.fq.gz"
+    output:
+        forward_trimmed  = FASTQ_DIR + "{sample}_R1_trim.fq.gz",
+        reverse_trimmed  = FASTQ_DIR + "{sample}_R2_trim.fq.gz"
+    log:
+    params:
+        sample_name = FASTQ_DIR + "{sample}",
+        adapters = config["adapters_fasta"]
+    threads:
+    shell:
+    """
+    trimmomatic-0.36.jar PE \
+    {input.forward} {input.reverse} \
+    {params.sample_name}_R1_trim.fq.gz {params.sample_name}_R1_unpaired.fq.gz \
+    {params.sample_name}_R2_trim.fq.gz {params.sample_name}_R2_unpaired.fq.gz \
+    ILLUMINACLIP:"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+    """
+
+rule soap_on_trimmed:
+    input:
+        forward_trimmed  = FASTQ_DIR + "{sample}_R1_trim.fq.gz",
+        reverse_trimmed  = FASTQ_DIR + "{sample}_R2_trim.fq.gz"
     output:
         assembly = expand("soap/{{sample}}_{T}.scafSeq", T=TIMESTAMP),
         log      = expand("logs/soap/{{sample}}_{T}.shell.log", T=TIMESTAMP),
