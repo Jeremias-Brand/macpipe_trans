@@ -101,6 +101,7 @@ rule all:
 #         ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \
 #         -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}
 #         """
+
 rule trimmomatic:
     input:
         forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
@@ -111,16 +112,19 @@ rule trimmomatic:
     log:
     params:
         sample_name = FASTQ_DIR + "{sample}",
-        adapters = config["adapters_fasta"]
-    threads:
+        adapters = config["adapters_fasta"],
+        trimmomatic_string = config["trimmomatic_string"]
+    threads: 14
     shell:
-    """
-    trimmomatic-0.36.jar PE \
-    {input.forward} {input.reverse} \
-    {params.sample_name}_R1_trim.fq.gz {params.sample_name}_R1_unpaired.fq.gz \
-    {params.sample_name}_R2_trim.fq.gz {params.sample_name}_R2_unpaired.fq.gz \
-    ILLUMINACLIP:"/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-    """
+        """
+        trimmomatic-0.36.jar PE -threads {threads}\
+        {input.forward} {input.reverse} \
+        {params.sample_name}_R1_trim.fq.gz {params.sample_name}_R1_unpaired.fq.gz \
+        {params.sample_name}_R2_trim.fq.gz {params.sample_name}_R2_unpaired.fq.gz \
+        ILLUMINACLIP:{params.adapters}{params.trimmomatic_string}
+        """
+#:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+ 
 
 rule soap_on_trimmed:
     input:
@@ -139,8 +143,8 @@ rule soap_on_trimmed:
         # calculating the RPKM leads to seg fault
         """
         cp template_soap.config {output.config}
-        echo q1={input.forward} >> {output.config}
-        echo q2={input.reverse} >> {output.config}
+        echo q1={input.forward_trimmed} >> {output.config}
+        echo q2={input.reverse_trimmed} >> {output.config}
         SOAPdenovo-31mer all -s {output.config}  -K 31 -p {threads} -o soap/{wildcards.sample}_{params.T} &> {output.log} 
         """        
 

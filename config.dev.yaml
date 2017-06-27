@@ -22,6 +22,7 @@ BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
 # path to BUSCO plotting function
 BUSCO_p:        "/home/jeremias/soft/busco/BUSCO_plot.py"
 # parameters
+trimmomatic_string: ":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
 trim_adapter: "2:40:15"
 trim_leading:   "30"
 trim_trailing:  "30"

@@ -39,3 +39,471 @@ INFO	303 Total BUSCO groups searched
 INFO	BUSCO analysis done. Total running time: 4.255456209182739 seconds
 INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
 
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 20:55:32 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 20:55:32 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 20:55:33
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_4067964857
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.0452311 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 20:55:36 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 20:55:36 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 20:55:36 =>	10% of predictions performed (14/16 candidate proteins)
+INFO	06/26/2017 20:55:36 =>	20% of predictions performed (14/16 candidate proteins)
+INFO	06/26/2017 20:55:36 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 4.05492377281189 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 20:57:32 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 20:57:32 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 20:57:32
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_1572249859
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.0229621 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 20:57:35 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 20:57:35 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 20:57:35 =>	10% of predictions performed (3/16 candidate proteins)
+INFO	06/26/2017 20:57:35 =>	20% of predictions performed (4/16 candidate proteins)
+INFO	06/26/2017 20:57:35 =>	30% of predictions performed (6/16 candidate proteins)
+INFO	06/26/2017 20:57:35 =>	40% of predictions performed (9/16 candidate proteins)
+INFO	06/26/2017 20:57:35 =>	50% of predictions performed (9/16 candidate proteins)
+INFO	06/26/2017 20:57:35 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.331880807876587 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 21:02:02 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 21:02:02 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 21:02:02
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_2035626783
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.020272 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 21:02:05 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 21:02:06 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 21:02:06 =>	10% of predictions performed (2/16 candidate proteins)
+INFO	06/26/2017 21:02:06 =>	20% of predictions performed (4/16 candidate proteins)
+INFO	06/26/2017 21:02:06 =>	30% of predictions performed (10/16 candidate proteins)
+INFO	06/26/2017 21:02:06 =>	40% of predictions performed (11/16 candidate proteins)
+INFO	06/26/2017 21:02:06 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.3388705253601074 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 21:08:38 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 21:08:38 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 21:08:38
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_2034429201
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.021816 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 21:08:41 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 21:08:41 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 21:08:41 =>	10% of predictions performed (2/16 candidate proteins)
+INFO	06/26/2017 21:08:41 =>	20% of predictions performed (8/16 candidate proteins)
+INFO	06/26/2017 21:08:41 =>	30% of predictions performed (12/16 candidate proteins)
+INFO	06/26/2017 21:08:41 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.3032779693603516 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 21:09:39 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 21:09:39 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 21:09:39
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_2166888537
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.022553 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 21:09:42 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 21:09:43 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 21:09:43 =>	10% of predictions performed (9/16 candidate proteins)
+INFO	06/26/2017 21:09:43 =>	20% of predictions performed (6/16 candidate proteins)
+INFO	06/26/2017 21:09:43 =>	30% of predictions performed (11/16 candidate proteins)
+INFO	06/26/2017 21:09:43 =>	40% of predictions performed (11/16 candidate proteins)
+INFO	06/26/2017 21:09:43 =>	50% of predictions performed (10/16 candidate proteins)
+INFO	06/26/2017 21:09:43 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.4299628734588623 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/26/2017 21:10:53 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/26/2017 21:10:53 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/26/2017 21:10:53
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_145613859
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.022294 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/26/2017 21:10:57 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/26/2017 21:10:57 =>	0% of predictions performed (16 to be done)
+INFO	06/26/2017 21:10:57 =>	10% of predictions performed (2/16 candidate proteins)
+INFO	06/26/2017 21:10:57 =>	20% of predictions performed (4/16 candidate proteins)
+INFO	06/26/2017 21:10:57 =>	30% of predictions performed (9/16 candidate proteins)
+INFO	06/26/2017 21:10:57 =>	40% of predictions performed (9/16 candidate proteins)
+INFO	06/26/2017 21:10:57 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.6221113204956055 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/27/2017 09:09:49 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/27/2017 09:09:49 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/27/2017 09:09:49
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_1403469308
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.022723 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/27/2017 09:09:52 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/27/2017 09:09:52 =>	0% of predictions performed (16 to be done)
+INFO	06/27/2017 09:09:52 =>	10% of predictions performed (4/16 candidate proteins)
+INFO	06/27/2017 09:09:52 =>	20% of predictions performed (6/16 candidate proteins)
+INFO	06/27/2017 09:09:52 =>	30% of predictions performed (7/16 candidate proteins)
+INFO	06/27/2017 09:09:52 =>	40% of predictions performed (10/16 candidate proteins)
+INFO	06/27/2017 09:09:52 =>	50% of predictions performed (11/16 candidate proteins)
+INFO	06/27/2017 09:09:53 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.6295437812805176 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/27/2017 09:22:39 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/27/2017 09:22:39 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/27/2017 09:22:39
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_2761638380
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.017678 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/27/2017 09:22:42 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/27/2017 09:22:42 =>	0% of predictions performed (16 to be done)
+INFO	06/27/2017 09:22:42 =>	10% of predictions performed (2/16 candidate proteins)
+INFO	06/27/2017 09:22:42 =>	20% of predictions performed (4/16 candidate proteins)
+INFO	06/27/2017 09:22:42 =>	30% of predictions performed (9/16 candidate proteins)
+INFO	06/27/2017 09:22:42 =>	40% of predictions performed (9/16 candidate proteins)
+INFO	06/27/2017 09:22:42 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.610203504562378 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/27/2017 09:23:06 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/27/2017 09:23:06 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/27/2017 09:23:06
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_4013712853
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.0127728 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/27/2017 09:23:09 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/27/2017 09:23:09 =>	0% of predictions performed (16 to be done)
+INFO	06/27/2017 09:23:09 =>	10% of predictions performed (4/16 candidate proteins)
+INFO	06/27/2017 09:23:09 =>	20% of predictions performed (5/16 candidate proteins)
+INFO	06/27/2017 09:23:09 =>	30% of predictions performed (8/16 candidate proteins)
+INFO	06/27/2017 09:23:09 =>	40% of predictions performed (7/16 candidate proteins)
+INFO	06/27/2017 09:23:09 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.5878875255584717 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/27/2017 09:23:39 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/27/2017 09:23:39 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/27/2017 09:23:39
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_4232876409
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.0138979 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/27/2017 09:23:43 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/27/2017 09:23:43 =>	0% of predictions performed (16 to be done)
+INFO	06/27/2017 09:23:43 =>	10% of predictions performed (2/16 candidate proteins)
+INFO	06/27/2017 09:23:43 =>	20% of predictions performed (4/16 candidate proteins)
+INFO	06/27/2017 09:23:43 =>	30% of predictions performed (6/16 candidate proteins)
+INFO	06/27/2017 09:23:43 =>	40% of predictions performed (9/16 candidate proteins)
+INFO	06/27/2017 09:23:43 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.5738277435302734 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 06/27/2017 09:30:37 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq -o Macmini2_soap_20170623.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 06/27/2017 09:30:37 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 06/27/2017 09:30:38
+INFO	[makeblastdb]	New DB name:   /home/jeremias/dev/macpipe_trans/tmp/Macmini2_soap_20170623.busco_198142103
+INFO	[makeblastdb]	New DB title:  /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 469 sequences in 0.0206442 seconds.
+INFO	Running tblastn, writing output to /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/blast_output/tblastn_Macmini2_soap_20170623.busco.tsv...
+INFO	****** Step 2/2, current time: 06/27/2017 09:30:41 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	06/27/2017 09:30:41 =>	0% of predictions performed (16 to be done)
+INFO	06/27/2017 09:30:41 =>	10% of predictions performed (8/16 candidate proteins)
+INFO	06/27/2017 09:30:41 =>	20% of predictions performed (7/16 candidate proteins)
+INFO	06/27/2017 09:30:41 =>	30% of predictions performed (8/16 candidate proteins)
+INFO	06/27/2017 09:30:41 =>	40% of predictions performed (9/16 candidate proteins)
+INFO	06/27/2017 09:30:41 =>	50% of predictions performed (10/16 candidate proteins)
+INFO	06/27/2017 09:30:41 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.3%,M:98.7%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	4 Fragmented BUSCOs (F)
+INFO	299 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.5525550842285156 seconds
+INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_soap_20170623.busco/
+

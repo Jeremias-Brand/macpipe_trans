@@ -1,9 +1,15 @@
->scaffold1 2 667 Locus_86_0 LINEAR
-1739       0         
-2011       133       
->scaffold2 2 523 Locus_94_0 LINEAR
-1755       0         
-1983       141       
->scaffold3 2 538 Locus_160_0 LINEAR
-1964       0         
-1887       337       
+>scaffold1 2 667 Locus_77_0 LINEAR
+1705       0         
+1976       133       
+>scaffold2 2 381 Locus_79_0 FORK
+1829       0         
+1835       195       
+>scaffold3 2 335 Locus_79_1 FORK
+1829       0         
+1709       198       
+>scaffold4 2 523 Locus_84_0 LINEAR
+1719       0         
+1949       141       
+>scaffold5 2 538 Locus_153_0 LINEAR
+1930       0         
+1861       337       
