@@ -9,12 +9,12 @@ read from file:
  /home/jeremias/dev/macpipe_trans/data/Macmini2_R1_trim.fq.gz
 read from file:
  /home/jeremias/dev/macpipe_trans/data/Macmini2_R2_trim.fq.gz
-time spent on hash reads: 1s, 19046 reads processed
+time spent on hash reads: 0s, 19046 reads processed
 [LIB] 0, avg_ins 150, reverse 0 
 893392 nodes allocated, 1324200 kmer in reads, 1324200 kmer processed
 871222 linear nodes
 time spent on marking linear nodes 0s
-time spent on pre-graph construction: 1s
+time spent on pre-graph construction: 0s
 
 deLowKmer 0, deLowEdge 1
 Start to remove kmer of out frequency kmers < 0.050000
@@ -45,7 +45,7 @@ kmer set 13 done
 4073 tips off
 14 thread created
 0 linear nodes
-time spent on cutTipe: 0s
+time spent on cutTipe: 1s
 
 13414 (6707) edges 158 extra nodes
 time spent on making edges: 0s
@@ -62,7 +62,7 @@ time 0,0,0,0,0,0,0
 0 markers outputed
 done mapping reads, 8959 reads deleted, 4115 arcs created
 [LIB] 0, avg_ins 150, reverse 0 
-time spent on mapping reads: 1s
+time spent on mapping reads: 0s
 
 10556 vertex outputed
 overall time for lightgraph: 0m
