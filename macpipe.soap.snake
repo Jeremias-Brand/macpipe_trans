@@ -124,7 +124,31 @@ rule trimmomatic:
         ILLUMINACLIP:{params.adapters}{params.trimmomatic_string}
         """
 #:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
- 
+
+# run fastQC on the untrimmed and the trimmed reads
+# TODO: put also in trinity version
+rule fastqc:
+    input:
+        forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
+        reverse  = FASTQ_DIR + "{sample}_R2.fq.gz",
+        forward_trimmed  = FASTQ_DIR + "{sample}_R1_trim.fq.gz",
+        reverse_trimmed  = FASTQ_DIR + "{sample}_R2_trim.fq.gz"
+    output:
+        forward_qc         = "{sample}_R1_fastqc.html",
+        reverse_qc         = "{sample}_R2_fastqc.html",
+        forward_trimmed_qc = "{sample}_R1_trim_fastqc.html",
+        reverse_trimmed_qc = "{sample}_R2_trim_fastqc.html"
+    log:
+        logs/fastqc/"{sample}_fastqc.log"
+    params:
+    threads: 6
+    shell:
+        """
+        fastqc {input.forward} {input.reverse} \
+        {input.forward_trimmed} {input.reversed_trimmed} \
+        --outdir QC/ --noextract -t {threads}
+        """
+
 
 rule soap_on_trimmed:
     input:
@@ -388,6 +412,10 @@ rule versions:
 # timestamp
 rule report:
     input:
+        forward_qc          = "{sample}_R1_fastqc.html",
+        reverse_qc          = "{sample}_R2_fastqc.html",
+        forward_trimmed_qc  = "{sample}_R1_trim_fastqc.html",
+        reverse_trimmed_qc  = "{sample}_R2_trim_fastqc.html",
         busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
         busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
