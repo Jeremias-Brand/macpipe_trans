@@ -283,7 +283,7 @@ rule plot_transrate_contigs:
     script:
         "R/contigs.plot.R"
 
-
+# TODO: check if output exists
 # add busco rule
 rule busco:
     input:
