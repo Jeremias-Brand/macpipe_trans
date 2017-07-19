@@ -16,21 +16,30 @@
 	"buffers":
 	[
 		{
-			"file": "macpipe.trans.main.small.snake",
-			"settings":
-			{
-				"buffer_size": 15196,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "/F/jeremias/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
 			"settings":
 			{
 				"buffer_size": 4231,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "\"\"\"\nAuthor: J. Brand\nAffiliation: Unibas\nAim: Workflow for transcriptome assembly, annotation and assessment\nDate: 20. Nov. 2016\nRun: snakemake   -s Snakefile\nLatest modification:\n  - add more flexible input\n  - add reporting\n  - add checks for gzip\n  - integrate gzip of intermediate results\n  - add a block to run if fail or succeed\n  - add evironment file for bioconda\n  - plotting of busco automated\n  - move transcriptomes to better places\n  - add trinity version to software.versions file\n\"\"\"\n# import statements\nfrom snakemake.utils import report\nfrom os.path import join\nimport os\nimport time\n\n\n# Uses a yaml file as input\nconfigfile: \"config.dev.yaml\"\n\n# Preparation------------------------------------------------------------------\n#TIMESTAMP = time.strftime(\"%Y%m%d\")\nTIMESTAMP = \"20170608\"\n# check if the necessary dirs exist and if not creates them\ndef save_mkdir( dirs ):\n\tfor d in dirs:\n\t\tif not os.path.isdir(d):\n\t\t\tos.mkdir(d)\n\t\t\tprint(\"Creating directory: \" + d)\n\ndef check_trailing_slash( path ):\n    if path[-1] != \"/\":\n        path = path + \"/\"\n    return path\n\ndirs = [\"logs\", \"logs/trinity\", \"logs/transrate\",\n        \"logs/rcorrector\", \"trinity\", \"transrate\",\n        \"transrate/summary\", \"busco\", \"logs/busco\"]\nsave_mkdir(dirs)\n\n\n# Globals ---------------------------------------------------------------------\n   \n# define global things here\n\n# Full path to a folder that holds all of your FASTQ files.\nFASTQ_DIR = check_trailing_slash(config[\"fastqdir\"])\n# loads all of the path into variable\nTRANSRATE_DIR = check_trailing_slash(config[\"transrateDir\"])\nHOME_DIR = check_trailing_slash(config[\"homedir\"])\nVOUCHER_DIR = check_trailing_slash(config[\"voucher_dir\"])\n\n\n# A Snakemake regular expression matching the forward mate FASTQ files.\n# we get a list with the names of all the files in the working directory\nSAMPLES, = glob_wildcards(join(FASTQ_DIR, '{sample}_R1.fq.gz'))\n\n# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.\nPATTERN_R1 = '{sample}_R1.fq.gz'\nPATTERN_R2 = '{sample}_R2.fq.gz'\n\n\n\n# Rules -----------------------------------------------------------------------\n\n\n\nrule all:\n    input:\n        \"macpipe_report_\" + TIMESTAMP + \".html\"\n\n# This is a template script to run trinity\n# Using a JSON file as input will be better\n# Sample is a wildcard equivalent to .+\n# rule All: # this top rule is here to define the goal of the script\n#     input:\n#         \"{sample}trinotate_annotation_report.xls\"\n#     log:\"snakemake.report.log\"\n\n# TODO software version printout and link to report\n\n# rule run_rcorrector:\n#     input:\n#         forward = join(FASTQ_DIR, PATTERN_R1),\n#         reverse = join(FASTQ_DIR, PATTERN_R2)\n#     output:\n#         FASTQ_DIR + \"{sample}_R1.cor.fq\",\n#         FASTQ_DIR + \"{sample}_R2.cor.fq\"\n#     log:\n#     \t\"logs/rcorrector/{sample}.log\"\n#     params:\n#         outdir = FASTQ_DIR\n#         \"\"\"\n#         ~/perl5/perlbrew/perls/5.16.2t/bin/perl ~/bin/run_rcorrector.pl -k 31 -t 30 \\\n#         -od {params.outdir}  -1 {input.forward}  -2 {input.reverse} &> {log}\n#         \"\"\"\n\n\nrule trim_and_trinity:\n    input:\n        forward  = FASTQ_DIR + \"{sample}_R1.fq.gz\",\n        reverse  = FASTQ_DIR + \"{sample}_R2.fq.gz\"\n    output:\n        assembly = expand(\"trinity/{{sample}}_{T}.Trinity.fasta\", T=TIMESTAMP),\n        log      = expand(\"logs/trinity/{{sample}}_{T}.shell.log\", T=TIMESTAMP)\n    log:\n        expand(\"logs/trinity/{{sample}}_{T}.log\", T=TIMESTAMP)\n    params:\n        adapters =  config[\"adapters_fasta\"],\n        outdir   =  FASTQ_DIR,\n        trinity  =  config[\"trinity\"],\n        trim_adapter = config[\"trim_adapter\"],\n        leading  =  config[\"trim_leading\"],\n        trailing  =  config[\"trim_trailing\"],\n        minlength  =  config[\"trim_minlength\"]\n    threads: 14  # threads only works if --cores is set to the actual number of cores when running the snakemake\n    # message: expand(\"Executing with {threads} threads on the following files {sample}.\", sample=SAMPLES)\n    # We also want a logfile\n    # log: expand(\"logs/{sample}.trinity.log\", sample=SAMPLES)\n    shell:\n        \"\"\"\n        {params.trinity} --seqType fq \\\n        --trimmomatic --CPU {threads} --max_memory 150G \\\n        --output 'trinity/'{wildcards.sample}_{TIMESTAMP}'.trinity' \\\n        --left   {input.forward}  \\\n        --right  {input.reverse} \\\n        --normalize_reads  --normalize_max_read_cov 30 \\\n        --quality_trimming_params 'ILLUMINACLIP:{params.adapters}:{params.trim_adapter} LEADING:{params.leading} TRAILING:{params.trailing} MINLEN:{params.minlength}' > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \\\n        mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \\\n        sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}\n        \"\"\"\n\n\nrule run_transrate:\n    input:\n        assembly =  expand(\"trinity/{{sample}}_{T}.Trinity.fasta\", T=TIMESTAMP),\n        forward  =  FASTQ_DIR + \"{sample}_R1.fq.gz\",\n        reverse  =  FASTQ_DIR + \"{sample}_R2.fq.gz\"\n    output:\n        expand(\"transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta\", T=TIMESTAMP),\n        expand(\"transrate/{{sample}}_{T}.transrate/assemblies.csv\", T=TIMESTAMP),\n        expand(\"transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv\", T=TIMESTAMP)\n    log:\n    \texpand(\"logs/transrate/{{sample}}_{T}.log\", T=TIMESTAMP)\n    params:\n        transDir  =  TRANSRATE_DIR,\n        dataDir   =  FASTQ_DIR,\n        homeDir   =  HOME_DIR,\n        transrate =  config[\"transrate\"]\n    threads: 28\n    shell:\n        \"\"\"\n        {params.transrate} --assembly {params.homeDir}{input.assembly} \\\n        --output {params.transDir}{wildcards.sample}_{TIMESTAMP}.transrate \\\n        --threads {threads} \\\n        --left {input.forward} \\\n        --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}\n        \"\"\"\n\n\nrule gather_transrate:\n    # move all transrate results to same folder for easier summary later\n    # First I used the same wildcard input output names for this rule as I did\n    # for the gather busco rule but that somehow caused it not to be plotted in the\n    # dag. More of a cosmetic issue.\n    input:\n        a = expand(\"transrate/{{sample}}_{T}.transrate/assemblies.csv\", T=TIMESTAMP),\n        c  = expand(\"transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv\", T=TIMESTAMP)\n    output:\n        a = expand(\"transrate/summary/{{sample}}_{T}.assemblies.csv\", T=TIMESTAMP),\n        c = expand(\"transrate/summary/{{sample}}_{T}.contigs.csv\", T=TIMESTAMP)\n    shell:\n        \"\"\"\n        cp {input.a} {output.a}\n        cp {input.c}  {output.c}\n\n        \"\"\"\n\n\n        # assembly = \"transrate/summary/\" + TIMESTAMP + \"assemblies.csv\"\n\n# Here the assemblies are being summarized and we need to expanda list\nrule summarize_transrate_assembly:\n    input:\n        expand(\"transrate/summary/{sample}_{T}.assemblies.csv\",sample=SAMPLES, T=TIMESTAMP)\n    output:\n        \"transrate/summary/run_\" + TIMESTAMP + \"_assemblies.csv\"\n    run:\n        assemblies = input\n        #generate first line we need in outfile:\n        with open(output[0], \"w\") as outfile:\n            with open(assemblies[0], \"r\") as infile:\n                lines = infile.readlines()\n                outfile.write(lines[0])\n\n        # now we open the outfile in appending mode to add all the results\n        with open(output[0], \"a\") as outfile:\n            for assembly in assemblies:\n                with open(assembly, \"r\") as infile:\n                    lines = infile.readlines()\n                    outfile.write(lines[1])\n\n\nrule fish_4_genes:\n    input:\n        assemblies = expand(\"trinity/{sample}_{T}.Trinity.fasta\", sample=SAMPLES, T=TIMESTAMP),\n        assembly_dir = \"trinity/\",\n        voucher_dir = VOUCHER_DIR,\n        vouchers    = config[\"vouchers\"],\n        one = config[\"ref_28S\"],\n        four = config[\"ref_4genes\"]\n    output:\n        one = \"blast_results/blastn_summary_\" + TIMESTAMP + \"_fish_28S\",\n        four =\"blast_results/blastn_summary_\" + TIMESTAMP + \"_fish_4genes\"\n    params:\n        timestamp = TIMESTAMP \n    threads: 12 \n    shell:\n        \"\"\"\n        python3 scripts/fish_genes.py \\\n            -a {input.assembly_dir} \\\n            -q {input.voucher_dir} -c {input.vouchers} \\\n            -v {input.one} -T {threads} \\\n            -o {output.one} &&  python3 scripts/fish_genes.py \\\n            -a {input.assembly_dir} \\\n            -q {input.voucher_dir} -c {input.vouchers} \\\n            -v {input.four} -T {threads} -o {output.four} \n\n        \"\"\"\n\n# transrate plotting\n# TODO change locations of file to something sensible\n# ownimgg directory?\nrule plot_transrate_contigs:\n    input:\n        expand(\"transrate/summary/{{sample}}_{T}.contigs.csv\", T=TIMESTAMP)\n    output:\n        expand(\"{{sample}}_{T}.png\", T=TIMESTAMP)\n    script:\n        \"R/contigs.plot.R\"\n\n\n# add busco rule\nrule busco:\n    input:\n        assembly =   expand(\"trinity/{{sample}}_{T}.Trinity.fasta\", T=TIMESTAMP)\n    output:\n        out      =   expand(HOME_DIR + \"busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt\", T=TIMESTAMP)\n    params:\n        py3      =   config[\"py3\"],\n        BUSCO    =   config[\"BUSCO\"],\n        BuscoLib =   config[\"BuscoLib\"],\n        homedir  =   HOME_DIR\n    threads: 14\n    log:\n        expand(\"logs/busco/{{sample}}_{T}.log\", T=TIMESTAMP)\n    shell:\n        # cd {params.outdir}\n        \"\"\"\n        {params.py3}  {params.BUSCO} -f \\\n                -i {params.homedir}{input.assembly} \\\n                -o {wildcards.sample}_{TIMESTAMP}.busco              \\\n                -l  {params.BuscoLib}    \\\n                -m  tran -c {threads} &>> {log} && \\\n        mv  run_{wildcards.sample}_{TIMESTAMP}.busco  busco/\n\n        \"\"\"\n\n\nrule busco_on_transrate:\n    # run busco on transrate optimized assembly\n    input:\n        assembly =   expand(\"transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta\", T=TIMESTAMP)\n    output:\n        out      =   expand(HOME_DIR + \"busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt\", T=TIMESTAMP),\n        outass   =   expand(\"trinity/{{sample}}_{T}_transrate_optimized.Trinity.fasta\", T=TIMESTAMP)\n    params:\n        outdir   =   HOME_DIR + \"busco/\",\n        py3      =   config[\"py3\"],\n        BUSCO    =   config[\"BUSCO\"],\n        BuscoLib =   config[\"BuscoLib\"],\n        homedir  =   HOME_DIR\n    threads: 14\n    log:\n        expand(\"logs/busco/{{sample}}_{T}.good.log\", T=TIMESTAMP)\n    # I move the assessed transrate assembly over to the trinity folder\n    shell:\n        # cd {params.outdir}\n        \"\"\"\n        {params.py3}  {params.BUSCO} -f \\\n                -i {params.homedir}{input.assembly} \\\n                -o {wildcards.sample}_{TIMESTAMP}.good.busco              \\\n                -l  {params.BuscoLib}    \\\n                -m  tran -c {threads} &>> {log} && \\\n        mv  run_{wildcards.sample}_{TIMESTAMP}.good.busco  busco/ && \\\n        mv {input.assembly} {output.outass}\n        \"\"\"\n\n\n# TODO rule decision on assembly\nrule gather_busco:\n    # move all transrate results to same folder for easier summary later\n    # we do not need the expand statement here because plot busco will just call this function many times\n    input:\n        normal   = expand(HOME_DIR + \"busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt\", T=TIMESTAMP),\n        good     = expand(HOME_DIR + \"busco/run_{{sample}}_{T}.good.busco/short_summary_{{sample}}_{T}.good.busco.txt\", T=TIMESTAMP)\n    output:\n        normal   = expand(\"busco/summary/short_summary_{{sample}}_{T}.busco.txt\", T=TIMESTAMP),\n        good     = expand(\"busco/summary/short_summary_{{sample}}_{T}.good.busco.txt\", T=TIMESTAMP)\n    shell:\n        \"\"\"\n        cp {input.normal} {output.normal}\n        cp {input.good}   {output.good}\n\n        \"\"\"\n\n\nrule plot_busco:\n    input:\n        expand(\"transrate/summary/{sample}_{T}.contigs.csv\", T=TIMESTAMP, sample=SAMPLES),\n        transrate_summary = \"transrate/summary/run_\" + TIMESTAMP + \"_assemblies.csv\",\n        normal            = expand(\"busco/summary/short_summary_{sample}_{T}.busco.txt\", sample=SAMPLES, T=TIMESTAMP),\n        good              = expand(\"busco/summary/short_summary_{sample}_{T}.good.busco.txt\", sample=SAMPLES, T=TIMESTAMP)\n    output:\n        busco_pdf         = \"busco/summary/run_\" + TIMESTAMP + \"_busco.pdf\",\n        busco_trans_pdf   = \"busco/summary/run_\" + TIMESTAMP + \"_busco_with_transrate.pdf\"\n    params:\n        timestamp = TIMESTAMP,\n        busco_folder      = \"busco/summary/\"\n    script:\n        \"R/plot_busco_summary.R\"\n\n\n# TODO rename assembly headers\n# TODO\n# add plotting for BUSCO\n# The default plotting does not work and we have to add\n# options(bitmapType='cairo')\n# at the beginning of the script. -.-\nrule versions:\n    output:\n        log         = \"logs/run_\" + TIMESTAMP + \"_software.versions\"\n    params:\n        trinity     = config[\"trinity\"],\n        transrate   = config[\"transrate\"],\n        BUSCO       = config[\"BUSCO\"],\n        time        = TIMESTAMP\n    shell:\n        \"\"\"\n        echo \"These are the versions of software used for run: {params.time}\" &>> {output.log}\n        date  &>> {output.log}\n        python --version &>> {output.log}\n        hmmscan -h | grep -E '^\\#\\ H' &>> {output.log}\n        blastn -h | grep Nucleotide &>> {output.log}\n        embossversion &>> {output.log}\n        echo \"perl version: \" &>> {output.log}\n        perl -e 'print $];' &>> {output.log}\n        {params.BUSCO} --version &>> {output.log}\n        echo \"transrate version:\" {params.transrate} --version &>> {output.log}\n        echo {params.trinity}  >> {output.log}\n        \"\"\"\n\n\n# TODO report file should contain:\n# plot of coverage\n# busco and transrate stats\n# software versions\n# timestamp\nrule report:\n    input:\n        busco_pdf           = \"busco/summary/run_\" + TIMESTAMP + \"_busco.pdf\",\n        busco_trans_pdf     = \"busco/summary/run_\" + TIMESTAMP + \"_busco_with_transrate.pdf\",\n        transrate_summary   = \"transrate/summary/run_\" + TIMESTAMP + \"_assemblies.csv\",\n        assembly_plot       = expand(\"{sample}_{T}.png\", sample=SAMPLES, T=TIMESTAMP),\n        versions            = \"logs/run_\" + TIMESTAMP + \"_software.versions\",\n        fish_4genes         = \"blast_results/blastn_summary_\" + TIMESTAMP + \"_fish_4genes\",\n        fish_28S            = \"blast_results/blastn_summary_\" + TIMESTAMP + \"_fish_28S\"\n    output:\n        report_name         = \"macpipe_report_\" + TIMESTAMP + \".html\"\n    run:\n        from snakemake.utils import report\n        run_name = TIMESTAMP \n        report(\"\"\" \n        Results of the macpipe_trans run for transcriptome assembly and assessment.\n        Run timestamp/ID: {run_name}\n        \"\"\", output[0], **input)\n        \n\n\n# Finishing up --------------------------------------------------------------\nonsuccess:\n    print(\"Workflow finished, no error\")\nonerror:\n    print(\"An error occurred with the snakemake run\")\n    # here it would be good to include timstamping\n    shell(\"mail -s 'Error in Snakemake run' jeremias.brand@unibas.ch < {log}\")\n\n# TODO add separate snakefile for annotation\n",
+			"file": "macpipe.trans.main.small.snake",
+			"file_size": 15212,
+			"file_write_time": 131445126262602357,
+			"settings":
+			{
+				"buffer_size": 15215,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -59,10 +68,22 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 104.0,
-		"last_filter": "Git: Status",
+		"height": 392.0,
+		"last_filter": "set py",
 		"selected_items":
 		[
+			[
+				"set py",
+				"Set Syntax: Python"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"py",
+				"Set Syntax: Python"
+			],
 			[
 				"Git: Status",
 				"Git: Status"
@@ -70,10 +91,6 @@
 			[
 				"install",
 				"Package Control: Install Package"
-			],
-			[
-				"py",
-				"Set Syntax: Python"
 			],
 			[
 				" toggle li",
@@ -161,10 +178,15 @@
 	},
 	"expanded_folders":
 	[
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans",
 		"/F/jeremias/Dropbox/Documents/CV-website/Jeremias-Brand.github.io"
 	],
 	"file_history":
 	[
+		"/F/jeremias/Dropbox/Documents/PhD/Viz/Macrostomum Drawings Jeremias/Mac076/README.txt",
+		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/macpipe.trans.main.small.snake",
+		"/C/Users/jeremias/AppData/Local/Temp/scp19309/home/jeremias/assembly/P248/macpipe-2017-06-16/report_soap_20170623.html",
+		"/F/jeremias/Dropbox/Documents/PhD/Applications/VISA USA/application details",
 		"/F/jeremias/Dropbox/Documents/PhD/Viz/Viz_Stylet_sperm.txt",
 		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/config.macpipe.trans.small.yaml",
 		"/F/jeremias/Dropbox/Bioinformatics/dev/macpipe_trans/data/trinity.conf.snake",
@@ -385,41 +407,11 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "macpipe.trans.main.small.snake",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15196,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7450,
-								7450
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3841.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "/F/jeremias/Dropbox/Documents/CV-website/Jeremias-Brand.github.io/em.md",
 					"semi_transient": false,
 					"settings":
@@ -431,8 +423,8 @@
 						"selection":
 						[
 							[
-								4231,
-								4231
+								1031,
+								1031
 							]
 						],
 						"settings":
@@ -443,11 +435,68 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "macpipe.trans.main.small.snake",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15215,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2405,
+								2405
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3020.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "config.dev.yaml",
 					"semi_transient": false,
 					"settings":
@@ -471,11 +520,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "scripts/fish_genes.py",
 					"semi_transient": false,
 					"settings":
@@ -501,7 +550,7 @@
 						"translation.y": 3066.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

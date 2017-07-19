@@ -74,7 +74,7 @@ PATTERN_R2 = '{sample}_R2.fq.gz'
 
 rule all:
     input:
-        "report_" + TIMESTAMP + ".html"
+        "macpipe_report_" + TIMESTAMP + ".html"
 
 # This is a template script to run trinity
 # Using a JSON file as input will be better
@@ -383,7 +383,7 @@ rule report:
         fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
         fish_28S            = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S"
     output:
-        report_name         = "report_" + TIMESTAMP + ".html"
+        report_name         = "macpipe_report_" + TIMESTAMP + ".html"
     run:
         from snakemake.utils import report
         run_name = TIMESTAMP 
