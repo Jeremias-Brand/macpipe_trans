@@ -4,6 +4,7 @@
 fastqdir:       "/home/jeremias/dev/macpipe_trans/data/"
 transrateDir:   "/home/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
 homedir:        "/home/jeremias/dev/macpipe_trans/"
+rRNAdb:         "/home/jeremias/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
 # where the fastas for the fish_genes.py step are stored
 voucher_dir:    "/home/jeremias/dbs/vouchers/"
 # list with one file name per line selecting vouchers in voucher_dir

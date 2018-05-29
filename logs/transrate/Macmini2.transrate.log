@@ -1,59 +1,59 @@
-[ INFO] 2017-06-27 10:37:29 : Loading assembly: /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
-[ INFO] 2017-06-27 10:37:29 : Analysing assembly: /home/jeremias/dev/macpipe_trans/soap/Macmini2_soap_20170623.scafSeq
-[ INFO] 2017-06-27 10:37:29 : Results will be saved in /home/jeremias/dev/macpipe_trans/transrate/Macmini2_soap_20170623.transrate/Macmini2_soap_20170623
-[ INFO] 2017-06-27 10:37:29 : Calculating contig metrics...
-[ INFO] 2017-06-27 10:37:29 : Contig metrics:
-[ INFO] 2017-06-27 10:37:29 : -----------------------------------
-[ INFO] 2017-06-27 10:37:29 : n seqs                          469
-[ INFO] 2017-06-27 10:37:29 : smallest                        100
-[ INFO] 2017-06-27 10:37:29 : largest                        1523
-[ INFO] 2017-06-27 10:37:29 : n bases                       80394
-[ INFO] 2017-06-27 10:37:29 : mean len                      71.17
-[ INFO] 2017-06-27 10:37:29 : n under 200                     376
-[ INFO] 2017-06-27 10:37:29 : n over 1k                         2
-[ INFO] 2017-06-27 10:37:29 : n over 10k                        0
-[ INFO] 2017-06-27 10:37:29 : n with orf                       11
-[ INFO] 2017-06-27 10:37:29 : mean orf percent              78.59
-[ INFO] 2017-06-27 10:37:29 : n90                             253
-[ INFO] 2017-06-27 10:37:29 : n70                             560
-[ INFO] 2017-06-27 10:37:29 : n50                            1523
-[ INFO] 2017-06-27 10:37:29 : n30                            1523
-[ INFO] 2017-06-27 10:37:29 : n10                            1523
-[ INFO] 2017-06-27 10:37:29 : gc                             0.53
-[ INFO] 2017-06-27 10:37:29 : gc skew                       -0.01
-[ INFO] 2017-06-27 10:37:29 : at skew                        0.01
-[ INFO] 2017-06-27 10:37:29 : cpg ratio                      2.04
-[ INFO] 2017-06-27 10:37:29 : bases n                          63
-[ INFO] 2017-06-27 10:37:29 : proportion n                    0.0
-[ INFO] 2017-06-27 10:37:29 : linguistic complexity          0.04
-[ INFO] 2017-06-27 10:37:29 : Contig metrics done in 0 seconds
-[ INFO] 2017-06-27 10:37:29 : Calculating read diagnostics...
-[ INFO] 2017-06-27 10:37:33 : Read mapping metrics:
-[ INFO] 2017-06-27 10:37:33 : -----------------------------------
-[ INFO] 2017-06-27 10:37:33 : fragments                     10000
-[ INFO] 2017-06-27 10:37:33 : fragments mapped               1941
-[ INFO] 2017-06-27 10:37:33 : p fragments mapped             0.19
-[ INFO] 2017-06-27 10:37:33 : good mappings                  1229
-[ INFO] 2017-06-27 10:37:33 : p good mapping                 0.12
-[ INFO] 2017-06-27 10:37:33 : bad mappings                    712
-[ INFO] 2017-06-27 10:37:33 : potential bridges                 2
-[ INFO] 2017-06-27 10:37:33 : bases uncovered                5017
-[ INFO] 2017-06-27 10:37:33 : p bases uncovered              0.06
-[ INFO] 2017-06-27 10:37:33 : contigs uncovbase               198
-[ INFO] 2017-06-27 10:37:33 : p contigs uncovbase            0.42
-[ INFO] 2017-06-27 10:37:33 : contigs uncovered                16
-[ INFO] 2017-06-27 10:37:33 : p contigs uncovered            0.03
-[ INFO] 2017-06-27 10:37:33 : contigs lowcovered               16
-[ INFO] 2017-06-27 10:37:33 : p contigs lowcovered           0.03
-[ INFO] 2017-06-27 10:37:33 : contigs segmented                16
-[ INFO] 2017-06-27 10:37:33 : p contigs segmented            0.03
-[ INFO] 2017-06-27 10:37:33 : Read metrics done in 4 seconds
-[ INFO] 2017-06-27 10:37:33 : No reference provided, skipping comparative diagnostics
-[ INFO] 2017-06-27 10:37:33 : TRANSRATE ASSEMBLY SCORE     0.0097
-[ INFO] 2017-06-27 10:37:33 : -----------------------------------
-[ INFO] 2017-06-27 10:37:33 : TRANSRATE OPTIMAL SCORE      0.0604
-[ INFO] 2017-06-27 10:37:33 : TRANSRATE OPTIMAL CUTOFF     0.3251
-[ INFO] 2017-06-27 10:37:33 : good contigs                    201
-[ INFO] 2017-06-27 10:37:33 : p good contigs                 0.43
-[ INFO] 2017-06-27 10:37:33 : Writing contig metrics for each contig to /home/jeremias/dev/macpipe_trans/transrate/Macmini2_soap_20170623.transrate/Macmini2_soap_20170623/contigs.csv
-[ INFO] 2017-06-27 10:37:33 : Writing analysis results to assemblies.csv
+[ INFO] 2017-07-19 18:06:51 : Loading assembly: /home/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+[ INFO] 2017-07-19 18:06:51 : Analysing assembly: /home/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+[ INFO] 2017-07-19 18:06:51 : Results will be saved in /home/jeremias/dev/macpipe_trans/transrate/Macmini2_rcorrtest.transrate/Macmini2_rcorrtest.Trinity
+[ INFO] 2017-07-19 18:06:51 : Calculating contig metrics...
+[ INFO] 2017-07-19 18:06:51 : Contig metrics:
+[ INFO] 2017-07-19 18:06:51 : -----------------------------------
+[ INFO] 2017-07-19 18:06:51 : n seqs                          287
+[ INFO] 2017-07-19 18:06:51 : smallest                        201
+[ INFO] 2017-07-19 18:06:51 : largest                        1560
+[ INFO] 2017-07-19 18:06:51 : n bases                       91302
+[ INFO] 2017-07-19 18:06:51 : mean len                     318.13
+[ INFO] 2017-07-19 18:06:51 : n under 200                       0
+[ INFO] 2017-07-19 18:06:51 : n over 1k                         3
+[ INFO] 2017-07-19 18:06:51 : n over 10k                        0
+[ INFO] 2017-07-19 18:06:51 : n with orf                       23
+[ INFO] 2017-07-19 18:06:51 : mean orf percent              84.19
+[ INFO] 2017-07-19 18:06:51 : n90                             213
+[ INFO] 2017-07-19 18:06:51 : n70                             252
+[ INFO] 2017-07-19 18:06:51 : n50                             303
+[ INFO] 2017-07-19 18:06:51 : n30                             423
+[ INFO] 2017-07-19 18:06:51 : n10                             662
+[ INFO] 2017-07-19 18:06:51 : gc                             0.54
+[ INFO] 2017-07-19 18:06:51 : gc skew                        0.02
+[ INFO] 2017-07-19 18:06:51 : at skew                        0.02
+[ INFO] 2017-07-19 18:06:51 : cpg ratio                      2.02
+[ INFO] 2017-07-19 18:06:51 : bases n                           0
+[ INFO] 2017-07-19 18:06:51 : proportion n                    0.0
+[ INFO] 2017-07-19 18:06:51 : linguistic complexity          0.07
+[ INFO] 2017-07-19 18:06:51 : Contig metrics done in 0 seconds
+[ INFO] 2017-07-19 18:06:51 : Calculating read diagnostics...
+[ INFO] 2017-07-19 18:06:55 : Read mapping metrics:
+[ INFO] 2017-07-19 18:06:55 : -----------------------------------
+[ INFO] 2017-07-19 18:06:55 : fragments                     10000
+[ INFO] 2017-07-19 18:06:55 : fragments mapped               2033
+[ INFO] 2017-07-19 18:06:55 : p fragments mapped              0.2
+[ INFO] 2017-07-19 18:06:55 : good mappings                  1707
+[ INFO] 2017-07-19 18:06:55 : p good mapping                 0.17
+[ INFO] 2017-07-19 18:06:55 : bad mappings                    326
+[ INFO] 2017-07-19 18:06:55 : potential bridges                13
+[ INFO] 2017-07-19 18:06:55 : bases uncovered                3671
+[ INFO] 2017-07-19 18:06:55 : p bases uncovered              0.04
+[ INFO] 2017-07-19 18:06:55 : contigs uncovbase                32
+[ INFO] 2017-07-19 18:06:55 : p contigs uncovbase            0.11
+[ INFO] 2017-07-19 18:06:55 : contigs uncovered                 9
+[ INFO] 2017-07-19 18:06:55 : p contigs uncovered            0.03
+[ INFO] 2017-07-19 18:06:55 : contigs lowcovered                9
+[ INFO] 2017-07-19 18:06:55 : p contigs lowcovered           0.03
+[ INFO] 2017-07-19 18:06:55 : contigs segmented                 5
+[ INFO] 2017-07-19 18:06:55 : p contigs segmented            0.02
+[ INFO] 2017-07-19 18:06:55 : Read metrics done in 4 seconds
+[ INFO] 2017-07-19 18:06:55 : No reference provided, skipping comparative diagnostics
+[ INFO] 2017-07-19 18:06:55 : TRANSRATE ASSEMBLY SCORE     0.1029
+[ INFO] 2017-07-19 18:06:55 : -----------------------------------
+[ INFO] 2017-07-19 18:06:55 : TRANSRATE OPTIMAL SCORE      0.1328
+[ INFO] 2017-07-19 18:06:55 : TRANSRATE OPTIMAL CUTOFF     0.3874
+[ INFO] 2017-07-19 18:06:55 : good contigs                    252
+[ INFO] 2017-07-19 18:06:55 : p good contigs                 0.88
+[ INFO] 2017-07-19 18:06:55 : Writing contig metrics for each contig to /home/jeremias/dev/macpipe_trans/transrate/Macmini2_rcorrtest.transrate/Macmini2_rcorrtest.Trinity/contigs.csv
+[ INFO] 2017-07-19 18:06:55 : Writing analysis results to assemblies.csv

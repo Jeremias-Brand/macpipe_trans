@@ -1,0 +1,186 @@
+Results from performing blastn of hits with:
+Macmini2_rcorrtest_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+Macmini1_rcorrtest_blast_FJ715326.1_Maclig_28s.fasta
+Macmini1_20170608_blast_FJ715306.1_Maclig_18S.fasta
+Macmini2_rcorrtest_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_rcorrtest_blast_FJ715306.1_Maclig_18S.fasta
+Macmini2_rcorrtest_blast_KP730467.1_Maclig_16S.fasta
+Macmini2_20170608_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_blast_FJ715306.1_Maclig_18S.fasta
+Macmini2_rcorrtest_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini1_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+Macmini1_20170608_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_blast_KP730467.1_Maclig_16S.fasta
+Macmini2_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini2_rcorrtest_blast_FJ715326.1_Maclig_28s.fasta
+Macmini1_rcorrtest_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_20170608_blast_FJ715326.1_Maclig_28s.fasta
+Macmini1_rcorrtest_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+Macmini1_rcorrtest_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+Macmini1_rcorrtest_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+Macmini2_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+Macmini2_rcorrtest_blast_FJ715306.1_Maclig_18S.fasta
+
+ against:
+/home/jeremias/dbs/vouchers/Macrostomidae_28S.fasta
+
+               Shown is the name of the sequence followed by the top 4 blast hits.
+               
+
+We found 2 contigs that matched blast_results/Macmini2_rcorrtest_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_rcorrtest_DN51_c0_g1_i1 len= 613
+##Macmini2_rcorrtest_DN180_c0_g1_i1 len= 206
+
+We found 2 contigs that matched blast_results/Macmini1_rcorrtest_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_rcorrtest_DN161_c0_g1_i1 len= 485
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	99.010	400	404	3	1	1	403	797	1200	0.0	723	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	347	347	0	0	1	347	831	1177	0.0	641	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mac013_824_LaBarra	1159	1/1	100.000	347	347	0	0	1	347	813	1159	0.0	641	Mac013_824_LaBarra
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.713	347	348	0	1	1	347	842	1189	0.0	636	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+##Macmini1_rcorrtest_DN36_c0_g1_i1 len= 385
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	385	385	0	0	1	385	545	161	0.0	712	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Macerm_561_Lignano	1066	1/1	99.740	384	385	1	0	1	385	485	101	0.0	706	Macerm_561_Lignano
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Macerm_525_MangroveBay	1071	1/1	96.667	377	390	6	3	1	385	492	105	0.0	641	Macerm_525_MangroveBay
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Maccur_365_TVA	1076	1/1	96.382	373	387	11	3	1	385	497	112	0.0	634	Maccur_365_TVA
+
+We found 3 contigs that matched blast_results/Macmini1_20170608_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_20170608_DN35_c0_g1_i1 len= 322
+##Macmini1_20170608_DN254_c0_g1_i1 len= 294
+##Macmini1_20170608_DN147_c0_g1_i1 len= 253
+
+We found 1 contigs that matched blast_results/Macmini2_rcorrtest_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_rcorrtest_DN101_c0_g1_i1 len= 655
+
+We found 3 contigs that matched blast_results/Macmini1_rcorrtest_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_rcorrtest_DN35_c0_g1_i1 len= 322
+##Macmini1_rcorrtest_DN4_c0_g1_i1 len= 295
+##Macmini1_rcorrtest_DN213_c0_g1_i1 len= 257
+
+We found 1 contigs that matched blast_results/Macmini2_rcorrtest_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_rcorrtest_DN101_c0_g1_i1 len= 655
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_20170608_DN160_c0_g1_i1 len= 547
+Macmini2_20170608_DN160_c0_g1_i1	547	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.795	486	487	1	0	1	487	539	53	0.0	894	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_20170608_DN160_c0_g1_i1	547	Maclon_274_Bibione_B7_28S_FJ715329	1176	1/1	96.289	519	539	19	1	1	539	538	1	0.0	883	Maclon_274_Bibione_B7_28S_FJ715329
+Macmini2_20170608_DN160_c0_g1_i1	547	Macerm_561_Lignano	1066	1/1	99.374	476	479	2	1	1	478	479	1	0.0	867	Macerm_561_Lignano
+Macmini2_20170608_DN160_c0_g1_i1	547	Mac004_442_Tvarminne_V7_28S	1151	1/1	96.395	508	527	17	2	1	527	528	4	0.0	867	Mac004_442_Tvarminne_V7_28S
+##Macmini2_20170608_DN229_c0_g1_i1 len= 390
+Macmini2_20170608_DN229_c0_g1_i1	390	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	98.721	386	391	4	1	1	390	1191	801	0.0	693	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini2_20170608_DN229_c0_g1_i1	390	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.708	342	343	1	0	48	390	1177	835	0.0	628	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_20170608_DN229_c0_g1_i1	390	Mac013_824_LaBarra	1159	1/1	99.708	342	343	1	0	48	390	1159	817	0.0	628	Mac013_824_LaBarra
+Macmini2_20170608_DN229_c0_g1_i1	390	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.419	342	344	1	1	48	390	1189	846	2.36e-180	623	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+
+We found 3 contigs that matched blast_results/Macmini2_20170608_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_20170608_DN71_c0_g1_i1 len= 612
+##Macmini2_20170608_DN127_c0_g1_i1 len= 209
+##Macmini2_20170608_DN255_c0_g1_i1 len= 206
+
+We found 2 contigs that matched blast_results/Macmini2_rcorrtest_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_rcorrtest_DN36_c0_g1_i1 len= 558
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.799	496	497	1	0	61	557	53	549	0.0	913	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Maclon_274_Bibione_B7_28S_FJ715329	1176	1/1	96.357	529	549	19	1	9	557	1	548	0.0	902	Maclon_274_Bibione_B7_28S_FJ715329
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Macerm_561_Lignano	1066	1/1	99.387	486	489	2	1	70	557	1	489	0.0	885	Macerm_561_Lignano
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Mac004_442_Tvarminne_V7_28S	1151	1/1	96.455	517	536	17	2	21	556	4	537	0.0	883	Mac004_442_Tvarminne_V7_28S
+##Macmini2_rcorrtest_DN239_c0_g1_i1 len= 0
+NO SEQUENCE FOUND
+
+We found 3 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_20170608_DN35_c0_g1_i1 len= 322
+##Macmini1_20170608_DN254_c0_g1_i1 len= 294
+##Macmini1_20170608_DN147_c0_g1_i1 len= 253
+
+We found 1 contigs that matched blast_results/Macmini1_20170608_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_20170608_DN188_c0_g1_i1 len= 562
+
+We found 1 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_20170608_DN188_c0_g1_i1 len= 562
+
+We found 2 contigs that matched blast_results/Macmini1_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_20170608_DN67_c0_g1_i1 len= 484
+Macmini1_20170608_DN67_c0_g1_i1	484	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	99.010	400	404	3	1	82	484	1200	797	0.0	723	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini1_20170608_DN67_c0_g1_i1	484	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	347	347	0	0	138	484	1177	831	0.0	641	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_20170608_DN67_c0_g1_i1	484	Mac013_824_LaBarra	1159	1/1	100.000	347	347	0	0	138	484	1159	813	0.0	641	Mac013_824_LaBarra
+Macmini1_20170608_DN67_c0_g1_i1	484	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.713	347	348	0	1	138	484	1189	842	0.0	636	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+##Macmini1_20170608_DN36_c0_g1_i1 len= 383
+Macmini1_20170608_DN36_c0_g1_i1	383	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	383	383	0	0	1	383	544	162	0.0	708	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_20170608_DN36_c0_g1_i1	383	Macerm_561_Lignano	1066	1/1	99.739	382	383	1	0	1	383	484	102	0.0	702	Macerm_561_Lignano
+Macmini1_20170608_DN36_c0_g1_i1	383	Macerm_525_MangroveBay	1071	1/1	96.649	375	388	6	3	1	383	491	106	0.0	638	Macerm_525_MangroveBay
+Macmini1_20170608_DN36_c0_g1_i1	383	Maccur_365_TVA	1076	1/1	96.364	371	385	11	3	1	383	496	113	0.0	630	Maccur_365_TVA
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_20170608_DN160_c0_g1_i1 len= 547
+Macmini2_20170608_DN160_c0_g1_i1	547	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.795	486	487	1	0	1	487	539	53	0.0	894	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_20170608_DN160_c0_g1_i1	547	Maclon_274_Bibione_B7_28S_FJ715329	1176	1/1	96.289	519	539	19	1	1	539	538	1	0.0	883	Maclon_274_Bibione_B7_28S_FJ715329
+Macmini2_20170608_DN160_c0_g1_i1	547	Macerm_561_Lignano	1066	1/1	99.374	476	479	2	1	1	478	479	1	0.0	867	Macerm_561_Lignano
+Macmini2_20170608_DN160_c0_g1_i1	547	Mac004_442_Tvarminne_V7_28S	1151	1/1	96.395	508	527	17	2	1	527	528	4	0.0	867	Mac004_442_Tvarminne_V7_28S
+##Macmini2_20170608_DN229_c0_g1_i1 len= 390
+Macmini2_20170608_DN229_c0_g1_i1	390	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	98.721	386	391	4	1	1	390	1191	801	0.0	693	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini2_20170608_DN229_c0_g1_i1	390	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.708	342	343	1	0	48	390	1177	835	0.0	628	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_20170608_DN229_c0_g1_i1	390	Mac013_824_LaBarra	1159	1/1	99.708	342	343	1	0	48	390	1159	817	0.0	628	Mac013_824_LaBarra
+Macmini2_20170608_DN229_c0_g1_i1	390	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.419	342	344	1	1	48	390	1189	846	2.36e-180	623	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+
+We found 1 contigs that matched blast_results/Macmini2_20170608_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_20170608_DN107_c0_g1_i1 len= 436
+
+We found 1 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini2_20170608_DN107_c0_g1_i1 len= 436
+
+We found 2 contigs that matched blast_results/Macmini2_rcorrtest_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini2_rcorrtest_DN36_c0_g1_i1 len= 558
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.799	496	497	1	0	61	557	53	549	0.0	913	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Maclon_274_Bibione_B7_28S_FJ715329	1176	1/1	96.357	529	549	19	1	9	557	1	548	0.0	902	Maclon_274_Bibione_B7_28S_FJ715329
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Macerm_561_Lignano	1066	1/1	99.387	486	489	2	1	70	557	1	489	0.0	885	Macerm_561_Lignano
+Macmini2_rcorrtest_DN36_c0_g1_i1	558	Mac004_442_Tvarminne_V7_28S	1151	1/1	96.455	517	536	17	2	21	556	4	537	0.0	883	Mac004_442_Tvarminne_V7_28S
+##Macmini2_rcorrtest_DN239_c0_g1_i1 len= 360
+Macmini2_rcorrtest_DN239_c0_g1_i1	360	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	98.615	356	361	4	1	1	360	799	1159	0.0	638	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini2_rcorrtest_DN239_c0_g1_i1	360	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	99.710	344	345	1	0	1	345	833	1177	0.0	632	Maccla_301_Marano_A4_28S_FJ715324
+Macmini2_rcorrtest_DN239_c0_g1_i1	360	Mac013_824_LaBarra	1159	1/1	99.710	344	345	1	0	1	345	815	1159	0.0	632	Mac013_824_LaBarra
+Macmini2_rcorrtest_DN239_c0_g1_i1	360	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.422	344	346	1	1	1	345	844	1189	0.0	627	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+
+We found 1 contigs that matched blast_results/Macmini1_rcorrtest_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_rcorrtest_DN162_c0_g1_i1 len= 563
+
+We found 2 contigs that matched blast_results/Macmini1_20170608_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_20170608_DN67_c0_g1_i1 len= 484
+Macmini1_20170608_DN67_c0_g1_i1	484	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	99.010	400	404	3	1	82	484	1200	797	0.0	723	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini1_20170608_DN67_c0_g1_i1	484	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	347	347	0	0	138	484	1177	831	0.0	641	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_20170608_DN67_c0_g1_i1	484	Mac013_824_LaBarra	1159	1/1	100.000	347	347	0	0	138	484	1159	813	0.0	641	Mac013_824_LaBarra
+Macmini1_20170608_DN67_c0_g1_i1	484	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.713	347	348	0	1	138	484	1189	842	0.0	636	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+##Macmini1_20170608_DN36_c0_g1_i1 len= 383
+Macmini1_20170608_DN36_c0_g1_i1	383	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	383	383	0	0	1	383	544	162	0.0	708	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_20170608_DN36_c0_g1_i1	383	Macerm_561_Lignano	1066	1/1	99.739	382	383	1	0	1	383	484	102	0.0	702	Macerm_561_Lignano
+Macmini1_20170608_DN36_c0_g1_i1	383	Macerm_525_MangroveBay	1071	1/1	96.649	375	388	6	3	1	383	491	106	0.0	638	Macerm_525_MangroveBay
+Macmini1_20170608_DN36_c0_g1_i1	383	Maccur_365_TVA	1076	1/1	96.364	371	385	11	3	1	383	496	113	0.0	630	Maccur_365_TVA
+
+We found 3 contigs that matched blast_results/Macmini1_rcorrtest_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini1_rcorrtest_DN35_c0_g1_i1 len= 322
+##Macmini1_rcorrtest_DN4_c0_g1_i1 len= 295
+##Macmini1_rcorrtest_DN213_c0_g1_i1 len= 257
+
+We found 1 contigs that matched blast_results/Macmini1_rcorrtest_transrate_optimized_blast_KP730467.1_Maclig_16S.fasta
+##Macmini1_rcorrtest_DN162_c0_g1_i1 len= 563
+
+We found 2 contigs that matched blast_results/Macmini1_rcorrtest_transrate_optimized_blast_FJ715326.1_Maclig_28s.fasta
+##Macmini1_rcorrtest_DN161_c0_g1_i1 len= 485
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200	1200	1/1	99.010	400	404	3	1	1	403	797	1200	0.0	723	Mac_sp_Laumer_and_Giribet_KC869843_shortened_1_1200
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	347	347	0	0	1	347	831	1177	0.0	641	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mac013_824_LaBarra	1159	1/1	100.000	347	347	0	0	1	347	813	1159	0.0	641	Mac013_824_LaBarra
+Macmini1_rcorrtest_DN161_c0_g1_i1	485	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320	1189	1/1	99.713	347	348	0	1	1	347	842	1189	0.0	636	Mactub_261_BotGarten_Victoriahaus_28S_FJ715320
+##Macmini1_rcorrtest_DN36_c0_g1_i1 len= 385
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Maccla_301_Marano_A4_28S_FJ715324	1177	1/1	100.000	385	385	0	0	1	385	545	161	0.0	712	Maccla_301_Marano_A4_28S_FJ715324
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Macerm_561_Lignano	1066	1/1	99.740	384	385	1	0	1	385	485	101	0.0	706	Macerm_561_Lignano
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Macerm_525_MangroveBay	1071	1/1	96.667	377	390	6	3	1	385	492	105	0.0	641	Macerm_525_MangroveBay
+Macmini1_rcorrtest_DN36_c0_g1_i1	385	Maccur_365_TVA	1076	1/1	96.382	373	387	11	3	1	385	497	112	0.0	634	Maccur_365_TVA
+
+We found 2 contigs that matched blast_results/Macmini2_20170608_transrate_optimized_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_20170608_DN71_c0_g1_i1 len= 612
+##Macmini2_20170608_DN255_c0_g1_i1 len= 206
+
+We found 3 contigs that matched blast_results/Macmini2_rcorrtest_blast_FJ715306.1_Maclig_18S.fasta
+##Macmini2_rcorrtest_DN51_c0_g1_i1 len= 613
+##Macmini2_rcorrtest_DN10_c0_g1_i1 len= 210
+##Macmini2_rcorrtest_DN180_c0_g1_i1 len= 206
