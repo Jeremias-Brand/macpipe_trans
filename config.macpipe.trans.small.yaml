@@ -16,6 +16,8 @@ BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
 # path to BUSCO plotting function
 BUSCO_p:        "/home/jeremias/soft/busco/BUSCO_plot.py"
 # parameters
-trim_leading:   30
-trim_trailing:  30
-trim_minlength: 25
+trim_leading:   "30"
+trim_trailing:  "30"
+trim_minlength: "25"
+
+

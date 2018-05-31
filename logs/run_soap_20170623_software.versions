@@ -1,0 +1,11 @@
+These are the versions of software used for run: soap_20170623
+Fri Jun 23 16:04:13 CEST 2017
+Python 3.6.0 :: Anaconda custom (64-bit)
+# HMMER 3.1b2 (February 2015); http://hmmer.org/
+   Nucleotide-Nucleotide BLAST 2.3.0+
+Report the current EMBOSS version number
+6.6.0.0
+perl version: 
+5.016002BUSCO 2.0
+transrate version: /home/jeremias/soft/transrate-1.0.2-linux-x86_64/transrate --version
+/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity

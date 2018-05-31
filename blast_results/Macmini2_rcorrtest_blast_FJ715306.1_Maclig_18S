@@ -1,0 +1,3 @@
+FJ715306.1	1693	Macmini2_rcorrtest_DN51_c0_g1_i1	613	1/1	99.258	535	539	2	1	1	537	539	1	0.0	972	Macmini2_rcorrtest_DN51_c0_g1_i1 len=613 path=[591:0-612] [-1, 591, -2]
+FJ715306.1	1693	Macmini2_rcorrtest_DN10_c0_g1_i1	210	1/1	99.048	208	210	2	0	835	1044	1	210	2.61e-106	377	Macmini2_rcorrtest_DN10_c0_g1_i1 len=210 path=[375:0-209] [-1, 375, -2]
+FJ715306.1	1693	Macmini2_rcorrtest_DN180_c0_g1_i1	206	1/1	98.544	203	206	3	0	1213	1418	1	206	2.03e-102	364	Macmini2_rcorrtest_DN180_c0_g1_i1 len=206 path=[367:0-205] [-1, 367, -2]

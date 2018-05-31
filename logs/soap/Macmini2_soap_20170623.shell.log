@@ -1,0 +1,201 @@
+
+The version 1.03: released on July 19th, 2013
+
+pregraph -s soap/Macmini2_soap_20170623.config -K 31 -p 14 -o soap/Macmini2_soap_20170623 
+In soap/Macmini2_soap_20170623.config, 1 libs, max seq len 100, max name len 256
+
+14 thread created
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R1_trim.fq.gz
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R2_trim.fq.gz
+time spent on hash reads: 0s, 19046 reads processed
+[LIB] 0, avg_ins 150, reverse 0 
+893392 nodes allocated, 1324200 kmer in reads, 1324200 kmer processed
+871222 linear nodes
+time spent on marking linear nodes 0s
+time spent on pre-graph construction: 0s
+
+deLowKmer 0, deLowEdge 1
+Start to remove kmer of out frequency kmers < 0.050000
+75 kmers off
+14 thread created
+0 linear nodes
+time spent on cut kmer: 0s
+
+Start to remove tips of single frequency kmers short than 62
+12188 tips off
+14 thread created
+1133 linear nodes
+Start to remove tips which don't contribute the most links
+kmer set 0 done
+kmer set 1 done
+kmer set 2 done
+kmer set 3 done
+kmer set 4 done
+kmer set 5 done
+kmer set 6 done
+kmer set 7 done
+kmer set 8 done
+kmer set 9 done
+kmer set 10 done
+kmer set 11 done
+kmer set 12 done
+kmer set 13 done
+4073 tips off
+14 thread created
+0 linear nodes
+time spent on cutTipe: 1s
+
+13414 (6707) edges 158 extra nodes
+time spent on making edges: 0s
+
+In file: soap/Macmini2_soap_20170623.config, max seq len 100, max name len 256
+
+14 thread created
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R1_trim.fq.gz
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R2_trim.fq.gz
+19046 reads processed
+time 0,0,0,0,0,0,0
+0 markers outputed
+done mapping reads, 8959 reads deleted, 4115 arcs created
+[LIB] 0, avg_ins 150, reverse 0 
+time spent on mapping reads: 0s
+
+10556 vertex outputed
+overall time for lightgraph: 0m
+
+contig -g soap/Macmini2_soap_20170623 -M 1 
+there're 10556 kmers in vertex file
+there're 13414 edge in edge file
+done sort
+input 13414 edges
+5520 pre-arcs loaded
+start to pinch bubbles, cutoff 0.100000, MAX NODE NUM 3, MAX DIFF 2
+5034 startingPoints, 1673 dheap nodes
+446 pairs found, 213 pairs of paths compared, 169 pairs merged
+sequenc compare failure: 0 26 18 0
+DFibHeap: 32 Nodes allocated
+a linear concatenation lap, 383 concatenated
+a linear concatenation lap, 15 concatenated
+a linear concatenation lap, 0 concatenated
+12274 edges in graph
+time spent on bubblePinch: 0s
+
+Start to remove the low coverage edge < 2
+4233 edges removed
+
+strict 0, cutLen 62
+a cutTipsInGraph lap, 406 tips cut
+a cutTipsInGraph lap, 44 tips cut
+a cutTipsInGraph lap, 25 tips cut
+a cutTipsInGraph lap, 6 tips cut
+a cutTipsInGraph lap, 1 tips cut
+a cutTipsInGraph lap, 2 tips cut
+a cutTipsInGraph lap, 3 tips cut
+a cutTipsInGraph lap, 1 tips cut
+a cutTipsInGraph lap, 0 tips cut
+123 dead arcs removed
+a linear concatenation lap, 327 concatenated
+a linear concatenation lap, 11 concatenated
+a linear concatenation lap, 0 concatenated
+2468 edges in graph
+there're 13414 edges
+after compacting 2468 edges left
+
+delete unlike arc :338
+1 time to delete light arcs 
+48 loops removed in Graph
+Start to remove light arc using the rate 0.050000 and 0.020000
+delete light arc :0/0
+
+207 short contig(<48) removed 
+a linear concatenation lap, 31 concatenated
+a linear concatenation lap, 0 concatenated
+1992 edges in graph
+there're 2468 edges
+after compacting 1992 edges left
+
+473 ctgs longer than 100, sum up 80273bp, with average length 169
+the longest is 1523bp, contig N50 is 173 bp,contig N90 is 100 bp
+996 contigs longer than 32 output
+time elapsed: 0m
+
+map -s soap/Macmini2_soap_20170623.config -g soap/Macmini2_soap_20170623 -p 14 -K 31 
+K = 31
+contig len cutoff: 33
+
+there're 996 contigs in file: soap/Macmini2_soap_20170623, max seq len 1523, min seq len 35, max name len 10
+time spent on parse contigs file 0s
+14 thread created
+time spent on hash reads: 0s
+100142 nodes allocated, 100186 kmer in reads, 100186 kmer processed
+time spent on De bruijn graph construction: 0s
+
+In file: soap/Macmini2_soap_20170623.config, max seq len 100, max name len 256
+
+14 thread created
+1992 edges in graph
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R1_trim.fq.gz
+read from file:
+ /home/jeremias/dev/macpipe_trans/data/Macmini2_R2_trim.fq.gz
+current insert size 150, map_len 32
+Output 388 out of 19046 (2.0)% reads in gaps
+5341 out of 19046 (28.0)% reads mapped to contigs
+1 pe insert size, the largest boundary is 19046
+
+[LIB] 0, avg_ins 150, reverse 0 
+time spent on mapping reads: 0s
+
+overall time for alignment: 0m
+
+scaff -g soap/Macmini2_soap_20170623 -p 14 
+there're 1 grads, 19046 reads, max read len 100
+K = 31
+there're 1992 edge in edge file
+40 arcs loaded
+input 996 contigs
+done loading updated edges
+time spent on loading edges 0s
+
+for insert size: 150
+Total_PE_link	Same_contig_right	Same_contig_wrong	Minus_dis_PE	Plus_dis_PE	Correct_PE	Accumulate_connect
+2553	2457	0	37	0	55	82
+Using contigs longer than 150 to estimate insert size: 
+Pair_num	SD	insert_size
+1192	SD=33, 41 new connections
+all PEs attached
+time spent on loading pair end info 0s
+
+
+9 link to masked contigs, 0 links on a single scaff
+Insert size 150: 40 links input
+Cutoff for number of pairs to make a reliable connection: 3
+all links loaded
+time spent on creating scaffolds 0s
+
+mask the short contigs, which are shorter than 100
+10 links built by the informations of single read
+48 weak connections(<3) removed (there were 64 active cnnects))
+4 simple loops found and removed in graph
+Begin to linearize the graph
+Delete the unnecessary connections : 0+0
+Remove the error connections
+0 complex loops found and removed in graph
+The second time to linearize the graph 
+Delete the unnecessary connections : 0+0
+Divided into 216 loci by the connections
+
+There are 4 locis, which contain more than 2 contigs
+The loci can be classified to four kinds:
+LINEAR:3
+FORK:1
+BUBBLE:0
+COMPLEX:0
+time spent on creating transcriptome 0s
+Done with 5 scaffolds, 0 gaps finished, 5 gaps overall
+time elapsed: 0m
+time for the whole pipeline: 0m

@@ -1,0 +1,12 @@
+PASS	Basic Statistics	Macmini2_R1_cor_trim.fq.gz
+FAIL	Per base sequence quality	Macmini2_R1_cor_trim.fq.gz
+PASS	Per tile sequence quality	Macmini2_R1_cor_trim.fq.gz
+PASS	Per sequence quality scores	Macmini2_R1_cor_trim.fq.gz
+WARN	Per base sequence content	Macmini2_R1_cor_trim.fq.gz
+FAIL	Per sequence GC content	Macmini2_R1_cor_trim.fq.gz
+PASS	Per base N content	Macmini2_R1_cor_trim.fq.gz
+WARN	Sequence Length Distribution	Macmini2_R1_cor_trim.fq.gz
+PASS	Sequence Duplication Levels	Macmini2_R1_cor_trim.fq.gz
+PASS	Overrepresented sequences	Macmini2_R1_cor_trim.fq.gz
+PASS	Adapter Content	Macmini2_R1_cor_trim.fq.gz
+PASS	Kmer Content	Macmini2_R1_cor_trim.fq.gz

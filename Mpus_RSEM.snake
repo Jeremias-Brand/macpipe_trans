@@ -1,0 +1,65 @@
+"""
+Author: J. Brand
+Affiliation: Unibas
+Aim: Workflow abundance estimation using RSEM
+Date: March 2017
+Run: snakemake   -s Snakefile
+Latest modification:
+
+"""
+from snakemake.utils import report
+from os.path import join
+import os
+import time
+SP = 'Mpus'
+ASSEMBLY        = 'Mpus_20161123.Trinity.fasta'
+FASTQ_DIR       = '/home/jeremias/assembly/BSSE_2015.12/khmer_assembly/RSEM/raw_reads/lanes_combined/'
+ASSEMBLY_DIR    = '/home/jeremias/assembly/BSSE_2015.12/khmer_assembly/RSEM/assemblies/'
+SAMPLES,        = glob_wildcards(join(FASTQ_DIR, 'Mhtx_{sample}_R1.fastq.gz'))
+
+
+# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
+PATTERN_R1 = expand('{SP}_{{sample}}_R1.fastq.gz', SP=SP)
+PATTERN_R2 = expand('{SP}_{{sample}}_R2.fastq.gz', SP=SP)
+
+rule all:
+    input:
+        expand('{SP}_report.file', SP=SP)
+
+rule RSEM:
+    input:
+        assembly = ASSEMBLY_DIR + ASSEMBLY,
+        left     = expand(FASTQ_DIR + '{SP}_{{sample}}_R1.fastq.gz', SP=SP),
+        right    = expand(FASTQ_DIR + '{SP}_{{sample}}_R2.fastq.gz', SP=SP)
+
+    output:
+        expand('{SP}_{{sample}}/RSEM.isoforms.results', SP=SP)
+    log:
+        expand("logs/RSEM/{SP}_{{sample}}.log", SP=SP)
+    threads: 12
+    shell:
+        """
+        ~/soft/trinityrnaseq-2.2.0/util/align_and_estimate_abundance.pl \
+        --transcripts {input.assembly} --seqType fq \
+        --left {input.left}  --right {input.right} \
+        --prep_reference --est_method RSEM --aln_method bowtie \
+        --bowtie_RSEM "--all --best --strata -m 200 --chunkmbs 512" \
+        --output_dir {SP}_{wildcards.sample} \
+        --thread_count {threads} &> {log}
+        """
+rule aggregate:
+    input:
+        expand('{SP}_{sample}/RSEM.isoforms.results', sample=SAMPLES, SP=SP)
+    output:
+        expand('{SP}_report.file', SP=SP)
+    shell:
+        "touch {SP}_report.file"
+
+# Finishing up --------------------------------------------------------------
+onsuccess:
+    print("Workflow finished, no error")
+    shell("mail -s '{SP} RSEM finished, no error' jeremias.brand@unibas.ch < {log}")
+onerror:
+    print("An error occurred with the snakemake run")
+    # here it would be good to include timstamping
+    shell("mail -s 'Error in {SP} RSEM run' jeremias.brand@unibas.ch < {log}")
