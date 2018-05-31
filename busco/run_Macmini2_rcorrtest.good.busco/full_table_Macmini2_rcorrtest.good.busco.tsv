@@ -1,6 +1,6 @@
 # BUSCO version is: 2.0 
 # The lineage dataset is: eukaryota_odb9 (Creation date: 2016-11-02, number of species: 100, number of BUSCOs: 303)
-# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/transrate/Macmini2_rcorrtest.transrate/Macmini2_rcorrtest.Trinity/good.Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/transrate/Macmini2_rcorrtest.transrate/Macmini2_rcorrtest.Trinity/good.Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
 #
 # Busco id	Status	Sequence	Score	Length
 EOG0937004M	Missing
@@ -56,7 +56,7 @@ EOG093707HK	Missing
 EOG093707LO	Missing
 EOG093707RF	Missing
 EOG093707VN	Missing
-EOG093707VQ	Fragmented	Macmini2_rcorrtest_DN145_c0_g1_i1	127.0	191
+EOG093707VQ	Missing
 EOG0937084T	Missing
 EOG0937085E	Missing
 EOG093708IM	Missing
@@ -69,7 +69,7 @@ EOG093709BZ	Missing
 EOG093709HP	Missing
 EOG093709JG	Missing
 EOG09370A22	Missing
-EOG09370ADO	Fragmented	Macmini2_rcorrtest_DN19_c0_g1_i1	260.5	264
+EOG09370ADO	Fragmented	Macmini2_rcorrtest_DN32_c0_g1_i1	111.9	84
 EOG09370AI8	Missing
 EOG09370AJP	Missing
 EOG09370AL3	Missing
@@ -171,7 +171,7 @@ EOG09370MGF	Missing
 EOG09370MHI	Missing
 EOG09370MMK	Missing
 EOG09370MQ0	Missing
-EOG09370MZ4	Fragmented	Macmini2_rcorrtest_DN113_c0_g1_i1	130.2	76
+EOG09370MZ4	Missing
 EOG09370N7W	Missing
 EOG09370NBT	Missing
 EOG09370NBW	Missing
@@ -191,7 +191,7 @@ EOG09370P2W	Missing
 EOG09370P5Q	Missing
 EOG09370P7I	Missing
 EOG09370P9T	Missing
-EOG09370PBD	Fragmented	Macmini2_rcorrtest_DN245_c0_g1_i1	152.1	93
+EOG09370PBD	Missing
 EOG09370PLC	Missing
 EOG09370PN3	Missing
 EOG09370PYJ	Missing
@@ -290,7 +290,7 @@ EOG09371330	Missing
 EOG0937133J	Missing
 EOG093713HJ	Missing
 EOG093713LY	Missing
-EOG09371431	Complete	Macmini2_rcorrtest_DN97_c0_g1_i1	171.1	97
+EOG09371431	Fragmented	Macmini2_rcorrtest_DN30_c0_g1_i1	90.0	51
 EOG093714JU	Missing
 EOG093714Q2	Missing
 EOG093715EC	Missing

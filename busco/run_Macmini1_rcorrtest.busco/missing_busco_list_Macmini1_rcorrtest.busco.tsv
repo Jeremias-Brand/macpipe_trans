@@ -1,6 +1,6 @@
 # BUSCO version is: 2.0 
 # The lineage dataset is: eukaryota_odb9 (Creation date: 2016-11-02, number of species: 100, number of BUSCOs: 303)
-# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.Trinity.fasta -o Macmini1_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.Trinity.fasta -o Macmini1_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
 #
 EOG0937004M
 EOG09370082
@@ -282,8 +282,10 @@ EOG0937129K
 EOG093712G8
 EOG093712Q6
 EOG09371330
+EOG0937133J
 EOG093713HJ
 EOG093713LY
+EOG09371431
 EOG093714JU
 EOG093714Q2
 EOG093715EC

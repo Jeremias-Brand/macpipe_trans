@@ -1,21 +1,21 @@
 # a yaml file to specify input to the pipline
 # TODO change to $HOME
 # dirs
-fastqdir:       "/home/jeremias/dev/macpipe_trans/data/"
-transrateDir:   "/home/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
-homedir:        "/home/jeremias/dev/macpipe_trans/"
-rRNAdb:         "/home/jeremias/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
+fastqdir:       "/home/scharer_group/jeremias/dev/macpipe_trans/data/"
+transrateDir:   "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
+homedir:        "/home/scharer_group/jeremias/dev/macpipe_trans/"
+rRNAdb:         "/home/scharer_group/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
 # where the fastas for the fish_genes.py step are stored
-voucher_dir:    "/home/jeremias/dbs/vouchers/"
+voucher_dir:    "/home/scharer_group/jeremias/dbs/vouchers/"
 # list with one file name per line selecting vouchers in voucher_dir
 vouchers:       "vouchers.config"
-ref_4genes:     "/home/jeremias/dbs/vouchers/Macrostomidae_4genes_db.fasta"
-ref_28S:        "/home/jeremias/dbs/vouchers/Macrostomidae_28S.fasta"
+ref_4genes:     "/home/scharer_group/dbs/vouchers/Macrostomidae_4genes_db.fasta"
+ref_28S:        "/home/scharer_group/dbs/vouchers/Macrostomidae_28S.fasta"
 # path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
-py3:            "/home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python"
-transrate:      "/home/jeremias/soft/transrate-1.0.2-linux-x86_64/transrate"
-trinity:        "/home/jeremias/soft/trinityrnaseq-2.2.0/Trinity"
+py3:            "/home/jeremias/.pyenv/versions/anaconda3-4.3.0/bin/python"
+transrate:      "/home/jeremias/soft/transrate-1.0.3-linux-x86_64/transrate"
+trinity:        "/home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Trinity"
 # path to the busco database
 BuscoLib:       "/home/jeremias/soft/busco/eukaryota_odb9"
 # path to BUSCO executable

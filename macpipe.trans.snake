@@ -120,7 +120,7 @@ rule trimmomatic:
     shell:
         # this step also renames the files
         """
-        trimmomatic-0.36.jar PE -threads {threads}\
+        trimmomatic PE -threads {threads}\
         {input.forward} {input.reverse} \
         {params.sample_name}_R1_cor_trim.fq.gz {params.sample_name}_R1_cor_unpaired.fq.gz \
         {params.sample_name}_R2_cor_trim.fq.gz {params.sample_name}_R2_cor_unpaired.fq.gz \
@@ -142,14 +142,15 @@ rule remove_rRNA:
         rRNAdb = config["rRNAdb"],
         statfile = "bowtie_stats",
         sample_name = FASTQ_DIR + "{sample}",
-        err = "logs/bowtie_{sample}.err"
+        err = "logs/bowtie_{sample}.sam"
     threads: 14
     shell:
         """
         (bowtie2 --very-sensitive-local --phred33 -q  \
         -x {params.rRNAdb} -1 {input.forward}  -2 {input.reverse} \
         --threads {threads} --met-file {params.statfile} \
-        --al-conc-gz {params.sample_name}_rRNA.gz --un-conc-gz {params.sample_name}_clean.gz) 2> {log} 1> {params.err}
+        -S {params.err} \
+        --al-conc-gz {params.sample_name}_rRNA.gz --un-conc-gz {params.sample_name}_clean.gz) 2> {log}
         """
 
 rule rename_remove_rRNA:
@@ -175,24 +176,32 @@ rule rename_remove_rRNA:
 
 rule fastqc:
     input:
-        forward  = FASTQ_DIR + "{sample}_R1.fq.gz",
-        reverse  = FASTQ_DIR + "{sample}_R2.fq.gz",
-        forward_clean  = FASTQ_DIR + "{sample}_R1_cor_trim_clean.fq.gz",
-        reverse_clean  = FASTQ_DIR + "{sample}_R2_cor_trim_clean.fq.gz"
+        f  = FASTQ_DIR + "{sample}_R1.fq.gz",
+        r  = FASTQ_DIR + "{sample}_R2.fq.gz",
+        f_trim  = FASTQ_DIR + "{sample}_R1_cor_trim.fq.gz",
+        r_trim  = FASTQ_DIR + "{sample}_R2_cor_trim.fq.gz",
+        f_clean  = FASTQ_DIR + "{sample}_R1_cor_trim_clean.fq.gz",
+        r_clean  = FASTQ_DIR + "{sample}_R2_cor_trim_clean.fq.gz"
     output:
-        forward_qc         = "QC/{sample}_R1_fastqc.html",
-        reverse_qc         = "QC/{sample}_R2_fastqc.html",
-        forward_trimmed_qc = "QC/{sample}_R1_cor_trim_clean_fastqc.html",
-        reverse_trimmed_qc = "QC/{sample}_R2_cor_trim_clean_fastqc.html"
+        f_qc         = "QC/{sample}_R1_fastqc.html",
+        r_qc         = "QC/{sample}_R2_fastqc.html",
+        f_trimmed_qc = "QC/{sample}_R1_cor_trim_clean_fastqc.html",
+        r_trimmed_qc = "QC/{sample}_R2_cor_trim_clean_fastqc.html"
     log:
         "logs/fastqc/{sample}_fastqc.log"
     params:
     threads: 7
     shell:
         """
-        fastqc {input.forward} {input.reverse} \
-        {input.forward_clean} {input.reverse_clean} \
-        --outdir QC/ --noextract -t {threads}
+        fastqc {input.f} {input.r} \
+        {input.f_trim} {input.r_trim} \
+        {input.f_clean} {input.r_clean} \
+        --outdir QC/  -t {threads}
+        unzip -d ./QC/ QC/{wildcards.sample}_R1_cor_trim_fastqc.zip
+        for f in {input};do
+            echo $f
+        done
+        
         """
 
 rule trinity_on_rRNA:
@@ -211,12 +220,12 @@ rule trinity_on_rRNA:
     shell:
         """
         {params.trinity} --seqType fq \
-        --trimmomatic --CPU {threads} --max_memory 150G \
-        --output 'trinity/'{wildcards.sample}_{TIMESTAMP}'.trinity' \
+        --CPU {threads} --max_memory 150G \
+        --output 'trinity/'{wildcards.sample}_rRNA_{TIMESTAMP}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
-        --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}_trinity.shell.log 2> {log} && \
-        mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
+        --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
+        mv trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly}
         """
 
@@ -245,7 +254,7 @@ rule trinity_on_trimmed:
     shell:
         """
         {params.trinity} --seqType fq \
-        --trimmomatic --CPU {threads} --max_memory 150G \
+        --CPU {threads} --max_memory 150G \
         --output 'trinity/'{wildcards.sample}_{TIMESTAMP}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
@@ -359,7 +368,7 @@ rule plot_transrate_contigs:
     input:
         expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
     output:
-        expand("{{sample}}_{T}.png", T=TIMESTAMP)
+        expand("QC/{{sample}}_{T}_contig_dist.png", T=TIMESTAMP)
     script:
         "R/contigs.plot.R"
 
@@ -495,7 +504,11 @@ rule report:
         busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
         busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
-        assembly_plot       = expand("{sample}_{T}.png", sample=SAMPLES, T=TIMESTAMP),
+        assembly_plot       = expand("QC/{sample}_{T}_contig_dist.png", sample=SAMPLES, T=TIMESTAMP),
+        forward_qc         = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
+        reverse_qc         = expand("QC/{sample}_R2_fastqc.html", sample=SAMPLES),
+        forward_trimmed_qc = expand("QC/{sample}_R1_cor_trim_clean_fastqc.html", sample=SAMPLES),
+        reverse_trimmed_qc = expand("QC/{sample}_R2_cor_trim_clean_fastqc.html", sample=SAMPLES),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions",
         fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
         fish_28S            = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S",

@@ -1,0 +1,14 @@
+{
+    "salmon_version": "0.6.0",
+    "libType": "IU",
+    "alignments": "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/Macmini2_rcorrtest.transrate/Macmini2_rcorrtest.Trinity/Macmini2_R1.fq.gz.Macmini2_R2.fq.gz.Macmini2_rcorrtest.Trinity.bam",
+    "targets": "/home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta",
+    "threads": "14",
+    "sampleOut": [],
+    "sampleUnaligned": [],
+    "output": ".",
+    "useErrorModel": [],
+    "biasCorrect": [],
+    "noEffectiveLengthCorrection": [],
+    "useFSPD": []
+}

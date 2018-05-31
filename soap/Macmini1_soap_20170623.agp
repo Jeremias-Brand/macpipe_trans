@@ -1,9 +1,0 @@
-scaffold1	1	162	1	W	1719	1	162	+
-scaffold1	163	188	2	N	26	fragment	yes
-scaffold1	189	404	3	W	1885	1	216	-
-scaffold2	1	262	1	W	1903	1	262	-
-scaffold2	263	306	2	N	44	fragment	yes
-scaffold2	307	471	3	W	1789	32	196	+
-scaffold3	1	271	1	W	1913	1	271	+
-scaffold3	272	301	2	N	30	fragment	yes
-scaffold3	302	731	3	W	1975	1	430	-

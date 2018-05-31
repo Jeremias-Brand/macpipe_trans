@@ -1,287 +1,52 @@
-# salmon (alignment-based) v0.4.2
-# [ program ] => salmon 
-# [ command ] => quant 
-# [ libType ] => { IU }
-# [ alignments ] => { /home/jeremias/dev/macpipe_trans/transrate/Macmini1_rcorrtest.transrate/Macmini1_rcorrtest.Trinity/Macmini1_R1.fq.gz.Macmini1_R2.fq.gz.Macmini1_rcorrtest.Trinity.bam }
-# [ targets ] => { /home/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.Trinity.fasta }
-# [ threads ] => { 28 }
-# [ sampleOut ] => { }
-# [ sampleUnaligned ] => { }
-# [ output ] => { . }
-# [ useVBOpt ] => { }
-# [ useErrorModel ] => { }
-# Name	Length	TPM	NumReads
-Macmini1_rcorrtest_DN120_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN169_c0_g1_i1	211	1723.76	2.00745
-Macmini1_rcorrtest_DN132_c0_g1_i1	213	3406.65	4.00492
-Macmini1_rcorrtest_DN108_c0_g1_i1	311	2333.17	4.00492
-Macmini1_rcorrtest_DN188_c0_g1_i1	217	3343.86	4.00492
-Macmini1_rcorrtest_DN187_c0_g1_i1	474	3057.86	7.99985
-Macmini1_rcorrtest_DN114_c0_g1_i1	208	1748.62	2.00745
-Macmini1_rcorrtest_DN100_c0_g1_i1	515	7954.05	22.609
-Macmini1_rcorrtest_DN159_c0_g1_i1	229	3168.63	4.00492
-Macmini1_rcorrtest_DN167_c0_g1_i1	298	3042.18	5.00365
-Macmini1_rcorrtest_DN140_c0_g1_i1	237	4588.69	6.00238
-Macmini1_rcorrtest_DN151_c0_g1_i1	302	5151.2	8.58622
-Macmini1_rcorrtest_DN180_c0_g1_i1	226	3210.69	4.00492
-Macmini1_rcorrtest_DN107_c0_g1_i1	322	2815.43	5.00365
-Macmini1_rcorrtest_DN128_c0_g1_i1	468	2323.76	6.00238
-Macmini1_rcorrtest_DN115_c0_g1_i1	215	1691.69	2.00745
-Macmini1_rcorrtest_DN179_c0_g1_i1	235	5935.37	7.69843
-Macmini1_rcorrtest_DN199_c0_g1_i1	272	2667.71	4.00492
-Macmini1_rcorrtest_DN129_c0_g1_i1	224	1623.72	2.00745
-Macmini1_rcorrtest_DN172_c0_g1_i1	955	3601.98	18.9859
-Macmini1_rcorrtest_DN123_c0_g1_i1	228	1595.23	2.00745
-Macmini1_rcorrtest_DN149_c0_g1_i1	264	2063.12	3.00619
-Macmini1_rcorrtest_DN150_c0_g1_i1	429	3378.61	7.99985
-Macmini1_rcorrtest_DN133_c0_g1_i1	396	1832.36	4.00492
-Macmini1_rcorrtest_DN110_c0_g1_i1	305	2972.36	5.00365
-Macmini1_rcorrtest_DN165_c0_g1_i1	221	1645.76	2.00745
-Macmini1_rcorrtest_DN186_c0_g1_i1	230	2368.11	3.00619
-Macmini1_rcorrtest_DN152_c0_g1_i1	225	1616.5	2.00745
-Macmini1_rcorrtest_DN184_c0_g1_i1	216	3359.34	4.00492
-Macmini1_rcorrtest_DN117_c0_g1_i1	214	2545.16	3.00619
-Macmini1_rcorrtest_DN195_c0_g1_i1	246	2214.08	3.00619
-Macmini1_rcorrtest_DN154_c0_g1_i1	318	2281.81	4.00492
-Macmini1_rcorrtest_DN197_c0_g1_i1	247	2937.72	4.00492
-Macmini1_rcorrtest_DN141_c0_g1_i1	245	2961.7	4.00492
-Macmini1_rcorrtest_DN147_c0_g1_i1	251	2169.98	3.00619
-Macmini1_rcorrtest_DN144_c0_g1_i1	209	2606.05	3.00619
-Macmini1_rcorrtest_DN125_c0_g1_i1	337	4300.96	7.99985
-Macmini1_rcorrtest_DN145_c0_g1_i1	277	5232.58	7.99985
-Macmini1_rcorrtest_DN109_c0_g1_i1	306	5919.37	9.99731
-Macmini1_rcorrtest_DN196_c0_g1_i1	270	3585.75	5.34356
-Macmini1_rcorrtest_DN193_c0_g1_i1	233	2337.62	3.00619
-Macmini1_rcorrtest_DN168_c0_g1_i1	225	3224.96	4.00492
-Macmini1_rcorrtest_DN146_c0_g1_i1	460	2364.17	6.00238
-Macmini1_rcorrtest_DN121_c0_g1_i1	229	2378.45	3.00619
-Macmini1_rcorrtest_DN148_c0_g1_i1	343	2115.5	4.00492
-Macmini1_rcorrtest_DN171_c0_g1_i1	470	3853.89	9.99731
-Macmini1_rcorrtest_DN111_c0_g1_i1	364	2490.57	5.00365
-Macmini1_rcorrtest_DN104_c0_g1_i1	294	2468.08	4.00492
-Macmini1_rcorrtest_DN113_c0_g1_i1	247	4402.92	6.00238
-Macmini1_rcorrtest_DN158_c0_g1_i1	238	3048.81	4.00492
-Macmini1_rcorrtest_DN185_c0_g1_i1	218	1668.41	2.00745
-Macmini1_rcorrtest_DN116_c0_g1_i1	348	3125.06	6.00238
-Macmini1_rcorrtest_DN106_c0_g1_i1	210	1731.97	2.00745
-Macmini1_rcorrtest_DN182_c0_g1_i1	343	3170.61	6.00238
-Macmini1_rcorrtest_DN126_c0_g1_i1	286	3214.05	5.07347
-Macmini1_rcorrtest_DN166_c0_g1_i1	221	3283.33	4.00492
-Macmini1_rcorrtest_DN143_c0_g1_i1	246	4420.81	6.00238
-Macmini1_rcorrtest_DN127_c0_g1_i1	214	1699.59	2.00745
-Macmini1_rcorrtest_DN119_c0_g1_i1	208	2618.58	3.00619
-Macmini1_rcorrtest_DN131_c0_g1_i1	208	2618.58	3.00619
-Macmini1_rcorrtest_DN103_c0_g1_i1	212	1715.63	2.00745
-Macmini1_rcorrtest_DN142_c0_g1_i1	310	1756.98	3.00619
-Macmini1_rcorrtest_DN177_c0_g1_i1	496	4381.51	11.9948
-Macmini1_rcorrtest_DN162_c0_g1_i1	563	13823.7	42.9555
-Macmini1_rcorrtest_DN138_c0_g1_i1	295	4050.91	6.5957
-Macmini1_rcorrtest_DN101_c0_g1_i1	412	9666.86	21.9821
-Macmini1_rcorrtest_DN189_c0_g1_i1	323	3366.94	6.00238
-Macmini1_rcorrtest_DN137_c0_g1_i1	427	6360.86	14.991
-Macmini1_rcorrtest_DN190_c0_g1_i1	273	1995.11	3.00619
-Macmini1_rcorrtest_DN135_c0_g1_i1	221	3283.33	4.00492
-Macmini1_rcorrtest_DN161_c0_g1_i1	485	3361.6	8.99858
-Macmini1_rcorrtest_DN134_c0_g1_i1	223	2442.44	3.00619
-Macmini1_rcorrtest_DN112_c0_g1_i1	217	1676.1	2.00745
-Macmini1_rcorrtest_DN183_c0_g1_i1	212	1715.63	2.00745
-Macmini1_rcorrtest_DN130_c0_g1_i1	653	3605.18	12.9935
-Macmini1_rcorrtest_DN194_c0_g1_i1	208	1748.62	2.00745
-Macmini1_rcorrtest_DN156_c0_g1_i1	214	1699.59	2.00745
-Macmini1_rcorrtest_DN198_c0_g1_i1	249	3640.84	5.00365
-Macmini1_rcorrtest_DN173_c0_g1_i1	226	1609.35	2.00745
-Macmini1_rcorrtest_DN176_c0_g1_i1	224	3239.36	4.00492
-Macmini1_rcorrtest_DN170_c0_g1_i1	507	7141.71	19.9846
-Macmini1_rcorrtest_DN191_c0_g1_i1	302	3001.88	5.00365
-Macmini1_rcorrtest_DN105_c0_g1_i1	201	2709.78	3.00619
-Macmini1_rcorrtest_DN139_c0_g1_i1	246	2214.08	3.00619
-Macmini1_rcorrtest_DN178_c0_g1_i1	209	2606.05	3.00619
-Macmini1_rcorrtest_DN157_c0_g1_i1	231	3141.2	4.00492
-Macmini1_rcorrtest_DN136_c0_g1_i1	378	2528.53	5.2753
-Macmini1_rcorrtest_DN174_c0_g1_i1	824	3296.22	14.991
-Macmini1_rcorrtest_DN102_c0_g1_i1	211	1723.76	2.00745
-Macmini1_rcorrtest_DN164_c0_g1_i1	379	4301.78	8.99858
-Macmini1_rcorrtest_DN155_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN175_c0_g1_i1	211	1723.76	2.00745
-Macmini1_rcorrtest_DN192_c0_g1_i1	206	1765.6	2.00745
-Macmini1_rcorrtest_DN163_c0_g1_i1	230	2368.11	3.00619
-Macmini1_rcorrtest_DN118_c0_g1_i1	306	2962.64	5.00365
-Macmini1_rcorrtest_DN181_c0_g1_i1	407	1782.84	4.00492
-Macmini1_rcorrtest_DN160_c0_g1_i1	220	1653.24	2.00745
-Macmini1_rcorrtest_DN122_c0_g1_i1	214	1699.59	2.00745
-Macmini1_rcorrtest_DN153_c0_g1_i1	279	2600.78	4.00492
-Macmini1_rcorrtest_DN98_c0_g1_i1	243	6506.82	8.72693
-Macmini1_rcorrtest_DN39_c0_g1_i1	227	1602.26	2.00745
-Macmini1_rcorrtest_DN10_c0_g1_i1	307	2952.99	5.00365
-Macmini1_rcorrtest_DN22_c0_g1_i1	671	7823.26	28.9732
-Macmini1_rcorrtest_DN47_c0_g1_i1	245	2223.12	3.00619
-Macmini1_rcorrtest_DN92_c0_g1_i1	266	4579.41	6.72322
-Macmini1_rcorrtest_DN68_c0_g1_i1	218	2498.46	3.00619
-Macmini1_rcorrtest_DN34_c0_g1_i1	286	2795.77	4.4132
-Macmini1_rcorrtest_DN76_c0_g1_i1	224	2431.54	3.00619
-Macmini1_rcorrtest_DN73_c0_g1_i1	255	2845.56	4.00492
-Macmini1_rcorrtest_DN89_c0_g1_i1	333	4352.62	7.99985
-Macmini1_rcorrtest_DN79_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN28_c0_g1_i1	520	11846.8	34.001
-Macmini1_rcorrtest_DN28_c0_g1_i2	445	16255.5	39.9252
-Macmini1_rcorrtest_DN28_c0_g1_i3	532	0	0
-Macmini1_rcorrtest_DN57_c0_g1_i1	437	2740.46	6.60986
-Macmini1_rcorrtest_DN72_c0_g1_i1	209	1740.25	2.00745
-Macmini1_rcorrtest_DN77_c0_g1_i1	264	2748.55	4.00492
-Macmini1_rcorrtest_DN2_c0_g1_i1	851	3829.54	17.9872
-Macmini1_rcorrtest_DN25_c0_g1_i1	438	9093.03	21.9821
-Macmini1_rcorrtest_DN25_c0_g1_i2	666	0	0
-Macmini1_rcorrtest_DN84_c0_g1_i1	232	2347.69	3.00619
-Macmini1_rcorrtest_DN23_c0_g1_i1	490	9954.78	26.9224
-Macmini1_rcorrtest_DN23_c1_g1_i1	1141	10952.8	68.9759
-Macmini1_rcorrtest_DN83_c0_g1_i1	209	2606.05	3.00619
-Macmini1_rcorrtest_DN41_c0_g1_i1	232	4687.59	6.00238
-Macmini1_rcorrtest_DN82_c0_g1_i1	338	4288.24	7.99985
-Macmini1_rcorrtest_DN4_c0_g1_i1	295	3073.11	5.00365
-Macmini1_rcorrtest_DN66_c0_g1_i1	210	4316.99	5.00365
-Macmini1_rcorrtest_DN59_c0_g1_i1	302	1803.53	3.00619
-Macmini1_rcorrtest_DN26_c0_g1_i1	1249	6774.89	46.7037
-Macmini1_rcorrtest_DN74_c0_g1_i1	226	1609.35	2.00745
-Macmini1_rcorrtest_DN50_c0_g1_i1	227	2399.4	3.00619
-Macmini1_rcorrtest_DN81_c0_g1_i1	214	2545.16	3.00619
-Macmini1_rcorrtest_DN32_c0_g1_i1	220	1653.24	2.00745
-Macmini1_rcorrtest_DN35_c0_g1_i1	322	3095.82	5.50196
-Macmini1_rcorrtest_DN69_c0_g1_i1	338	2198.22	4.10086
-Macmini1_rcorrtest_DN62_c0_g1_i1	258	9273.95	13.206
-Macmini1_rcorrtest_DN62_c1_g1_i1	232	2347.69	3.00619
-Macmini1_rcorrtest_DN51_c0_g1_i1	233	3114.23	4.00492
-Macmini1_rcorrtest_DN12_c0_g1_i1	917	7105.86	35.9644
-Macmini1_rcorrtest_DN65_c0_g1_i1	301	3613.02	6.00238
-Macmini1_rcorrtest_DN18_c0_g1_i1	497	8522.76	23.3788
-Macmini1_rcorrtest_DN93_c0_g1_i1	240	2269.44	3.00619
-Macmini1_rcorrtest_DN11_c0_g1_i1	307	3542.41	6.00238
-Macmini1_rcorrtest_DN52_c0_g1_i1	303	3589.18	6.00238
-Macmini1_rcorrtest_DN45_c0_g1_i1	205	1774.21	2.00745
-Macmini1_rcorrtest_DN49_c0_g1_i1	243	2986.08	4.00492
-Macmini1_rcorrtest_DN94_c0_g1_i1	217	1676.1	2.00745
-Macmini1_rcorrtest_DN33_c0_g1_i1	242	2250.68	3.00619
-Macmini1_rcorrtest_DN55_c0_g1_i1	350	3624.21	7.00112
-Macmini1_rcorrtest_DN17_c0_g1_i1	570	3486.08	10.9673
-Macmini1_rcorrtest_DN17_c0_g2_i1	570	3049.56	9.59396
-Macmini1_rcorrtest_DN40_c0_g1_i1	203	1791.69	2.00745
-Macmini1_rcorrtest_DN86_c0_g1_i1	207	2986.08	3.4116
-Macmini1_rcorrtest_DN78_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN31_c0_g1_i1	409	3986.25	8.99858
-Macmini1_rcorrtest_DN15_c0_g1_i1	289	3136.91	5.00365
-Macmini1_rcorrtest_DN64_c0_g1_i1	234	3100.93	4.00492
-Macmini1_rcorrtest_DN96_c0_g1_i1	322	2815.43	5.00365
-Macmini1_rcorrtest_DN53_c0_g1_i1	264	2748.55	4.00492
-Macmini1_rcorrtest_DN42_c0_g1_i1	250	2178.66	3.00619
-Macmini1_rcorrtest_DN60_c0_g1_i1	236	1541.16	2.00745
-Macmini1_rcorrtest_DN3_c0_g1_i1	372	3896.3	7.99985
-Macmini1_rcorrtest_DN3_c0_g2_i1	221	0	0
-Macmini1_rcorrtest_DN8_c0_g1_i1	314	4616	7.99985
-Macmini1_rcorrtest_DN1_c0_g1_i1	271	4680.71	7.00112
-Macmini1_rcorrtest_DN75_c0_g1_i1	209	1740.25	2.00745
-Macmini1_rcorrtest_DN36_c0_g1_i1	385	4234.74	8.99858
-Macmini1_rcorrtest_DN43_c0_g1_i1	213	1707.57	2.00745
-Macmini1_rcorrtest_DN46_c0_g1_i1	492	2945.98	7.99985
-Macmini1_rcorrtest_DN30_c0_g1_i1	333	3265.83	6.00238
-Macmini1_rcorrtest_DN48_c0_g1_i1	287	1897.79	3.00619
-Macmini1_rcorrtest_DN9_c0_g1_i1	265	5082.13	7.43324
-Macmini1_rcorrtest_DN9_c0_g2_i1	257	0	0
-Macmini1_rcorrtest_DN29_c0_g1_i1	302	1294.01	2.1569
-Macmini1_rcorrtest_DN29_c0_g1_i2	206	8727.97	9.92355
-Macmini1_rcorrtest_DN29_c0_g1_i3	538	12307.1	36.5449
-Macmini1_rcorrtest_DN29_c0_g1_i4	417	11356.2	26.137
-Macmini1_rcorrtest_DN29_c0_g1_i5	206	0	0
-Macmini1_rcorrtest_DN29_c0_g1_i6	243	32333	43.3649
-Macmini1_rcorrtest_DN29_c0_g1_i7	230	30651.5	38.9105
-Macmini1_rcorrtest_DN29_c0_g1_i8	334	3835.69	7.07094
-Macmini1_rcorrtest_DN29_c0_g1_i9	585	3329.22	10.7494
-Macmini1_rcorrtest_DN29_c1_g1_i1	274	3969.05	6.00238
-Macmini1_rcorrtest_DN90_c0_g1_i1	203	2683.08	3.00619
-Macmini1_rcorrtest_DN70_c0_g1_i1	294	1852.6	3.00619
-Macmini1_rcorrtest_DN71_c0_g1_i1	600	3320.46	10.996
-Macmini1_rcorrtest_DN27_c0_g1_i1	1697	20154.2	188.77
-Macmini1_rcorrtest_DN37_c0_g1_i1	277	1966.3	3.00619
-Macmini1_rcorrtest_DN95_c0_g1_i1	407	4005.84	8.99858
-Macmini1_rcorrtest_DN85_c0_g1_i1	213	3406.65	4.00492
-Macmini1_rcorrtest_DN21_c0_g1_i1	722	9677.03	38.5626
-Macmini1_rcorrtest_DN14_c0_g1_i1	445	4070.4	9.99731
-Macmini1_rcorrtest_DN54_c0_g1_i1	217	1676.1	2.00745
-Macmini1_rcorrtest_DN97_c0_g1_i1	216	1683.86	2.00745
-Macmini1_rcorrtest_DN91_c0_g1_i1	221	3283.33	4.00492
-Macmini1_rcorrtest_DN44_c0_g1_i1	397	2739.35	6.00238
-Macmini1_rcorrtest_DN5_c0_g1_i1	422	3434.65	7.99985
-Macmini1_rcorrtest_DN38_c0_g1_i1	217	1676.1	2.00745
-Macmini1_rcorrtest_DN24_c0_g1_i1	1267	5999.83	41.9568
-Macmini1_rcorrtest_DN87_c0_g1_i1	500	1813.14	5.00365
-Macmini1_rcorrtest_DN99_c0_g1_i1	230	3154.85	4.00492
-Macmini1_rcorrtest_DN61_c0_g1_i1	233	4667.47	6.00238
-Macmini1_rcorrtest_DN58_c0_g1_i1	206	3522.41	4.00492
-Macmini1_rcorrtest_DN67_c0_g1_i1	330	3843.85	7.00112
-Macmini1_rcorrtest_DN19_c0_g1_i1	516	15726.1	44.7875
-Macmini1_rcorrtest_DN88_c0_g1_i1	230	18615.6	23.6315
-Macmini1_rcorrtest_DN63_c0_g1_i1	280	3237.74	5.00365
-Macmini1_rcorrtest_DN7_c0_g1_i1	721	8786.58	34.9656
-Macmini1_rcorrtest_DN56_c0_g1_i1	343	4753.28	8.99858
-Macmini1_rcorrtest_DN219_c0_g1_i1	222	2453.44	3.00619
-Macmini1_rcorrtest_DN214_c0_g1_i1	206	1765.6	2.00745
-Macmini1_rcorrtest_DN218_c0_g1_i1	215	1691.69	2.00745
-Macmini1_rcorrtest_DN236_c0_g1_i1	278	1959.23	3.00619
-Macmini1_rcorrtest_DN226_c0_g1_i1	331	2738.88	5.00365
-Macmini1_rcorrtest_DN249_c0_g1_i1	221	1645.76	2.00745
-Macmini1_rcorrtest_DN227_c0_g1_i1	310	2484.92	4.25168
-Macmini1_rcorrtest_DN206_c0_g1_i1	349	2079.13	4.00492
-Macmini1_rcorrtest_DN220_c0_g1_i1	250	2178.66	3.00619
-Macmini1_rcorrtest_DN216_c0_g1_i1	219	2487.05	3.00619
-Macmini1_rcorrtest_DN251_c0_g1_i1	214	2545.16	3.00619
-Macmini1_rcorrtest_DN230_c0_g1_i1	258	5617.92	7.99985
-Macmini1_rcorrtest_DN237_c0_g1_i1	309	2348.27	4.00492
-Macmini1_rcorrtest_DN223_c0_g1_i1	603	3604.03	11.9948
-Macmini1_rcorrtest_DN248_c0_g1_i1	245	2223.12	3.00619
-Macmini1_rcorrtest_DN241_c0_g1_i1	265	4103.85	6.00238
-Macmini1_rcorrtest_DN228_c0_g1_i1	351	3098.35	6.00238
-Macmini1_rcorrtest_DN209_c0_g1_i1	206	2644	3.00619
-Macmini1_rcorrtest_DN215_c0_g1_i1	210	2593.64	3.00619
-Macmini1_rcorrtest_DN243_c0_g1_i1	272	4663.5	7.00112
-Macmini1_rcorrtest_DN252_c0_g1_i1	297	1833.89	3.00619
-Macmini1_rcorrtest_DN208_c0_g1_i1	334	2172.5	4.00492
-Macmini1_rcorrtest_DN225_c0_g1_i1	346	2620.14	5.00365
-Macmini1_rcorrtest_DN229_c0_g1_i1	335	2706.17	5.00365
-Macmini1_rcorrtest_DN253_c0_g1_i1	213	2813.5	3.3076
-Macmini1_rcorrtest_DN261_c0_g1_i1	213	2040.38	2.39871
-Macmini1_rcorrtest_DN254_c0_g1_i1	208	1748.62	2.00745
-Macmini1_rcorrtest_DN259_c0_g1_i1	290	1878.15	3.00619
-Macmini1_rcorrtest_DN210_c0_g1_i1	266	2727.88	4.00492
-Macmini1_rcorrtest_DN244_c0_g1_i1	285	2546.02	4.00492
-Macmini1_rcorrtest_DN213_c0_g1_i1	257	3176.2	4.50534
-Macmini1_rcorrtest_DN233_c0_g1_i1	206	1765.6	2.00745
-Macmini1_rcorrtest_DN264_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN234_c0_g1_i1	276	1973.42	3.00619
-Macmini1_rcorrtest_DN205_c0_g1_i1	206	1765.6	2.00745
-Macmini1_rcorrtest_DN222_c0_g1_i1	204	1782.91	2.00745
-Macmini1_rcorrtest_DN262_c0_g1_i1	286	4936.8	7.79288
-Macmini1_rcorrtest_DN221_c0_g1_i1	203	1791.69	2.00745
-Macmini1_rcorrtest_DN240_c0_g1_i1	358	4554.12	8.99858
-Macmini1_rcorrtest_DN257_c0_g1_i1	248	2925.87	4.00492
-Macmini1_rcorrtest_DN238_c0_g1_i1	349	6569.05	12.6536
-Macmini1_rcorrtest_DN224_c0_g1_i1	385	3764.74	7.99985
-Macmini1_rcorrtest_DN258_c0_g1_i1	229	2378.45	3.00619
-Macmini1_rcorrtest_DN231_c0_g1_i1	312	2325.69	4.00492
-Macmini1_rcorrtest_DN202_c0_g1_i1	201	2709.78	3.00619
-Macmini1_rcorrtest_DN217_c0_g1_i1	546	3980.28	11.9948
-Macmini1_rcorrtest_DN207_c0_g1_i1	346	3143.12	6.00238
-Macmini1_rcorrtest_DN203_c0_g1_i1	242	3744.12	5.00094
-Macmini1_rcorrtest_DN200_c0_g1_i1	207	1757.07	2.00745
-Macmini1_rcorrtest_DN235_c0_g1_i1	295	3073.11	5.00365
-Macmini1_rcorrtest_DN242_c0_g1_i1	274	1987.83	3.00619
-Macmini1_rcorrtest_DN204_c0_g1_i1	201	2709.78	3.00619
-Macmini1_rcorrtest_DN245_c0_g1_i1	286	2537.12	4.00492
-Macmini1_rcorrtest_DN263_c0_g1_i1	354	2049.76	4.00492
-Macmini1_rcorrtest_DN255_c0_g1_i1	202	1800.56	2.00745
-Macmini1_rcorrtest_DN211_c0_g1_i1	232	2347.69	3.00619
-Macmini1_rcorrtest_DN246_c0_g1_i1	227	2399.4	3.00619
-Macmini1_rcorrtest_DN212_c0_g1_i1	225	1616.5	2.00745
-Macmini1_rcorrtest_DN260_c0_g1_i1	276	2629.05	4.00492
-Macmini1_rcorrtest_DN232_c0_g1_i1	212	2569.17	3.00619
-Macmini1_rcorrtest_DN247_c0_g1_i1	349	2079.13	4.00492
-Macmini1_rcorrtest_DN250_c0_g1_i1	223	1631	2.00745
-Macmini1_rcorrtest_DN201_c0_g1_i1	239	2278.93	3.00619
-Macmini1_rcorrtest_DN239_c0_g1_i1	211	3438.94	4.00492
+Name	Length	EffectiveLength	TPM	NumReads
+Macmini1_rcorrtest_DN39_c0_g1_i1	251	251	8326.58	5
+Macmini1_rcorrtest_DN10_c0_g1_i1	520	520	57876.1	72
+Macmini1_rcorrtest_DN34_c0_g1_i1	558	558	21723.7	29
+Macmini1_rcorrtest_DN28_c0_g1_i1	229	229	16427.7	9
+Macmini1_rcorrtest_DN2_c0_g1_i1	447	447	20572.4	22
+Macmini1_rcorrtest_DN25_c0_g1_i1	231	231	18095	10
+Macmini1_rcorrtest_DN23_c0_g1_i1	280	280	52249.3	35
+Macmini1_rcorrtest_DN41_c0_g1_i1	455	455	20210.7	22
+Macmini1_rcorrtest_DN50_c0_g1_i1	349	349	15570	13
+Macmini1_rcorrtest_DN32_c0_g1_i1	222	222	9414.29	5
+Macmini1_rcorrtest_DN35_c0_g1_i1	213	213	5887.24	3
+Macmini1_rcorrtest_DN51_c0_g1_i1	202	202	14485	7
+Macmini1_rcorrtest_DN12_c0_g1_i1	1034	1034	42974.3	106.306
+Macmini1_rcorrtest_DN12_c0_g2_i1	546	546	61010.2	79.6938
+Macmini1_rcorrtest_DN11_c0_g1_i1	646	646	23940.9	37
+Macmini1_rcorrtest_DN45_c0_g1_i1	305	305	10963.8	8
+Macmini1_rcorrtest_DN49_c0_g1_i1	209	209	5999.92	3
+Macmini1_rcorrtest_DN13_c0_g1_i1	290	290	48774.4	33.8392
+Macmini1_rcorrtest_DN13_c1_g1_i1	499	499	9349.04	11.1608
+Macmini1_rcorrtest_DN0_c0_g1_i1	258	258	14581.2	9
+Macmini1_rcorrtest_DN33_c0_g1_i1	205	205	12234	6
+Macmini1_rcorrtest_DN17_c0_g1_i1	219	219	7634.6	4
+Macmini1_rcorrtest_DN16_c0_g1_i1	203	203	16472.7	8
+Macmini1_rcorrtest_DN40_c0_g1_i1	307	307	20423.2	15
+Macmini1_rcorrtest_DN31_c0_g1_i1	294	294	7108.75	5
+Macmini1_rcorrtest_DN15_c0_g1_i1	295	295	9918.51	7
+Macmini1_rcorrtest_DN53_c0_g1_i1	204	204	8195.97	4
+Macmini1_rcorrtest_DN6_c0_g1_i1	497	497	20184.8	24
+Macmini1_rcorrtest_DN8_c0_g1_i1	204	204	8195.97	4
+Macmini1_rcorrtest_DN1_c0_g1_i1	368	368	21581.2	19
+Macmini1_rcorrtest_DN36_c0_g1_i1	521	521	23266.5	29
+Macmini1_rcorrtest_DN43_c0_g1_i1	337	337	13643.7	11
+Macmini1_rcorrtest_DN46_c0_g1_i1	243	243	6880.57	4
+Macmini1_rcorrtest_DN30_c0_g1_i1	206	206	12174.6	6
+Macmini1_rcorrtest_DN48_c0_g1_i1	968	968	24181.5	56
+Macmini1_rcorrtest_DN9_c0_g1_i1	382	382	21884.5	20
+Macmini1_rcorrtest_DN29_c0_g1_i1	263	263	12714.7	8
+Macmini1_rcorrtest_DN27_c0_g1_i1	269	269	15538.8	10
+Macmini1_rcorrtest_DN37_c0_g1_i1	227	227	9206.92	5
+Macmini1_rcorrtest_DN21_c0_g1_i1	235	235	14229.6	8
+Macmini1_rcorrtest_DN14_c0_g1_i5	548	548	15246.2	19.9881
+Macmini1_rcorrtest_DN14_c0_g1_i1	408	408	20691.6	20.1969
+Macmini1_rcorrtest_DN14_c0_g1_i4	452	452	45103.5	48.7729
+Macmini1_rcorrtest_DN14_c0_g1_i3	488	488	55614	64.9282
+Macmini1_rcorrtest_DN14_c0_g1_i2	489	489	4371.44	5.11402
+Macmini1_rcorrtest_DN44_c0_g1_i1	293	293	15692.6	11
+Macmini1_rcorrtest_DN5_c0_g1_i1	393	393	26590	25
+Macmini1_rcorrtest_DN38_c0_g1_i1	230	230	9086.83	5
+Macmini1_rcorrtest_DN24_c0_g1_i1	277	277	9054.03	6
+Macmini1_rcorrtest_DN19_c0_g1_i1	257	257	13011.5	8
+Macmini1_rcorrtest_DN7_c0_g1_i1	429	429	21435.6	22

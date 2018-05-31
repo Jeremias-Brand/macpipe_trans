@@ -1,15 +1,15 @@
 # BUSCO version is: 2.0 
 # The lineage dataset is: eukaryota_odb9 (Creation date: 2016-11-02, number of species: 100, number of BUSCOs: 303)
-# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/jeremias/dev/macpipe_trans/transrate/Macmini1_rcorrtest.transrate/Macmini1_rcorrtest.Trinity/good.Macmini1_rcorrtest.Trinity.fasta -o Macmini1_rcorrtest.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+# To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/transrate/Macmini1_rcorrtest.transrate/Macmini1_rcorrtest.Trinity/good.Macmini1_rcorrtest.Trinity.fasta -o Macmini1_rcorrtest.good.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
 #
-# Summarized benchmarking in BUSCO notation for file /home/jeremias/dev/macpipe_trans/transrate/Macmini1_rcorrtest.transrate/Macmini1_rcorrtest.Trinity/good.Macmini1_rcorrtest.Trinity.fasta
+# Summarized benchmarking in BUSCO notation for file /home/scharer_group/jeremias/dev/macpipe_trans/transrate/Macmini1_rcorrtest.transrate/Macmini1_rcorrtest.Trinity/good.Macmini1_rcorrtest.Trinity.fasta
 # BUSCO was run in mode: tran
 
-	C:0.3%[S:0.3%,D:0.0%],F:1.0%,M:98.7%,n:303
+	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
 
-	1	Complete BUSCOs (C)
-	1	Complete and single-copy BUSCOs (S)
+	0	Complete BUSCOs (C)
+	0	Complete and single-copy BUSCOs (S)
 	0	Complete and duplicated BUSCOs (D)
-	3	Fragmented BUSCOs (F)
-	299	Missing BUSCOs (M)
+	2	Fragmented BUSCOs (F)
+	301	Missing BUSCOs (M)
 	303	Total BUSCO groups searched

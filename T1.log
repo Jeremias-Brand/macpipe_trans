@@ -1,0 +1,31 @@
+Saw ASCII character Saw ASCII character 5862 but expected 64-based Phred qual. but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+
+Saw ASCII character 47 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 58 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 60 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 60 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 51 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 61 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Saw ASCII character 62 but expected 64-based Phred qual.
+Try not specifying --solexa1.3-quals/--phred64-quals.
+Error: Encountered exception: 'Unidentified exception'
+Command: /home/jeremias/.pyenv/versions/anaconda3-4.3.0/bin/bowtie2-align-s --wrapper basic-0 --very-sensitive-local --phred64 -q -x /home/scharer_group/jeremias/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta --threads 14 --met-file bowtie_stats --passthrough -1 /tmp/26134.inpipe1 -2 /tmp/26134.inpipe2 
+(ERR): bowtie2-align exited with value 1

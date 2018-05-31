@@ -3,6 +3,8 @@
 # We need to expicitly tell R to use cairo for the server.
 options(bitmapType='cairo')
 X11.options(type="cairo")
+# this will direct any plotting to a pdf and thus not cause any problems due to an x11 window being called.
+options(device=pdf)
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(dplyr, tidyr, ggplot2, cowplot)
 
@@ -66,4 +68,4 @@ out.plot <- plot_grid(title, arranged.plot,
           ncol=1, rel_heights=c(0.1, 1)) # rel height controls the title margin
 
 # This does not work, we need to tell it about the layout
-save_plot(paste0(sample_name, ".png"), out.plot, base_width = 8, base_height = 8)
+save_plot(paste0("QC/", sample_name, "_contig_dist.png"), out.plot, base_width = 8, base_height = 8)

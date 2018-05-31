@@ -36,3 +36,236 @@ INFO	303 Total BUSCO groups searched
 INFO	BUSCO analysis done. Total running time: 4.4687395095825195 seconds
 INFO	Results written in /home/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
 
+/bin/bash: line 1: /home/jeremias/.linuxbrew/var/pyenv/versions/3.5.2/bin/python: No such file or directory
+-bash: cmini2_rcorrtest.busco: command not found
+-bash: cmini2_rcorrtest.busco: command not found
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 13:23:06 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 13:23:06 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 13:23:06
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_2150737893
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 67 sequences in 0.014854 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 13:23:10 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 13:23:10 =>	0% of predictions performed (7 to be done)
+INFO	05/31/2018 13:23:10 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:1.0%,M:99.0%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	3 Fragmented BUSCOs (F)
+INFO	300 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 4.430977821350098 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 14:30:48 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 14:30:48 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 14:30:49
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_1912070582
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 56 sequences in 0.002738 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 14:30:52 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 14:30:52 =>	0% of predictions performed (6 to be done)
+INFO	05/31/2018 14:30:52 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	2 Fragmented BUSCOs (F)
+INFO	301 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.939042806625366 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 14:31:07 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 14:31:07 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 14:31:07
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_1827874133
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 56 sequences in 0.00488496 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 14:31:11 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 14:31:11 =>	0% of predictions performed (6 to be done)
+INFO	05/31/2018 14:31:11 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	2 Fragmented BUSCOs (F)
+INFO	301 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.6075565814971924 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 15:06:11 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 15:06:11 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 15:06:11
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_4086865534
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 56 sequences in 0.00265288 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 15:06:14 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 15:06:14 =>	0% of predictions performed (6 to be done)
+INFO	05/31/2018 15:06:14 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	2 Fragmented BUSCOs (F)
+INFO	301 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.5771076679229736 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 15:20:14 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Delete the current result folder and start a new run
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 15:20:14 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 15:20:15
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_3270519545
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 56 sequences in 0.00270796 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 15:20:18 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 15:20:18 =>	0% of predictions performed (6 to be done)
+INFO	05/31/2018 15:20:18 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	2 Fragmented BUSCOs (F)
+INFO	301 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.900184154510498 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+
+
+INFO	****************** Start a BUSCO 2.0 analysis, current time: 05/31/2018 15:50:05 ******************
+INFO	The lineage dataset is: eukaryota_odb9 (eukaryota)
+INFO	Mode is: tran
+INFO	To reproduce this run: python /home/jeremias/soft/busco/BUSCO.py -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta -o Macmini2_rcorrtest.busco -l /home/jeremias/soft/busco/eukaryota_odb9/ -m tran -c 14 -sp fly
+INFO	Check dependencies...
+INFO	Check input file...
+INFO	Temp directory is ./tmp/
+INFO	****** Step 1/2, current time: 05/31/2018 15:50:05 ******
+INFO	Create blast database...
+INFO	[makeblastdb]	Building a new DB, current time: 05/31/2018 15:50:05
+INFO	[makeblastdb]	New DB name:   /home/scharer_group/jeremias/dev/macpipe_trans/tmp/Macmini2_rcorrtest.busco_190319231
+INFO	[makeblastdb]	New DB title:  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini2_rcorrtest.Trinity.fasta
+INFO	[makeblastdb]	Sequence type: Nucleotide
+INFO	[makeblastdb]	Keep Linkouts: T
+INFO	[makeblastdb]	Keep MBits: T
+INFO	[makeblastdb]	Maximum file size: 1000000000B
+INFO	[makeblastdb]	Adding sequences from FASTA; added 53 sequences in 0.00256991 seconds.
+INFO	Running tblastn, writing output to /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/blast_output/tblastn_Macmini2_rcorrtest.busco.tsv...
+INFO	****** Step 2/2, current time: 05/31/2018 15:50:09 ******
+INFO	Getting coordinates for candidate transcripts...
+INFO	Extracting candidate transcripts...
+INFO	Translating candidate transcripts...
+INFO	Running HMMER to confirm transcript orthology:
+INFO	05/31/2018 15:50:09 =>	0% of predictions performed (6 to be done)
+INFO	05/31/2018 15:50:09 =>	100% of predictions performed
+INFO	Results:
+INFO	C:0.0%[S:0.0%,D:0.0%],F:0.7%,M:99.3%,n:303
+INFO	0 Complete BUSCOs (C)
+INFO	0 Complete and single-copy BUSCOs (S)
+INFO	0 Complete and duplicated BUSCOs (D)
+INFO	2 Fragmented BUSCOs (F)
+INFO	301 Missing BUSCOs (M)
+INFO	303 Total BUSCO groups searched
+
+INFO	BUSCO analysis done. Total running time: 3.646130323410034 seconds
+INFO	Results written in /home/scharer_group/jeremias/dev/macpipe_trans/run_Macmini2_rcorrtest.busco/
+

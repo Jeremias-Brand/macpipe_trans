@@ -1,22 +1,27 @@
-[2017-07-19 18:06:54.485] [fileLog] [info] quantification processed 0 fragments so far
+[2018-05-31 15:50:04.151] [fileLog] [info] quantification processed 0 fragments so far
 
-[2017-07-19 18:06:54.486] [fileLog] [info] quantification processed 2149 fragments so far
+[2018-05-31 15:50:04.151] [fileLog] [info] quantification processed 992 fragments so far
 
-[2017-07-19 18:06:54.524] [jointLog] [info] 
+[2018-05-31 15:50:04.203] [jointLog] [info] 
 
 
 Completed first pass through the alignment file.
-Total # of mapped reads : 2149
-# of uniquely mapped reads : 1918
-# ambiguously mapped reads : 231
+Total # of mapped reads : 992
+# of uniquely mapped reads : 882
+# ambiguously mapped reads : 110
 
 
 
-[2017-07-19 18:06:54.534] [jointLog] [info] Computed 418 rich equivalence classes for further processing
-[2017-07-19 18:06:54.535] [jointLog] [info] starting optimizer
-[2017-07-19 18:06:54.535] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
-[2017-07-19 18:06:54.536] [jointLog] [info] iteration = 0 | max rel diff. = 1.27108
-[2017-07-19 18:06:54.548] [jointLog] [info] iteration = 36 | max rel diff. = 0.000904509
-[2017-07-19 18:06:54.548] [jointLog] [info] finished optimizer
-[2017-07-19 18:06:54.551] [jointLog] [info] Sampling alignments; outputting results to ./postSample.bam
+[2018-05-31 15:50:04.210] [jointLog] [info] Computed 134 rich equivalence classes for further processing
+[2018-05-31 15:50:04.210] [jointLog] [info] Counted 992 total reads in the equivalence classes 
+[2018-05-31 15:50:04.212] [jointLog] [warning] Only 992 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2018-05-31 15:50:04.212] [jointLog] [warning] Since only 992 (< 5000000) fragments were observed, modeling of the fragment start position distribution has been disabled
+[2018-05-31 15:50:04.212] [jointLog] [info] starting optimizer
+[2018-05-31 15:50:04.213] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2018-05-31 15:50:04.214] [jointLog] [info] iteration = 0 | max rel diff. = 0.223253
+[2018-05-31 15:50:04.218] [jointLog] [info] iteration = 50 | max rel diff. = 8.59128e-06
+[2018-05-31 15:50:04.218] [jointLog] [info] finished optimizer
+[2018-05-31 15:50:04.222] [jointLog] [info] Sampling alignments; outputting results to ./postSample.bam
 

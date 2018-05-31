@@ -1,0 +1,5 @@
+Statistics:
+===========
+Trinity Version:      Trinity-v2.6.6
+Compiler:             GCC
+Trinity Parameters:   --seqType fq --CPU 14 --max_memory 150G --output one_rRNA_Macmini1.trinity --left /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R1_cor_trim_rRNA.fq.gz --right /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R2_cor_trim_rRNA.fq.gz --normalize_reads --normalize_max_read_cov 30
