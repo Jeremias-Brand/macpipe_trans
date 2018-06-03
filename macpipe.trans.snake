@@ -42,7 +42,9 @@ def check_trailing_slash( path ):
 
 dirs = ["logs", "logs/trinity", "logs/transrate",
         "logs/rcorrector", "trinity", "transrate",
-        "transrate/summary", "busco", "logs/busco"]
+        "transrate/summary", "busco", "logs/busco",
+        "expression", "expression/salmon", "expression/RSEM",
+        "transdecoder", "logs/transdecoder", "mapping", "logs/trimmomatic"]
 save_mkdir(dirs)
 
 
@@ -95,6 +97,8 @@ rule run_rcorrector:
         FASTQ_DIR + "{sample}_R2.cor.fq.gz"
     log:
     	"logs/rcorrector/{sample}.log"
+    benchmark:
+        "benchmarks/{sample}.run_rcorrector.txt"
     params:
         outdir = FASTQ_DIR
     threads: 14
@@ -111,7 +115,10 @@ rule trimmomatic:
     output:
         forward_trimmed  = FASTQ_DIR + "{sample}_R1_cor_trim.fq.gz",
         reverse_trimmed  = FASTQ_DIR + "{sample}_R2_cor_trim.fq.gz"
-    log:
+    log: 
+        "logs/trimmomatic/{sample}.log"
+    benchmark:
+        "benchmarks/{sample}.trimmomatic.txt"
     params:
         sample_name = FASTQ_DIR + "{sample}",
         adapters = config["adapters_fasta"],
@@ -124,7 +131,7 @@ rule trimmomatic:
         {input.forward} {input.reverse} \
         {params.sample_name}_R1_cor_trim.fq.gz {params.sample_name}_R1_cor_unpaired.fq.gz \
         {params.sample_name}_R2_cor_trim.fq.gz {params.sample_name}_R2_cor_unpaired.fq.gz \
-        ILLUMINACLIP:{params.adapters}{params.trimmomatic_string}
+        ILLUMINACLIP:{params.adapters}{params.trimmomatic_string} &> {log}
         """
 
 rule remove_rRNA:
@@ -138,6 +145,8 @@ rule remove_rRNA:
         fclean  = FASTQ_DIR + "{sample}_clean.1.gz",
         rclean  = FASTQ_DIR + "{sample}_clean.2.gz"
     log: "logs/bowtie_{sample}.log"
+    benchmark:
+        "benchmarks/{sample}.remove_rRNA.txt"
     params:
         rRNAdb = config["rRNAdb"],
         statfile = "bowtie_stats",
@@ -185,24 +194,51 @@ rule fastqc:
     output:
         f_qc         = "QC/{sample}_R1_fastqc.html",
         r_qc         = "QC/{sample}_R2_fastqc.html",
+        f_trim       = "QC/{sample}_R1_cor_trim_fastqc.html",
+        r_trim       = "QC/{sample}_R2_cor_trim_fastqc.html",
         f_trimmed_qc = "QC/{sample}_R1_cor_trim_clean_fastqc.html",
         r_trimmed_qc = "QC/{sample}_R2_cor_trim_clean_fastqc.html"
     log:
         "logs/fastqc/{sample}_fastqc.log"
+    benchmark:
+        "benchmarks/{sample}.fastqc.txt"
     params:
-    threads: 7
+    threads: 6
     shell:
         """
         fastqc {input.f} {input.r} \
         {input.f_trim} {input.r_trim} \
         {input.f_clean} {input.r_clean} \
-        --outdir QC/  -t {threads}
-        unzip -d ./QC/ QC/{wildcards.sample}_R1_cor_trim_fastqc.zip
-        for f in {input};do
+        --outdir QC/  -t {threads} &> /dev/null
+        for f in {output};do
             echo $f
+            file=${{f%%.html}}
+            z=$file".zip"
+            unzip -qq -d ./QC/ $z
+            scripts/collect_fastqcData.sh $file
         done
-        
         """
+
+# this gives just a rough estimate of the mapping rate
+rule map_snap:
+    input:
+        f_clean  = FASTQ_DIR + "{sample}_R1_cor_trim_clean.fq.gz",
+        r_clean  = FASTQ_DIR + "{sample}_R2_cor_trim_clean.fq.gz"
+    output:
+        expand("mapping/{{sample}}_{T}_snap_to_ref.txt", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.map_snap.txt"
+    threads: 14
+    params:
+        map_yn = config["map_yn"],
+        reference_snap = config["reference_snap"]
+    run:
+        if str(params.map_yn) == "y":
+            shell("snap-aligner paired  {params.reference_snap}  {input.f_clean} {input.r_clean} -I -d 25 -t {threads} 1> {output} 2> /dev/null")
+        else:
+            with open(str(output), "a") as f:
+                f.write("Mapping to reference was not performed.\n")
+
 
 rule trinity_on_rRNA:
     input:
@@ -210,24 +246,60 @@ rule trinity_on_rRNA:
         reverse  = FASTQ_DIR + "{sample}_R2_cor_trim_rRNA.fq.gz"
     output:
         assembly = expand("rRNA/{{sample}}_{T}_rRNA.Trinity.fasta", T=TIMESTAMP),
-        #log      = expand("logs/rRNA/{{sample}}_{T}_trinity.shell.log", T=TIMESTAMP)
+        log      = expand("logs/rRNA/{{sample}}_{T}_trinity.shell.log", T=TIMESTAMP)
     log:
         expand("logs/rRNA/{{sample}}_{T}.log", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.trinity_on_rRNA.txt"
     params:
         outdir   =  FASTQ_DIR,
         trinity  =  config["trinity"]
     threads: 14
-    shell:
-        """
-        {params.trinity} --seqType fq \
+    run:
+        try:
+            shell("""{params.trinity} --seqType fq \
         --CPU {threads} --max_memory 150G \
         --output 'trinity/'{wildcards.sample}_rRNA_{TIMESTAMP}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
         mv trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
-        sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly}
-        """
+        sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly} && \ 
+        sed -E 's/^(>[^ ]+) ([^ ]+) .+$/\1 \2/' {output.assembly}""")
+        except:
+        # We need to convert the variables to a sting because otehrwise they are of type <class 'snakemake.io.Namedlist'>
+            print("Trinity run on rRNA did not return an assembly!\n This could be because there were not enough input reads\n")
+            open(str(output.assembly), 'a').close()
+            with open(str(output.log), "a") as log_f:
+                log_f.write("Trinity run did not return an assembly.\n")
+
+
+
+
+# rule trinity_on_rRNA:
+#     input:
+#         forward  = FASTQ_DIR + "{sample}_R1_cor_trim_rRNA.fq.gz",
+#         reverse  = FASTQ_DIR + "{sample}_R2_cor_trim_rRNA.fq.gz"
+#     output:
+#         assembly = expand("rRNA/{{sample}}_{T}_rRNA.Trinity.fasta", T=TIMESTAMP),
+#         #log      = expand("logs/rRNA/{{sample}}_{T}_trinity.shell.log", T=TIMESTAMP)
+#     log:
+#         expand("logs/rRNA/{{sample}}_{T}.log", T=TIMESTAMP)
+#     params:
+#         outdir   =  FASTQ_DIR,
+#         trinity  =  config["trinity"]
+#     threads: 14
+#     shell:
+#         """
+#         {params.trinity} --seqType fq \
+#         --CPU {threads} --max_memory 150G \
+#         --output 'trinity/'{wildcards.sample}_rRNA_{TIMESTAMP}'.trinity' \
+#         --left   {input.forward}  \
+#         --right  {input.reverse} \
+#         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
+#         mv trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
+#         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly}
+#         """
 
 
 rule trinity_on_trimmed:
@@ -239,6 +311,8 @@ rule trinity_on_trimmed:
         log      = expand("logs/trinity/{{sample}}_{T}.shell.log", T=TIMESTAMP)
     log:
         expand("logs/trinity/{{sample}}_{T}.log", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.trinity_on_trimmed.txt"
     params:
         adapters =  config["adapters_fasta"],
         outdir   =  FASTQ_DIR,
@@ -263,6 +337,72 @@ rule trinity_on_trimmed:
         sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}
         """
 
+rule basic_assembly_stats:
+    input:
+        assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
+        forward  = FASTQ_DIR + "{sample}_R1_cor_trim_clean.fq.gz",
+        reverse  = FASTQ_DIR + "{sample}_R2_cor_trim_clean.fq.gz"
+    output:
+        basic = expand("assembly_stats/{{sample}}_{T}_N50.txt", T=TIMESTAMP),
+        salmon_quant = expand("expression/salmon/{{sample}}_{T}/quant.sf", T=TIMESTAMP),
+        # RSEM_quant = expand("expression/RSEM/{{sample}}_{T}/RSEM.isoforms.results", T=TIMESTAMP),
+        ExN50  = expand("assembly_stats/{{sample}}_{T}_ExN50.txt", T=TIMESTAMP),
+        out_salmon  = expand("expression/salmon/{{sample}}_{T}/", T=TIMESTAMP)
+        # out_RSEM  = expand("expression/RSEM/{{sample}}_{T}/", T=TIMESTAMP)
+    threads: 14
+    params:
+        trinity_home = config["trinity_home"]
+    log:
+        expand("logs/basic_assembly_stats/{{sample}}_{T}.log", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.basic_assembly_stats.txt"
+    
+    shell:
+        """
+        {params.trinity_home}'util/TrinityStats.pl' {input.assembly} > {output.basic}
+        
+        {params.trinity_home}'util/align_and_estimate_abundance.pl' --thread_count {threads} --prep_reference \
+        --transcripts {input.assembly} --seqType fq --left {input.forward} --right {input.reverse} \
+        --est_method salmon --aln_method bowtie2 --trinity_mode  --output_dir {output.out_salmon} &>> {log}
+
+
+        {params.trinity_home}'util/misc/contig_ExN50_statistic.pl' {output.salmon_quant} {input.assembly} | tee {output.ExN50} &> /dev/null
+        
+        R/plot_ExN50_statistic.Rscript {output.ExN50} 
+        """
+        
+#        {params.trinity_home}'util/align_and_estimate_abundance.pl' --thread_count {threads} --prep_reference \
+#        --transcripts {input.assembly} --seqType fq --left {input.forward} --right {input.reverse} \
+#        --est_method RSEM --aln_method bowtie2 --trinity_mode --output_dir {output.out_RSEM} &>> {log}
+
+
+rule run_transdecoder:
+    input:
+        assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
+    output:
+        longest_pep = expand("transdecoder/{{sample}}_{T}_longest_orfs.pep", T=TIMESTAMP),
+        longest_cds = expand("transdecoder/{{sample}}_{T}_longest_orfs.cds", T=TIMESTAMP),
+        length_pep  = expand("transdecoder/{{sample}}_{T}_longest_orfs.pep.length", T=TIMESTAMP),
+        length_cds  = expand("transdecoder/{{sample}}_{T}_longest_orfs.cds.length", T=TIMESTAMP)
+    threads: 1
+    params:
+        T = TIMESTAMP,
+        H = HOME_DIR
+    benchmark:
+        "benchmarks/{sample}.run_transdecoder.txt"
+    shell:
+        """
+        cd transdecoder
+        TransDecoder.LongOrfs -m 100 -t {params.H}{input.assembly} &> /dev/null 
+        cp {wildcards.sample}_{params.T}.Trinity.fasta.transdecoder_dir/longest_orfs.pep {wildcards.sample}_{params.T}_longest_orfs.pep
+        cp {wildcards.sample}_{params.T}.Trinity.fasta.transdecoder_dir/longest_orfs.cds {wildcards.sample}_{params.T}_longest_orfs.cds
+        python {params.H}scripts/seq_length.py {wildcards.sample}_{params.T}_longest_orfs.pep > {params.H}transdecoder/{wildcards.sample}_{params.T}_longest_orfs.pep.length 
+        python {params.H}scripts/seq_length.py {wildcards.sample}_{params.T}_longest_orfs.cds > {params.H}transdecoder/{wildcards.sample}_{params.T}_longest_orfs.cds.length 
+        """
+
+
+    
+
 
 rule run_transrate:
     input:
@@ -275,6 +415,8 @@ rule run_transrate:
         expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP)
     log:
     	expand("logs/transrate/{{sample}}_{T}.log", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.transrate.txt"
     params:
         transDir  =  TRANSRATE_DIR,
         dataDir   =  FASTQ_DIR,
@@ -305,7 +447,7 @@ rule gather_transrate:
     shell:
         """
         cp {input.a} {output.a}
-        cp {input.c}  {output.c}
+        cp {input.c} {output.c}
 
         """
 
@@ -387,6 +529,8 @@ rule busco:
     threads: 14
     log:
         expand("logs/busco/{{sample}}_{T}.log", T=TIMESTAMP)
+    benchmark:
+        "benchmarks/{sample}.busco.txt"
     shell:
         # cd {params.outdir}
         """
@@ -417,6 +561,8 @@ rule busco_on_transrate:
     log:
         expand("logs/busco/{{sample}}_{T}.good.log", T=TIMESTAMP)
     # I move the assessed transrate assembly over to the trinity folder
+    benchmark:
+        "benchmarks/{sample}.busco_on_transrate.txt"
     shell:
         # cd {params.outdir}
         """
@@ -480,19 +626,47 @@ rule versions:
         time        = TIMESTAMP
     shell:
         """
-        echo "These are the versions of software used for run: {params.time}" &>> {output.log}
-        date  &>> {output.log}
-        python --version &>> {output.log}
-        hmmscan -h | grep -E '^\#\ H' &>> {output.log}
-        blastn -h | grep Nucleotide &>> {output.log}
-        embossversion &>> {output.log}
-        echo "perl version: " &>> {output.log}
-        perl -e 'print $];' &>> {output.log}
-        {params.BUSCO} --version &>> {output.log}
-        echo "transrate version:" {params.transrate} --version &>> {output.log}
-        echo {params.trinity}  >> {output.log}
+        scripts/versions.sh > {log}
         """
 
+rule collect_all_stats:
+    input:
+        transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
+        assembly_plot       = expand("QC/{sample}_{T}_contig_dist.png", sample=SAMPLES, T=TIMESTAMP),
+        forward_qc          = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
+        reverse_qc          = expand("QC/{sample}_R2_fastqc.html", sample=SAMPLES),
+        forward_trimmed_qc  = expand("QC/{sample}_R1_cor_trim_clean_fastqc.html", sample=SAMPLES),
+        reverse_trimmed_qc  = expand("QC/{sample}_R2_cor_trim_clean_fastqc.html", sample=SAMPLES),
+        assembly            = expand("rRNA/{sample}_{T}_rRNA.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP),
+        basic = expand("assembly_stats/{sample}_{T}_N50.txt", sample=SAMPLES, T=TIMESTAMP),
+        salmon_quant = expand("expression/salmon/{sample}_{T}/quant.sf", sample=SAMPLES, T=TIMESTAMP),
+        ExN50  = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
+        longest_pep = expand("transdecoder/{sample}_{T}_longest_orfs.pep", sample=SAMPLES, T=TIMESTAMP),
+        longest_cds = expand("transdecoder/{sample}_{T}_longest_orfs.cds", sample=SAMPLES, T=TIMESTAMP),
+        mapping = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
+    output:
+        a = "assembly_stats/All_stats_" + TIMESTAMP + ".txt",
+        qc = "QC/All_qc.txt"
+    params:
+        s = SAMPLES,
+        T = TIMESTAMP,
+        script = "scripts/collect_macpipe_stats.sh"
+    shell:
+        """
+        for i in {params.s}; do
+            {params.script} "$i"_{params.T} > assembly_stats/"$i"_{params.T}_all_stats.txt
+        done
+        
+        # take first element to have the header line
+        arr=({params.s})
+        head -n 1 assembly_stats/${{arr[0]}}_{params.T}_all_stats.txt > {output.a}
+        for s in $( find assembly_stats/ -name "*_all_stats.txt" );do
+            tail -n 1 $s >> {output.a}
+        done
+        
+        echo -e "No_reads\tPercent_deduplicated\tGC_content" > {output.qc}
+        cat QC/*_stats.txt >> {output.qc} 
+        """
 
 # TODO report file should contain:
 # plot of coverage
@@ -501,18 +675,26 @@ rule versions:
 # timestamp
 rule report:
     input:
+        all_stats           = "assembly_stats/All_stats_" + TIMESTAMP + ".txt",
+        qc                  = "QC/All_qc.txt",
         busco_pdf           = "busco/summary/run_" + TIMESTAMP + "_busco.pdf",
         busco_trans_pdf     = "busco/summary/run_" + TIMESTAMP + "_busco_with_transrate.pdf",
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("QC/{sample}_{T}_contig_dist.png", sample=SAMPLES, T=TIMESTAMP),
-        forward_qc         = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
-        reverse_qc         = expand("QC/{sample}_R2_fastqc.html", sample=SAMPLES),
-        forward_trimmed_qc = expand("QC/{sample}_R1_cor_trim_clean_fastqc.html", sample=SAMPLES),
-        reverse_trimmed_qc = expand("QC/{sample}_R2_cor_trim_clean_fastqc.html", sample=SAMPLES),
+        forward_qc          = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
+        reverse_qc          = expand("QC/{sample}_R2_fastqc.html", sample=SAMPLES),
+        forward_trimmed_qc  = expand("QC/{sample}_R1_cor_trim_clean_fastqc.html", sample=SAMPLES),
+        reverse_trimmed_qc  = expand("QC/{sample}_R2_cor_trim_clean_fastqc.html", sample=SAMPLES),
         versions            = "logs/run_" + TIMESTAMP + "_software.versions",
         fish_4genes         = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_4genes",
         fish_28S            = "blast_results/blastn_summary_" + TIMESTAMP + "_fish_28S",
-        assembly            = expand("rRNA/{sample}_{T}_rRNA.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP)
+        assembly            = expand("rRNA/{sample}_{T}_rRNA.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP),
+        basic               = expand("assembly_stats/{sample}_{T}_N50.txt", sample=SAMPLES, T=TIMESTAMP),
+        salmon_quant        = expand("expression/salmon/{sample}_{T}/quant.sf", sample=SAMPLES, T=TIMESTAMP),
+        ExN50               = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
+        longest_pep         = expand("transdecoder/{sample}_{T}_longest_orfs.pep", sample=SAMPLES, T=TIMESTAMP),
+        longest_cds         = expand("transdecoder/{sample}_{T}_longest_orfs.cds", sample=SAMPLES, T=TIMESTAMP),
+        mapping             = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
     output:
         report_name         = "report_" + TIMESTAMP + ".html"
     run:
@@ -524,10 +706,22 @@ rule report:
         """, output[0], **input)
 
 
+rule clean_up:
+    input:
+    output:
+        "clean.ok"
+    run:
+        shell("""
+                rm -rdf trinity/ transrate/ expression/ QC/ benchmarks/ transdecoder/ mapping/ busco/ assembly_stats/ logs/ rRNA/ blast_results/
+                touch clean.ok
+                """)
+
+
 
 # Finishing up --------------------------------------------------------------
 onsuccess:
     print("Workflow finished, no error")
+    shell("mail -s 'Snakemake finished with no error' jeremias.brand@unibas.ch < {log}")
 onerror:
     print("An error occurred with the snakemake run")
     # here it would be good to include timstamping

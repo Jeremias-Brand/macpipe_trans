@@ -1,198 +1,0 @@
-
-
-     ______  ____   ____  ____   ____  ______  __ __
-    |      ||    \ |    ||    \ |    ||      ||  |  |
-    |      ||  D  ) |  | |  _  | |  | |      ||  |  |
-    |_|  |_||    /  |  | |  |  | |  | |_|  |_||  ~  |
-      |  |  |    \  |  | |  |  | |  |   |  |  |___, |
-      |  |  |  .  \ |  | |  |  | |  |   |  |  |     |
-      |__|  |__|\_||____||__|__||____|  |__|  |____/
-
-
-Left read files: $VAR1 = [
-          '/home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R1_cor_trim_clean.fq.gz'
-        ];
-Right read files: $VAR1 = [
-          '/home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R2_cor_trim_clean.fq.gz'
-        ];
-Trinity version: Trinity-v2.6.6
--currently using the latest production release of Trinity.
-
-Thursday, May 31, 2018: 15:49:45	CMD: java -Xmx64m -XX:ParallelGCThreads=2  -jar /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/ExitTester.jar 0
-Thursday, May 31, 2018: 15:49:45	CMD: java -Xmx64m -XX:ParallelGCThreads=2  -jar /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/ExitTester.jar 1
-Thursday, May 31, 2018: 15:49:45	CMD: mkdir -p /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity
-Thursday, May 31, 2018: 15:49:45	CMD: mkdir -p /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis
-
-
-----------------------------------------------------------------------------------
--------------- Trinity Phase 1: Clustering of RNA-Seq Reads  ---------------------
-----------------------------------------------------------------------------------
-
----------------------------------------------------------------
------------- In silico Read Normalization ---------------------
--- (Removing Excess Reads Beyond 30 Coverage --
----------------------------------------------------------------
-
-# running normalization on reads: $VAR1 = [
-          [
-            '/home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R1_cor_trim_clean.fq.gz'
-          ],
-          [
-            '/home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R2_cor_trim_clean.fq.gz'
-          ]
-        ];
-
-
-Thursday, May 31, 2018: 15:49:45	CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/insilico_read_normalization.pl --seqType fq --JM 150G  --max_cov 30 --min_cov 1 --CPU 14 --output /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization   --max_pct_stdev 10000  --left /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R1_cor_trim_clean.fq.gz --right /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R2_cor_trim_clean.fq.gz --pairs_together --PARALLEL_STATS  
-Converting input files. (both directions in parallel)CMD: seqtk-trinity seq -A <(gunzip -c /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R1_cor_trim_clean.fq.gz) >> left.fa
-CMD: seqtk-trinity seq -A <(gunzip -c /home/scharer_group/jeremias/dev/macpipe_trans/data/Macmini1_R2_cor_trim_clean.fq.gz) >> right.fa
-CMD finished (0 seconds)
-CMD finished (0 seconds)
-CMD: touch left.fa.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.ok
-CMD finished (0 seconds)
-Done converting input files.CMD: cat left.fa right.fa > both.fa
-CMD finished (0 seconds)
-CMD: touch both.fa.ok
--------------------------------------------
------------ Jellyfish  --------------------
--- (building a k-mer catalog from reads) --
--------------------------------------------
-
-CMD finished (0 seconds)
-CMD: jellyfish count -t 14 -m 25 -s 100000000  --canonical  both.fa
-CMD finished (0 seconds)
-CMD: jellyfish histo -t 14 -o jellyfish.K25.min2.kmers.fa.histo mer_counts.jf
-CMD finished (0 seconds)
-CMD: jellyfish dump -L 2 mer_counts.jf > jellyfish.K25.min2.kmers.fa
-CMD finished (0 seconds)
-CMD: touch jellyfish.K25.min2.kmers.fa.success
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/..//Inchworm/bin/fastaToKmerCoverageStats --reads left.fa --kmers jellyfish.K25.min2.kmers.fa --kmer_size 25  --num_threads 7  --DS  > left.fa.K25.stats
-CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/..//Inchworm/bin/fastaToKmerCoverageStats --reads right.fa --kmers jellyfish.K25.min2.kmers.fa --kmer_size 25  --num_threads 7  --DS  > right.fa.K25.stats
--reading Kmer occurrences...
--reading Kmer occurrences...
-
- done parsing 83790 Kmers, 83790 added, taking 0 seconds.
-
- done parsing 83790 Kmers, 83790 added, taking 0 seconds.
-STATS_GENERATION_TIME: 0 seconds.
-CMD finished (0 seconds)
-STATS_GENERATION_TIME: 0 seconds.
-CMD finished (0 seconds)
-CMD: touch left.fa.K25.stats.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.K25.stats.ok
--sorting each stats file by read name.
-CMD finished (0 seconds)
-CMD: /usr/bin/sort --parallel=14 -k5,5 -T . -S 75G left.fa.K25.stats > left.fa.K25.stats.sort
-CMD: /usr/bin/sort --parallel=14 -k5,5 -T . -S 75G right.fa.K25.stats > right.fa.K25.stats.sort
-CMD finished (0 seconds)
-CMD finished (0 seconds)
-CMD: touch left.fa.K25.stats.sort.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.K25.stats.sort.ok
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/..//util/support_scripts//nbkc_merge_left_right_stats.pl --left left.fa.K25.stats.sort --right right.fa.K25.stats.sort --sorted > pairs.K25.stats
--opening left.fa.K25.stats.sort
--opening right.fa.K25.stats.sort
--done opening files.
-CMD finished (1 seconds)
-CMD: touch pairs.K25.stats.ok
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/..//util/support_scripts//nbkc_normalize.pl --stats_file pairs.K25.stats --max_cov 30  --min_cov 1 --max_pct_stdev 10000 > pairs.K25.stats.C30.pctSD10000.accs
-1899 / 1913 = 99.27% reads selected during normalization.
-0 / 1913 = 0.00% reads discarded as likely aberrant based on coverage profiles.
-0 / 1913 = 0.00% reads missing kmer coverage (N chars included?).
-0 / 1913 = 0.00% reads discarded as below minimum coverage threshold=1
-CMD finished (0 seconds)
-CMD: touch pairs.K25.stats.C30.pctSD10000.accs.ok
-CMD finished (0 seconds)
-CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R1_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq.ok
-CMD finished (0 seconds)
-CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R2_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq.ok
-CMD finished (0 seconds)
-CMD: ln -sf /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R1_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq left.norm.fq
-CMD finished (0 seconds)
-CMD: ln -sf /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R2_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq right.norm.fq
--removing tmp dir /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/tmp_normalized_reads
-CMD finished (0 seconds)
-
-
-Normalization complete. See outputs: 
-	/home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R1_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq
-	/home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/Macmini1_R2_cor_trim_clean.fq.gz.normalized_K25_maxC30_minC1_pctSD10000.fq
-Thursday, May 31, 2018: 15:49:46	CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/normalization.ok
-Converting input files. (in parallel)Thursday, May 31, 2018: 15:49:46	CMD: cat /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/left.norm.fq | seqtk-trinity seq -A - >> left.fa
-Thursday, May 31, 2018: 15:49:46	CMD: touch left.fa.ok
-Thursday, May 31, 2018: 15:49:46	CMD: cat /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/insilico_read_normalization/right.norm.fq | seqtk-trinity seq -A - >> right.fa
-Thursday, May 31, 2018: 15:49:46	CMD: touch right.fa.ok
-Thursday, May 31, 2018: 15:49:46	CMD: touch left.fa.ok right.fa.ok
-Thursday, May 31, 2018: 15:49:46	CMD: cat left.fa right.fa > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa
-Thursday, May 31, 2018: 15:49:46	CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa.ok
--------------------------------------------
------------ Jellyfish  --------------------
--- (building a k-mer catalog from reads) --
--------------------------------------------
-
-* Running CMD: jellyfish count -t 14 -m 25 -s 100000000  --canonical  /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa
-* Running CMD: jellyfish dump -L 1 mer_counts.jf > jellyfish.kmers.fa
-* Running CMD: jellyfish histo -t 14 -o jellyfish.kmers.fa.histo mer_counts.jf
-----------------------------------------------
---------------- Inchworm ---------------------
--- (Linear contig construction from k-mers) --
-----------------------------------------------
-
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Inchworm/bin//inchworm --kmers jellyfish.kmers.fa --run_inchworm -K 25 -L 25 --monitor 1   --DS  --num_threads 6  --PARALLEL_IWORM  > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa.tmp
-* Running CMD: mv /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa.tmp /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa
-Thursday, May 31, 2018: 15:49:47	CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa.finished
---------------------------------------------------------
--------------------- Chrysalis -------------------------
--- (Contig Clustering & de Bruijn Graph Construction) --
---------------------------------------------------------
-
-inchworm_target: /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa
-bowite_reads_fa: /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa
-chrysalis_reads_fa: /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/filter_iworm_by_min_length_or_cov.pl /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa 100 10 > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100
-* Running CMD: /home/jeremias/.pyenv/versions/anaconda3-4.3.0/bin/bowtie2-build --threads 14 -o 3 /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100 /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100 1>/dev/null
-* Running CMD: bash -c " set -o pipefail;/home/jeremias/.pyenv/versions/anaconda3-4.3.0/bin/bowtie2 --local -k 2 --no-unal --threads 14 -f --score-min G,20,4 -x /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100 /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa  | samtools view -@ 14 -F4 -Sb - | samtools sort -m 5752188342 -@ 14 -no - - > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm.bowtie.nameSorted.bam" 
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/scaffold_iworm_contigs.pl /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm.bowtie.nameSorted.bam /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm_scaffolds.txt
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Chrysalis/GraphFromFasta -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa -r /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa -min_contig_length 200 -min_glue 2 -glue_factor 0.05 -min_iso_ratio 0.05 -t 14 -k 24 -kk 48  -scaffolding /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm_scaffolds.txt  > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm_cluster_welds_graph.txt
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Chrysalis/BubbleUpClustering -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/inchworm.K25.L25.DS.fa  -weld_graph /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/iworm_cluster_welds_graph.txt -min_contig_length 200  > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/GraphFromIwormFasta.out
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Chrysalis/CreateIwormFastaBundle -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/GraphFromIwormFasta.out -o /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/bundled_iworm_contigs.fasta -min 200
-* Running CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Chrysalis/ReadsToTranscripts -i /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/both.fa -f /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/bundled_iworm_contigs.fasta -o /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/readsToComponents.out -t 14 -max_mem_reads 50000000 
-* Running CMD: /usr/bin/sort --parallel=14 -T . -S 150G -k 1,1n /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/readsToComponents.out > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/chrysalis/readsToComponents.out.sort
-Thursday, May 31, 2018: 15:49:48	CMD: mkdir -p /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/read_partitions/Fb_0/CBin_0
-Thursday, May 31, 2018: 15:49:48	CMD: touch /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/partitioned_reads.files.list.ok
-Thursday, May 31, 2018: 15:49:48	CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/write_partitioned_trinity_cmds.pl --reads_list_file /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/partitioned_reads.files.list --CPU 1 --max_memory 1G  --run_as_paired  --seqType fa --trinity_complete --full_cleanup  > recursive_trinity.cmds
-Thursday, May 31, 2018: 15:49:48	CMD: touch recursive_trinity.cmds.ok
-Thursday, May 31, 2018: 15:49:48	CMD: touch recursive_trinity.cmds.ok
-
-
---------------------------------------------------------------------------------
------------- Trinity Phase 2: Assembling Clusters of Reads ---------------------
---------------------------------------------------------------------------------
-
-Thursday, May 31, 2018: 15:49:48	CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/trinity-plugins/BIN/ParaFly -c recursive_trinity.cmds -CPU 14 -v -shuffle 
-Number of Commands: 54
-succeeded(1)   1.85185% completed.    succeeded(2)   3.7037% completed.    succeeded(3)   5.55556% completed.    succeeded(4)   7.40741% completed.    succeeded(5)   9.25926% completed.    succeeded(6)   11.1111% completed.    succeeded(8)   14.8148% completed.    succeeded(8)   14.8148% completed.    succeeded(9)   16.6667% completed.    succeeded(10)   18.5185% completed.    succeeded(11)   20.3704% completed.    succeeded(12)   22.2222% completed.    succeeded(13)   24.0741% completed.    succeeded(14)   25.9259% completed.    succeeded(15)   27.7778% completed.    succeeded(16)   29.6296% completed.    succeeded(17)   31.4815% completed.    succeeded(18)   33.3333% completed.    succeeded(19)   35.1852% completed.    succeeded(20)   37.037% completed.    succeeded(21)   38.8889% completed.    succeeded(22)   40.7407% completed.    succeeded(23)   42.5926% completed.    succeeded(24)   44.4444% completed.    succeeded(25)   46.2963% completed.    succeeded(26)   48.1481% completed.    succeeded(27)   50% completed.    succeeded(28)   51.8519% completed.    succeeded(29)   53.7037% completed.    succeeded(30)   55.5556% completed.    succeeded(31)   57.4074% completed.    succeeded(32)   59.2593% completed.    succeeded(33)   61.1111% completed.    succeeded(34)   62.963% completed.    succeeded(35)   64.8148% completed.    succeeded(36)   66.6667% completed.    succeeded(37)   68.5185% completed.    succeeded(38)   70.3704% completed.    succeeded(39)   72.2222% completed.    succeeded(40)   74.0741% completed.    succeeded(41)   75.9259% completed.    succeeded(42)   77.7778% completed.    succeeded(43)   79.6296% completed.    succeeded(44)   81.4815% completed.    succeeded(45)   83.3333% completed.    succeeded(46)   85.1852% completed.    succeeded(47)   87.037% completed.    succeeded(48)   88.8889% completed.    succeeded(49)   90.7407% completed.    succeeded(50)   92.5926% completed.    succeeded(51)   94.4444% completed.    succeeded(52)   96.2963% completed.    succeeded(53)   98.1481% completed.    succeeded(54)   100% completed.    
-
-All commands completed successfully. :-)
-
-
-
-** Harvesting all assembled transcripts into a single multi-fasta file...
-
-Thursday, May 31, 2018: 15:49:57	CMD: find /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/read_partitions/ -name '*inity.fasta'  | /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/partitioned_trinity_aggregator.pl TRINITY_DN > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta.tmp
--relocating /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta.tmp to /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta
-Thursday, May 31, 2018: 15:49:57	CMD: mv /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta.tmp /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta
-Thursday, May 31, 2018: 15:49:57	CMD: /home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/util/support_scripts/get_Trinity_gene_to_trans_map.pl /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta > /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta.gene_trans_map
-
-
-###################################################################
-Trinity assemblies are written to /home/scharer_group/jeremias/dev/macpipe_trans/trinity/Macmini1_rcorrtest.trinity/Trinity.fasta
-###################################################################
-
-

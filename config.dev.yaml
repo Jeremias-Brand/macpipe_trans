@@ -6,18 +6,22 @@ transrateDir:   "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/" # ne
 homedir:        "/home/scharer_group/jeremias/dev/macpipe_trans/"
 rRNAdb:         "/home/scharer_group/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
 # where the fastas for the fish_genes.py step are stored
-voucher_dir:    "/home/scharer_group/jeremias/dbs/vouchers/"
+voucher_dir:    "/home/scharer_group/dbs/vouchers/"
 # list with one file name per line selecting vouchers in voucher_dir
 vouchers:       "vouchers.config"
 ref_4genes:     "/home/scharer_group/dbs/vouchers/Macrostomidae_4genes_db.fasta"
 ref_28S:        "/home/scharer_group/dbs/vouchers/Macrostomidae_28S.fasta"
+# decide if we want to map DO NOT LEAVE TRAILING SLASH
+map_yn: "y"    
+reference_snap: "/home/scharer_group/assemblies/maclig/genome/Maclig_3_7/snap_index"
 # path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
 py3:            "/home/jeremias/.pyenv/versions/anaconda3-4.3.0/bin/python"
 transrate:      "/home/jeremias/soft/transrate-1.0.3-linux-x86_64/transrate"
 trinity:        "/home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/Trinity"
+trinity_home:   "/home/jeremias/soft/trinityrnaseq-Trinity-v2.6.6/"
 # path to the busco database
-BuscoLib:       "/home/jeremias/soft/busco/eukaryota_odb9"
+BuscoLib:       "/home/jeremias/soft/busco/metazoa_odb9"
 # path to BUSCO executable
 BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
 # path to BUSCO plotting function

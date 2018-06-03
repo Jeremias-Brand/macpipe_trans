@@ -1,220 +1,0 @@
-Trinity version: v2.2.0
-** NOTE: Latest version of Trinity is Trinity-v2.4.0, and can be obtained at:
-	https://github.com/trinityrnaseq/trinityrnaseq/releases
-
-Thursday, June 1, 2017: 17:53:19	CMD: java -Xmx64m -XX:ParallelGCThreads=2 -jar /home/jeremias/soft/trinityrnaseq-2.2.0/util/support_scripts/ExitTester.jar 0
-Thursday, June 1, 2017: 17:53:19	CMD: java -Xmx64m -XX:ParallelGCThreads=2 -jar /home/jeremias/soft/trinityrnaseq-2.2.0/util/support_scripts/ExitTester.jar 1
-Thursday, June 1, 2017: 17:53:20	CMD: mkdir -p /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity
-Thursday, June 1, 2017: 17:53:20	CMD: mkdir -p /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis
-
-
-----------------------------------------------------------------------------------
--------------- Trinity Phase 1: Clustering of RNA-Seq Reads  ---------------------
-----------------------------------------------------------------------------------
-
----------------------------------------------------------------
------- Quality Trimming Via Trimmomatic  ---------------------
-<< ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:2 TRAILING:2 MINLEN:25 >>
----------------------------------------------------------------
-
-Thursday, June 1, 2017: 17:53:20	CMD: java -jar /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/Trimmomatic/trimmomatic.jar PE -threads 2 -phred33  /home/jeremias/dev/macpipe_trans/data/Macmini1_R1.cor.fq /home/jeremias/dev/macpipe_trans/data/Macmini1_R2.cor.fq  Macmini1_R1.cor.fq.P.qtrim Macmini1_R1.cor.fq.U.qtrim  Macmini1_R2.cor.fq.P.qtrim Macmini1_R2.cor.fq.U.qtrim  ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:2 TRAILING:2 MINLEN:25 
-TrimmomaticPE: Started with arguments: -threads 2 -phred33 /home/jeremias/dev/macpipe_trans/data/Macmini1_R1.cor.fq /home/jeremias/dev/macpipe_trans/data/Macmini1_R2.cor.fq Macmini1_R1.cor.fq.P.qtrim Macmini1_R1.cor.fq.U.qtrim Macmini1_R2.cor.fq.P.qtrim Macmini1_R2.cor.fq.U.qtrim ILLUMINACLIP:/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa:2:40:15 LEADING:2 TRAILING:2 MINLEN:25
-Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATCTGATCGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATGTAGCCGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATAAGCTAGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATCGTGATGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATCGGTCTCGGCATTCCTGCTGAACCGCTCTTCCGATCT'
-Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
-Using Long Clipping Sequence: 'GGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATTAGATCGGAAGAGCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATGCCTAAGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATTGGTCAGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATACATCGGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATTACAAGGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATTCAAGTGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATGATCTGGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATATTGGCGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATCACTGTGTGACTGGAGTTCAGACGTGTGCTCTTCCGATC'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGGCTACATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACTAGCTTATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACAGTCAACAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACCTTGTAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACATGTCAGAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACAGTTCCGTATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACCCGTCCCGATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGTGAAACGATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGTCCGCACATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT'
-Using Long Clipping Sequence: 'CAAGCAGAAGACGGCATACGAGATCGGTCTCGGCATTCCTGCTGAACCGCTCTTCCGATCT'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGTGGCCTTATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACCGTACGTAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACCGATGTATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGTTTCGGAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACTTAGGCATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACTGACCAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGAGTGGATATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACACAGTGATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGCCAATATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACACTGATATATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACCAGATCATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACACTTGAATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACATTCCTTTATCTCGTATGCCGTCTTCTGCTTG'
-Using Long Clipping Sequence: 'GATCGGAAGAGCACACGTCTGAACTCCAGTCACGATCAGATCTCGTATGCCGTCTTCTGCTTG'
-ILLUMINACLIP: Using 1 prefix pairs, 26 forward/reverse sequences, 0 forward only sequences, 15 reverse only sequences
-Input Read Pairs: 10000 Both Surviving: 9630 (96.30%) Forward Only Surviving: 369 (3.69%) Reverse Only Surviving: 0 (0.00%) Dropped: 1 (0.01%)
-TrimmomaticPE: Completed successfully
-Thursday, June 1, 2017: 17:53:23	CMD: cp Macmini1_R1.cor.fq.P.qtrim Macmini1_R1.cor.fq.PwU.qtrim.fq
-Thursday, June 1, 2017: 17:53:23	CMD: cp Macmini1_R2.cor.fq.P.qtrim Macmini1_R2.cor.fq.PwU.qtrim.fq
-Thursday, June 1, 2017: 17:53:23	CMD: touch trimmomatic.ok
-Thursday, June 1, 2017: 17:53:23	CMD: gzip Macmini1_R1.cor.fq.P.qtrim Macmini1_R1.cor.fq.U.qtrim Macmini1_R2.cor.fq.P.qtrim Macmini1_R2.cor.fq.U.qtrim &
----------------------------------------------------------------
------------- In silico Read Normalization ---------------------
--- (Removing Excess Reads Beyond 30 Coverage --
--- /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization --
----------------------------------------------------------------
-
-Thursday, June 1, 2017: 17:53:23	CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/insilico_read_normalization.pl --seqType fq --JM 150G  --max_cov 30 --CPU 2 --output /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization --left Macmini1_R1.cor.fq.PwU.qtrim.fq --right Macmini1_R2.cor.fq.PwU.qtrim.fq --pairs_together --PARALLEL_STATS  
-Converting input files. (both directions in parallel)CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//trinity-plugins/fastool/fastool --illumina-trinity --to-fasta /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/Macmini1_R1.cor.fq.PwU.qtrim.fq >> left.fa
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//trinity-plugins/fastool/fastool --illumina-trinity --to-fasta /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/Macmini1_R2.cor.fq.PwU.qtrim.fq >> right.fa
-Sequences parsed: 9630
-CMD finished (0 seconds)
-Sequences parsed: 9630
-CMD finished (0 seconds)
-CMD: touch left.fa.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.ok
-CMD finished (0 seconds)
-Done converting input files.CMD: cat left.fa right.fa > both.fa
-CMD finished (0 seconds)
-CMD: touch both.fa.ok
--------------------------------------------
------------ Jellyfish  --------------------
--- (building a k-mer catalog from reads) --
--------------------------------------------
-
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//trinity-plugins/jellyfish/bin/jellyfish count -t 2 -m 25 -s 23008357626  --canonical  both.fa
-CMD finished (648 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//trinity-plugins/jellyfish/bin/jellyfish histo -t 2 -o jellyfish.K25.min2.kmers.fa.histo mer_counts.jf
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//trinity-plugins/jellyfish/bin/jellyfish dump -L 2 mer_counts.jf > jellyfish.K25.min2.kmers.fa
-CMD finished (0 seconds)
-CMD: touch jellyfish.K25.min2.kmers.fa.success
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//Inchworm/bin/fastaToKmerCoverageStats --reads left.fa --kmers jellyfish.K25.min2.kmers.fa --kmer_size 25  --num_threads 2  --DS  > left.fa.K25.stats
--reading Kmer occurrences...
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//Inchworm/bin/fastaToKmerCoverageStats --reads right.fa --kmers jellyfish.K25.min2.kmers.fa --kmer_size 25  --num_threads 2  --DS  > right.fa.K25.stats
--reading Kmer occurrences...
-
- done parsing 331982 Kmers, 331982 added, taking 2 seconds.
-
- done parsing 331982 Kmers, 331982 added, taking 2 seconds.
-STATS_GENERATION_TIME: 0 seconds.
-CMD finished (3 seconds)
-STATS_GENERATION_TIME: 1 seconds.
-CMD finished (3 seconds)
-CMD: touch left.fa.K25.stats.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.K25.stats.ok
--sorting each stats file by read name.
-CMD finished (0 seconds)
-CMD: /usr/bin/sort --parallel=2 -k5,5 -T . -S 75G left.fa.K25.stats > left.fa.K25.stats.sort
-CMD: /usr/bin/sort --parallel=2 -k5,5 -T . -S 75G right.fa.K25.stats > right.fa.K25.stats.sort
-CMD finished (0 seconds)
-CMD finished (0 seconds)
-CMD: touch left.fa.K25.stats.sort.ok
-CMD finished (0 seconds)
-CMD: touch right.fa.K25.stats.sort.ok
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//util/support_scripts//nbkc_merge_left_right_stats.pl --left left.fa.K25.stats.sort --right right.fa.K25.stats.sort --sorted > pairs.K25.stats
--opening left.fa.K25.stats.sort
--opening right.fa.K25.stats.sort
--done opening files.
-CMD finished (1 seconds)
-CMD: touch pairs.K25.stats.ok
-CMD finished (0 seconds)
-CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/..//util/support_scripts//nbkc_normalize.pl pairs.K25.stats 30 200 > pairs.K25.stats.C30.pctSD200.accs
-9478 / 9630 = 98.42% reads selected during normalization.
-105 / 9630 = 1.09% reads discarded as likely aberrant based on coverage profiles.
-0 / 9630 = 0.00% reads missing kmer coverage (N chars included?).
-CMD finished (0 seconds)
-CMD: touch pairs.K25.stats.C30.pctSD200.accs.ok
-CMD finished (0 seconds)
-CMD: touch /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R1.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq.ok
-CMD finished (0 seconds)
-CMD: touch /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R2.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq.ok
-CMD finished (0 seconds)
-CMD: ln -sf /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R1.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq left.norm.fq
-CMD finished (0 seconds)
-CMD: ln -sf /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R2.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq right.norm.fq
--removing tmp dir /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/tmp_normalized_reads
-CMD finished (0 seconds)
-
-
-Normalization complete. See outputs: 
-	/home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R1.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq
-	/home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/Macmini1_R2.cor.fq.PwU.qtrim.fq.normalized_K25_C30_pctSD200.fq
-Thursday, June 1, 2017: 18:04:16	CMD: touch /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/normalization.ok
-Converting input files. (in parallel)Thursday, June 1, 2017: 18:04:16	CMD: cat /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/left.norm.fq | /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/fastool/fastool --append /1 --to-fasta >> left.fa 2> /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/left.norm.fq.readcount 
-Thursday, June 1, 2017: 18:04:16	CMD: cat /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/right.norm.fq | /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/fastool/fastool --append /2 --to-fasta >> right.fa 2> /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/insilico_read_normalization/right.norm.fq.readcount 
--conversion of 9478 from FQ to FA format succeeded.
--conversion of 9478 from FQ to FA format succeeded.
-Thursday, June 1, 2017: 18:04:16	CMD: touch left.fa.ok right.fa.ok
-Thursday, June 1, 2017: 18:04:16	CMD: cat left.fa right.fa > both.fa
-Thursday, June 1, 2017: 18:04:16	CMD: touch both.fa.ok
--------------------------------------------
------------ Jellyfish  --------------------
--- (building a k-mer catalog from reads) --
--------------------------------------------
-
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/jellyfish/bin/jellyfish count -t 2 -m 25 -s 23008363872  --canonical  both.fa
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/jellyfish/bin/jellyfish dump -L 1 mer_counts.jf > jellyfish.kmers.fa
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/jellyfish/bin/jellyfish histo -t 2 -o jellyfish.kmers.fa.histo mer_counts.jf
-----------------------------------------------
---------------- Inchworm ---------------------
--- (Linear contig construction from k-mers) --
-----------------------------------------------
-
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/Inchworm/bin//inchworm --kmers jellyfish.kmers.fa --run_inchworm -K 25 -L 25 --monitor 1   --DS  --num_threads 2  --PARALLEL_IWORM  > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa.tmp
-* Running CMD: mv /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa.tmp /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa
-Thursday, June 1, 2017: 18:15:17	CMD: touch /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa.finished
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/misc/fasta_filter_by_min_length.pl /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa 100 > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100
-* Running CMD: bowtie-build -q /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100 /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100
-* Running CMD: bash -c " set -o pipefail; bowtie -a -m 20 --best --strata --threads 2  --chunkmbs 512 -q -S -f /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/inchworm.K25.L25.DS.fa.min100 both.fa  | samtools view -@ 2 -F4 -Sb - | samtools sort -m 40265318400 -@ 2 -no - - > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/iworm.bowtie.nameSorted.bam" 
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/scaffold_iworm_contigs/scaffold_iworm_contigs /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/iworm.bowtie.nameSorted.bam /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/iworm_scaffolds.txt
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/Chrysalis/GraphFromFasta -i /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/inchworm.K25.L25.DS.fa -r both.fa -min_contig_length 200 -min_glue 2 -glue_factor 0.05 -min_iso_ratio 0.05 -t 2 -k 24 -kk 48  -scaffolding /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/iworm_scaffolds.txt  > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/GraphFromIwormFasta.out
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/Chrysalis/CreateIwormFastaBundle -i /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/GraphFromIwormFasta.out -o /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/bundled_iworm_contigs.fasta -min 200
-* Running CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/Chrysalis/ReadsToTranscripts -i both.fa -f /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/bundled_iworm_contigs.fasta -o /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/readsToComponents.out -t 2 -max_mem_reads 50000000 
-* Running CMD: /usr/bin/sort --parallel=2 -T . -S 150G -k 1,1n /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/readsToComponents.out > /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/chrysalis/readsToComponents.out.sort
-Thursday, June 1, 2017: 18:15:32	CMD: mkdir -p read_partitions/Fb_0/CBin_0
-Thursday, June 1, 2017: 18:15:32	CMD: mkdir -p read_partitions/Fb_0/CBin_1
-Thursday, June 1, 2017: 18:15:32	CMD: mkdir -p read_partitions/Fb_0/CBin_2
-Thursday, June 1, 2017: 18:15:32	CMD: touch partitioned_reads.files.list.ok
-Thursday, June 1, 2017: 18:15:32	CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/util/support_scripts/write_partitioned_trinity_cmds.pl --reads_list_file partitioned_reads.files.list --CPU 1 --max_memory 1G  --seqType fa --trinity_complete --full_cleanup  > recursive_trinity.cmds
-Thursday, June 1, 2017: 18:15:32	CMD: touch recursive_trinity.cmds.ok
-Thursday, June 1, 2017: 18:15:32	CMD: touch recursive_trinity.cmds.ok
-
-
---------------------------------------------------------------------------------
------------- Trinity Phase 2: Assembling Clusters of Reads ---------------------
---------------------------------------------------------------------------------
-
-Thursday, June 1, 2017: 18:15:32	CMD: /home/jeremias/soft/trinityrnaseq-2.2.0/trinity-plugins/parafly/bin/ParaFly -c recursive_trinity.cmds -CPU 2 -v 
-Number of Commands: 268
-succeeded(1)   0.373134% completed.    succeeded(2)   0.746269% completed.    succeeded(3)   1.1194% completed.    succeeded(4)   1.49254% completed.    succeeded(5)   1.86567% completed.    succeeded(6)   2.23881% completed.    succeeded(7)   2.61194% completed.    succeeded(8)   2.98507% completed.    succeeded(9)   3.35821% completed.    succeeded(10)   3.73134% completed.    succeeded(11)   4.10448% completed.    succeeded(12)   4.47761% completed.    succeeded(13)   4.85075% completed.    succeeded(14)   5.22388% completed.    succeeded(15)   5.59701% completed.    succeeded(16)   5.97015% completed.    succeeded(17)   6.34328% completed.    succeeded(18)   6.71642% completed.    succeeded(19)   7.08955% completed.    succeeded(20)   7.46269% completed.    succeeded(21)   7.83582% completed.    succeeded(22)   8.20895% completed.    succeeded(23)   8.58209% completed.    succeeded(24)   8.95522% completed.    succeeded(25)   9.32836% completed.    succeeded(26)   9.70149% completed.    succeeded(27)   10.0746% completed.    succeeded(28)   10.4478% completed.    succeeded(29)   10.8209% completed.    succeeded(30)   11.194% completed.    succeeded(31)   11.5672% completed.    succeeded(32)   11.9403% completed.    succeeded(33)   12.3134% completed.    succeeded(34)   12.6866% completed.    succeeded(35)   13.0597% completed.    succeeded(36)   13.4328% completed.    succeeded(37)   13.806% completed.    succeeded(38)   14.1791% completed.    succeeded(39)   14.5522% completed.    succeeded(40)   14.9254% completed.    succeeded(41)   15.2985% completed.    succeeded(42)   15.6716% completed.    succeeded(43)   16.0448% completed.    succeeded(44)   16.4179% completed.    succeeded(45)   16.791% completed.    succeeded(46)   17.1642% completed.    succeeded(47)   17.5373% completed.    succeeded(48)   17.9104% completed.    succeeded(49)   18.2836% completed.    succeeded(50)   18.6567% completed.    succeeded(51)   19.0299% completed.    succeeded(52)   19.403% completed.    succeeded(53)   19.7761% completed.    succeeded(54)   20.1493% completed.    succeeded(55)   20.5224% completed.    succeeded(56)   20.8955% completed.    succeeded(57)   21.2687% completed.    succeeded(58)   21.6418% completed.    succeeded(59)   22.0149% completed.    succeeded(60)   22.3881% completed.    succeeded(61)   22.7612% completed.    succeeded(62)   23.1343% completed.    succeeded(63)   23.5075% completed.    succeeded(64)   23.8806% completed.    succeeded(65)   24.2537% completed.    succeeded(66)   24.6269% completed.    succeeded(67)   25% completed.    succeeded(68)   25.3731% completed.    succeeded(69)   25.7463% completed.    succeeded(70)   26.1194% completed.    succeeded(71)   26.4925% completed.    succeeded(72)   26.8657% completed.    succeeded(73)   27.2388% completed.    succeeded(74)   27.6119% completed.    succeeded(75)   27.9851% completed.    succeeded(76)   28.3582% completed.    succeeded(77)   28.7313% completed.    succeeded(78)   29.1045% completed.    succeeded(79)   29.4776% completed.    succeeded(80)   29.8507% completed.    succeeded(81)   30.2239% completed.    succeeded(82)   30.597% completed.    succeeded(83)   30.9701% completed.    succeeded(84)   31.3433% completed.    succeeded(85)   31.7164% completed.    succeeded(86)   32.0896% completed.    succeeded(87)   32.4627% completed.    succeeded(88)   32.8358% completed.    succeeded(89)   33.209% completed.    succeeded(90)   33.5821% completed.    succeeded(91)   33.9552% completed.    succeeded(92)   34.3284% completed.    succeeded(93)   34.7015% completed.    succeeded(94)   35.0746% completed.    succeeded(95)   35.4478% completed.    succeeded(96)   35.8209% completed.    succeeded(97)   36.194% completed.    succeeded(98)   36.5672% completed.    succeeded(99)   36.9403% completed.    succeeded(100)   37.3134% completed.    succeeded(101)   37.6866% completed.    succeeded(102)   38.0597% completed.    succeeded(103)   38.4328% completed.    succeeded(104)   38.806% completed.    succeeded(105)   39.1791% completed.    succeeded(106)   39.5522% completed.    succeeded(107)   39.9254% completed.    succeeded(108)   40.2985% completed.    succeeded(109)   40.6716% completed.    succeeded(110)   41.0448% completed.    succeeded(111)   41.4179% completed.    succeeded(112)   41.791% completed.    succeeded(113)   42.1642% completed.    succeeded(114)   42.5373% completed.    succeeded(115)   42.9104% completed.    succeeded(116)   43.2836% completed.    succeeded(117)   43.6567% completed.    succeeded(118)   44.0299% completed.    succeeded(119)   44.403% completed.    succeeded(120)   44.7761% completed.    succeeded(121)   45.1493% completed.    succeeded(122)   45.5224% completed.    succeeded(123)   45.8955% completed.    succeeded(124)   46.2687% completed.    succeeded(125)   46.6418% completed.    succeeded(126)   47.0149% completed.    succeeded(127)   47.3881% completed.    succeeded(128)   47.7612% completed.    succeeded(129)   48.1343% completed.    succeeded(130)   48.5075% completed.    succeeded(131)   48.8806% completed.    succeeded(132)   49.2537% completed.    succeeded(133)   49.6269% completed.    succeeded(134)   50% completed.    succeeded(135)   50.3731% completed.    succeeded(136)   50.7463% completed.    succeeded(137)   51.1194% completed.    succeeded(138)   51.4925% completed.    succeeded(139)   51.8657% completed.    succeeded(140)   52.2388% completed.    succeeded(141)   52.6119% completed.    succeeded(142)   52.9851% completed.    succeeded(143)   53.3582% completed.    succeeded(144)   53.7313% completed.    succeeded(145)   54.1045% completed.    succeeded(146)   54.4776% completed.    succeeded(147)   54.8507% completed.    succeeded(148)   55.2239% completed.    succeeded(149)   55.597% completed.    succeeded(150)   55.9701% completed.    succeeded(151)   56.3433% completed.    succeeded(152)   56.7164% completed.    succeeded(153)   57.0896% completed.    succeeded(154)   57.4627% completed.    succeeded(155)   57.8358% completed.    succeeded(156)   58.209% completed.    succeeded(157)   58.5821% completed.    succeeded(158)   58.9552% completed.    succeeded(159)   59.3284% completed.    succeeded(160)   59.7015% completed.    succeeded(161)   60.0746% completed.    succeeded(162)   60.4478% completed.    succeeded(163)   60.8209% completed.    succeeded(164)   61.194% completed.    succeeded(165)   61.5672% completed.    succeeded(166)   61.9403% completed.    succeeded(167)   62.3134% completed.    succeeded(168)   62.6866% completed.    succeeded(169)   63.0597% completed.    succeeded(170)   63.4328% completed.    succeeded(171)   63.806% completed.    succeeded(172)   64.1791% completed.    succeeded(173)   64.5522% completed.    succeeded(174)   64.9254% completed.    succeeded(175)   65.2985% completed.    succeeded(176)   65.6716% completed.    succeeded(177)   66.0448% completed.    succeeded(178)   66.4179% completed.    succeeded(179)   66.791% completed.    succeeded(180)   67.1642% completed.    succeeded(181)   67.5373% completed.    succeeded(182)   67.9105% completed.    succeeded(183)   68.2836% completed.    succeeded(184)   68.6567% completed.    succeeded(185)   69.0298% completed.    succeeded(186)   69.403% completed.    succeeded(187)   69.7761% completed.    succeeded(188)   70.1493% completed.    succeeded(189)   70.5224% completed.    succeeded(190)   70.8955% completed.    succeeded(191)   71.2687% completed.    succeeded(192)   71.6418% completed.    succeeded(193)   72.0149% completed.    succeeded(194)   72.3881% completed.    succeeded(195)   72.7612% completed.    succeeded(196)   73.1343% completed.    succeeded(197)   73.5075% completed.    succeeded(198)   73.8806% completed.    succeeded(199)   74.2537% completed.    succeeded(200)   74.6269% completed.    succeeded(201)   75% completed.    succeeded(202)   75.3731% completed.    succeeded(203)   75.7463% completed.    succeeded(204)   76.1194% completed.    succeeded(205)   76.4925% completed.    succeeded(206)   76.8657% completed.    succeeded(207)   77.2388% completed.    succeeded(208)   77.6119% completed.    succeeded(209)   77.9851% completed.    succeeded(210)   78.3582% completed.    succeeded(211)   78.7313% completed.    succeeded(212)   79.1045% completed.    succeeded(213)   79.4776% completed.    succeeded(214)   79.8507% completed.    succeeded(215)   80.2239% completed.    succeeded(216)   80.597% completed.    succeeded(217)   80.9702% completed.    succeeded(218)   81.3433% completed.    succeeded(219)   81.7164% completed.    succeeded(220)   82.0895% completed.    succeeded(221)   82.4627% completed.    succeeded(222)   82.8358% completed.    succeeded(223)   83.209% completed.    succeeded(224)   83.5821% completed.    succeeded(225)   83.9552% completed.    succeeded(226)   84.3284% completed.    succeeded(227)   84.7015% completed.    succeeded(228)   85.0746% completed.    succeeded(229)   85.4478% completed.    succeeded(230)   85.8209% completed.    succeeded(231)   86.194% completed.    succeeded(232)   86.5672% completed.    succeeded(233)   86.9403% completed.    succeeded(234)   87.3134% completed.    succeeded(235)   87.6866% completed.    succeeded(236)   88.0597% completed.    succeeded(237)   88.4328% completed.    succeeded(238)   88.806% completed.    succeeded(239)   89.1791% completed.    succeeded(240)   89.5522% completed.    succeeded(241)   89.9254% completed.    succeeded(242)   90.2985% completed.    succeeded(243)   90.6716% completed.    succeeded(244)   91.0448% completed.    succeeded(245)   91.4179% completed.    succeeded(246)   91.791% completed.    succeeded(247)   92.1642% completed.    succeeded(248)   92.5373% completed.    succeeded(249)   92.9105% completed.    succeeded(250)   93.2836% completed.    succeeded(251)   93.6567% completed.    succeeded(252)   94.0298% completed.    succeeded(253)   94.403% completed.    succeeded(254)   94.7761% completed.    succeeded(255)   95.1493% completed.    succeeded(256)   95.5224% completed.    succeeded(257)   95.8955% completed.    succeeded(258)   96.2687% completed.    succeeded(259)   96.6418% completed.    succeeded(260)   97.0149% completed.    succeeded(261)   97.3881% completed.    succeeded(262)   97.7612% completed.    succeeded(263)   98.1343% completed.    succeeded(264)   98.5075% completed.    succeeded(265)   98.8806% completed.    succeeded(266)   99.2537% completed.    succeeded(267)   99.6269% completed.    succeeded(268)   100% completed.    
-
-All commands completed successfully. :-)
-
-
-
-** Harvesting all assembled transcripts into a single multi-fasta file...
-
-Thursday, June 1, 2017: 18:23:19	CMD: find read_partitions/  -name '*inity.fasta'  | /home/jeremias/soft/trinityrnaseq-2.2.0/util/support_scripts/partitioned_trinity_aggregator.pl TRINITY_DN > Trinity.fasta.tmp
-
-
-###################################################################
-Butterfly assemblies are written to /home/jeremias/dev/macpipe_trans/trinity/Macmini1.trinity/Trinity.fasta
-###################################################################
-
-
