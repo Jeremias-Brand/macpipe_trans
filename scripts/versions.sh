@@ -22,10 +22,10 @@ embossversion
 echo "perl version: "                                                 
 perl -e 'print $];'                                                   
 echo "BUSCO version: "                                                
-{params.BUSCO} --version                                              
+$3 --version                                              
 echo "transrate version:" 
-{params.transrate} --version                
-echo {params.trinity}                                                 
+$2 --version                
+echo $1                                                 
 echo "HARDCODED"                                                      
 echo "TransDecoder   2.0.1"                                           
 echo "Trimmomatic 0.36"                                               

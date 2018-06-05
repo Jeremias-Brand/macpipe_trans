@@ -626,7 +626,7 @@ rule versions:
         time        = TIMESTAMP
     shell:
         """
-        scripts/versions.sh {params.trinity} {params.transrate} {params.BUSCO} > {output.log}
+        scripts/versions.sh > {log}
         """
 
 rule collect_all_stats:
