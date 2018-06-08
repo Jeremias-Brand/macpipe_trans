@@ -447,9 +447,7 @@ rule gather_transrate:
     # dag. More of a cosmetic issue.
     input:
         a = expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
-        c  = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP),
-        dir = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/", T=TIMESTAMP),
-        index = dir = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/{{sample}}_{T}.Trinity", T=TIMESTAMP)
+        c  = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP)
     output:
         a = expand("transrate/summary/{{sample}}_{T}.assemblies.csv", T=TIMESTAMP),
         c = expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
@@ -457,11 +455,11 @@ rule gather_transrate:
         """
         cp {input.a} {output.a}
         cp {input.c} {output.c}
-        rm -rdf {input.dir}*.bam {input.dir}single_component_bad
-        rm -rdf {input.index}
+
         """
 
 
+        # assembly = "transrate/summary/" + TIMESTAMP + "assemblies.csv"
 
 # Here the assemblies are being summarized and we need to expanda list
 rule summarize_transrate_assembly:
