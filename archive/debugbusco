@@ -1,0 +1,17 @@
+             assembly_name_stats            category percentage
+1    Macmini1_rcorrtest 51 0.041     complete_single        0.0
+2     Macmini2_rcorrtest 53 0.04     complete_single        0.0
+3  good.Macmini1_rcorrtest NA NA     complete_single        0.0
+4  good.Macmini2_rcorrtest NA NA     complete_single        0.0
+5    Macmini1_rcorrtest 51 0.041 complete_dublicated        0.0
+6     Macmini2_rcorrtest 53 0.04 complete_dublicated        0.0
+7  good.Macmini1_rcorrtest NA NA complete_dublicated        0.0
+8  good.Macmini2_rcorrtest NA NA complete_dublicated        0.0
+9    Macmini1_rcorrtest 51 0.041          fragmented        0.1
+10    Macmini2_rcorrtest 53 0.04          fragmented        0.1
+11 good.Macmini1_rcorrtest NA NA          fragmented        0.1
+12 good.Macmini2_rcorrtest NA NA          fragmented        0.1
+13   Macmini1_rcorrtest 51 0.041             missing       99.9
+14    Macmini2_rcorrtest 53 0.04             missing       99.9
+15 good.Macmini1_rcorrtest NA NA             missing       99.9
+16 good.Macmini2_rcorrtest NA NA             missing       99.9

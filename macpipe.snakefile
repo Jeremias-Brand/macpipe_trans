@@ -25,9 +25,13 @@ import time
 # Uses a yaml file as input
 configfile: "config.yaml"
 
+
 # Preparation------------------------------------------------------------------
 #TIMESTAMP = time.strftime("%Y%m%d")
-TIMESTAMP = "rcorrtest"
+if config["TIMESTAMP"]:
+    TIMESTAMP = config["TIMESTAMP"]
+else:
+    TIMESTAMP = time.strftime("%Y%m%d")
 # check if the necessary dirs exist and if not creates them
 def save_mkdir( dirs ):
 	for d in dirs:
@@ -263,9 +267,12 @@ rule trinity_on_rRNA:
         --left   {input.forward}  \
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
-        mv trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
+        cp trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly} && \ 
         sed -E 's/^(>[^ ]+) ([^ ]+) .+$/\1 \2/' {output.assembly}""")
+        cd trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/
+        find  trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
+        rm -rdf chrysalis insilico_read_normalization read_partitions
         except:
         # We need to convert the variables to a sting because otehrwise they are of type <class 'snakemake.io.Namedlist'>
             print("Trinity run on rRNA did not return an assembly!\n This could be because there were not enough input reads\n")
@@ -316,11 +323,7 @@ rule trinity_on_trimmed:
     params:
         adapters =  config["adapters_fasta"],
         outdir   =  FASTQ_DIR,
-        trinity  =  config["trinity"],
-        trim_adapter = config["trim_adapter"],
-        leading  =  config["trim_leading"],
-        trailing  =  config["trim_trailing"],
-        minlength  =  config["trim_minlength"]
+        trinity  =  config["trinity"]
     threads: 14  # threads only works if --cores is set to the actual number of cores when running the snakemake
     # message: expand("Executing with {threads} threads on the following files {sample}.", sample=SAMPLES)
     # We also want a logfile
@@ -333,8 +336,11 @@ rule trinity_on_trimmed:
         --left   {input.forward}  \
         --right  {input.reverse} \
         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
-        mv trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
-        sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly}
+        cp trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
+        sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly} 
+        cd trinity/{wildcards.sample}_{TIMESTAMP}.trinity/
+        find  trinity/{wildcards.sample}_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
+        rm -rdf chrysalis insilico_read_normalization read_partitions
         """
 
 rule basic_assembly_stats:
@@ -421,13 +427,14 @@ rule run_transrate:
         transDir  =  TRANSRATE_DIR,
         dataDir   =  FASTQ_DIR,
         homeDir   =  HOME_DIR,
-        transrate =  config["transrate"]
-    threads: 28
+        transrate =  config["transrate"],
+        transrate_cores = config["transrate_cores"]
+    threads: 7
     shell:
         """
         {params.transrate} --assembly {params.homeDir}{input.assembly} \
         --output {params.transDir}{wildcards.sample}_{TIMESTAMP}.transrate \
-        --threads {threads} \
+        --threads {transrate_cores} \
         --left {input.forward} \
         --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
         """
@@ -653,7 +660,9 @@ rule collect_all_stats:
         script = "scripts/collect_macpipe_stats.sh"
     shell:
         """
+        set -euxo pipefail
         for i in {params.s}; do
+
             {params.script} "$i"_{params.T} > assembly_stats/"$i"_{params.T}_all_stats.txt
         done
         
@@ -709,11 +718,17 @@ rule report:
 rule clean_up:
     input:
     output:
-        "clean.ok"
+        "cleanup"
     run:
         shell("""
-                rm -rdf trinity/ transrate/ expression/ QC/ benchmarks/ transdecoder/ mapping/ busco/ assembly_stats/ logs/ rRNA/ blast_results/
-                touch clean.ok
+            while true; do
+                read -p "Do you want to delete all output of the snakemake pipeline?\n WARNING THIS CAN NOT BE REVERSED!" yn
+                case $yn in
+                    [Yy]* ) rm -rdf data/*cor* trinity/ transrate/ expression/ QC/ benchmarks/ transdecoder/ mapping/ busco/ assembly_stats/ logs/ rRNA/ blast_results/ && touch cleanup ; break;;
+                    [Nn]* ) exit;;
+                    * ) echo "Please answer yes or no.";;
+                esac
+            done
                 """)
 
 

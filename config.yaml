@@ -1,18 +1,24 @@
 # a yaml file to specify input to the pipline
 # TODO change to $HOME
 # dirs
-fastqdir:       "/home/scharer_group/jeremias/dev/macpipe_trans/data/"
-transrateDir:   "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
-homedir:        "/home/scharer_group/jeremias/dev/macpipe_trans/"
-rRNAdb:         "/home/scharer_group/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
-# where the fastas for the fish_genes.py step are stored
-voucher_dir:    "/home/scharer_group/dbs/vouchers/"
-# list with one file name per line selecting vouchers in voucher_dir
-vouchers:       "vouchers.config"
-ref_4genes:     "/home/scharer_group/dbs/vouchers/Macrostomidae_4genes_db.fasta"
-ref_28S:        "/home/scharer_group/dbs/vouchers/Macrostomidae_28S.fasta"
+# if this is "" the currecnt date will be used
+TIMESTAMP:      "dd"
 # decide if we want to map DO NOT LEAVE TRAILING SLASH
 map_yn: "y"    
+trimmomatic_string: ":2:30:10:8:TRUE LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:36"
+# a hack to get transrate to run more efficently. several transrate prcesses are unable to realize there are more cores available
+transrate_cores:          28
+
+    
+homedir:        "/home/scharer_group/jeremias/dev/macpipe_trans/"
+fastqdir:       "/home/scharer_group/jeremias/dev/macpipe_trans/data/"
+transrateDir:   "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
+rRNAdb:         "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
+voucher_dir:    "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/"
+ref_4genes:     "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/Macrostomidae_4genes_db.fasta"
+ref_28S:        "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/Macrostomidae_28S.fasta"
+# list with one file name per line selecting vouchers in voucher_dir
+vouchers:       "vouchers.config"
 reference_snap: "/home/scharer_group/assemblies/maclig/genome/Maclig_3_7/snap_index"
 # path to various softwares
 adapters_fasta: "/home/jeremias/soft/Trimmomatic-0.36/adapters/Truseq_barcodes.fa"
@@ -26,11 +32,3 @@ BuscoLib:       "/home/jeremias/soft/busco/metazoa_odb9"
 BUSCO:          "/home/jeremias/soft/busco/BUSCO.py"
 # path to BUSCO plotting function
 BUSCO_p:        "/home/jeremias/soft/busco/BUSCO_plot.py"
-# parameters
-trimmomatic_string: ":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
-trim_adapter: "2:40:15"
-trim_leading:   "30"
-trim_trailing:  "30"
-trim_minlength: "25"
-
-
