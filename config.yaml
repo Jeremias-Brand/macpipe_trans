@@ -13,10 +13,10 @@ transrate_cores:          28
 homedir:        "/home/scharer_group/jeremias/dev/macpipe_trans/"
 fastqdir:       "/home/scharer_group/jeremias/dev/macpipe_trans/data/"
 transrateDir:   "/home/scharer_group/jeremias/dev/macpipe_trans/transrate/" # need trailing slash!!!
-rRNAdb:         "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
-voucher_dir:    "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/"
-ref_4genes:     "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/Macrostomidae_4genes_db.fasta"
-ref_28S:        "/home/scharer_group/jeremias/dev/macpipe_trans/dbs/vouchers/Macrostomidae_28S.fasta"
+rRNAdb:         "/home/scharer_group/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
+voucher_dir:    "/home/scharer_group/dbs/vouchers/"
+ref_4genes:     "/home/scharer_group/dbs/vouchers/Macrostomidae_4genes_db.fasta"
+ref_28S:        "/home/scharer_group/dbs/vouchers/Macrostomidae_28S.fasta"
 # list with one file name per line selecting vouchers in voucher_dir
 vouchers:       "vouchers.config"
 reference_snap: "/home/scharer_group/assemblies/maclig/genome/Maclig_3_7/snap_index"

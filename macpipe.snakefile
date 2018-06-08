@@ -269,10 +269,10 @@ rule trinity_on_rRNA:
         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
         cp trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly} && \ 
-        sed -E 's/^(>[^ ]+) ([^ ]+) .+$/\1 \2/' {output.assembly}""")
+        sed -E 's/^(>[^ ]+) ([^ ]+) .+$/\1 \2/' {output.assembly}
+        find  ./trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
         cd trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/
-        find  trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
-        rm -rdf chrysalis insilico_read_normalization read_partitions
+        rm -rdf chrysalis insilico_read_normalization read_partitions""")
         except:
         # We need to convert the variables to a sting because otehrwise they are of type <class 'snakemake.io.Namedlist'>
             print("Trinity run on rRNA did not return an assembly!\n This could be because there were not enough input reads\n")
@@ -283,30 +283,6 @@ rule trinity_on_rRNA:
 
 
 
-# rule trinity_on_rRNA:
-#     input:
-#         forward  = FASTQ_DIR + "{sample}_R1_cor_trim_rRNA.fq.gz",
-#         reverse  = FASTQ_DIR + "{sample}_R2_cor_trim_rRNA.fq.gz"
-#     output:
-#         assembly = expand("rRNA/{{sample}}_{T}_rRNA.Trinity.fasta", T=TIMESTAMP),
-#         #log      = expand("logs/rRNA/{{sample}}_{T}_trinity.shell.log", T=TIMESTAMP)
-#     log:
-#         expand("logs/rRNA/{{sample}}_{T}.log", T=TIMESTAMP)
-#     params:
-#         outdir   =  FASTQ_DIR,
-#         trinity  =  config["trinity"]
-#     threads: 14
-#     shell:
-#         """
-#         {params.trinity} --seqType fq \
-#         --CPU {threads} --max_memory 150G \
-#         --output 'trinity/'{wildcards.sample}_rRNA_{TIMESTAMP}'.trinity' \
-#         --left   {input.forward}  \
-#         --right  {input.reverse} \
-#         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
-#         mv trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
-#         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly}
-#         """
 
 
 rule trinity_on_trimmed:
@@ -338,8 +314,8 @@ rule trinity_on_trimmed:
         --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
         cp trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly} 
+        find  ./trinity/{wildcards.sample}_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
         cd trinity/{wildcards.sample}_{TIMESTAMP}.trinity/
-        find  trinity/{wildcards.sample}_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
         rm -rdf chrysalis insilico_read_normalization read_partitions
         """
 
@@ -420,7 +396,7 @@ rule run_transrate:
         expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
         expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP)
     log:
-    	expand("logs/transrate/{{sample}}_{T}.log", T=TIMESTAMP)
+        expand("logs/transrate/{{sample}}_{T}.log", T=TIMESTAMP)
     benchmark:
         "benchmarks/{sample}.transrate.txt"
     params:
@@ -434,7 +410,7 @@ rule run_transrate:
         """
         {params.transrate} --assembly {params.homeDir}{input.assembly} \
         --output {params.transDir}{wildcards.sample}_{TIMESTAMP}.transrate \
-        --threads {transrate_cores} \
+        --threads {params.transrate_cores} \
         --left {input.forward} \
         --right {input.reverse} > logs/transrate/{wildcards.sample}.transrate.log 2> {log}
         """
@@ -447,18 +423,19 @@ rule gather_transrate:
     # dag. More of a cosmetic issue.
     input:
         a = expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
-        c  = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP),
-        dir = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/", T=TIMESTAMP),
-        index = dir = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/{{sample}}_{T}.Trinity", T=TIMESTAMP)
+        c  = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP)
     output:
         a = expand("transrate/summary/{{sample}}_{T}.assemblies.csv", T=TIMESTAMP),
         c = expand("transrate/summary/{{sample}}_{T}.contigs.csv", T=TIMESTAMP)
+    params:
+        T = TIMESTAMP,
+        dir = expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/", T=TIMESTAMP)
     shell:
         """
         cp {input.a} {output.a}
         cp {input.c} {output.c}
-        rm -rdf {input.dir}*.bam {input.dir}single_component_bad
-        rm -rdf {input.index}
+        rm -rdf {params.dir}*.bam {params.dir}single_component_bad
+        rm -rdf {params.dir}{wildcards.sample}_{params.T}.Trinity
         """
 
 
