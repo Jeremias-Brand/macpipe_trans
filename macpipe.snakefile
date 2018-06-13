@@ -48,7 +48,8 @@ dirs = ["logs", "logs/trinity", "logs/transrate",
         "logs/rcorrector", "trinity", "transrate",
         "transrate/summary", "busco", "logs/busco",
         "expression", "expression/salmon", "expression/RSEM",
-        "transdecoder", "logs/transdecoder", "mapping", "logs/trimmomatic"]
+        "transdecoder", "logs/transdecoder", "mapping", "logs/trimmomatic",
+        "logs/pfam"]
 save_mkdir(dirs)
 
 
@@ -257,7 +258,8 @@ rule trinity_on_rRNA:
         "benchmarks/{sample}.trinity_on_rRNA.txt"
     params:
         outdir   =  FASTQ_DIR,
-        trinity  =  config["trinity"]
+        trinity  =  config["trinity"],
+        stranded_string =  config["stranded_string"]
     threads: 14
     run:
         try:
@@ -266,7 +268,8 @@ rule trinity_on_rRNA:
         --output 'trinity/'{wildcards.sample}_rRNA_{TIMESTAMP}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
-        --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
+        --normalize_reads  --normalize_max_read_cov 30 \
+        {params.stranded_string} > ./logs/trinity/{wildcards.sample}_rRNA_{TIMESTAMP}_trinity.shell.log 2> {log} && \
         cp trinity/{wildcards.sample}_rRNA_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_rRNA_{TIMESTAMP}/' {output.assembly} && \ 
         sed -E 's/^(>[^ ]+) ([^ ]+) .+$/\1 \2/' {output.assembly}
@@ -281,10 +284,6 @@ rule trinity_on_rRNA:
                 log_f.write("Trinity run did not return an assembly.\n")
 
 
-
-
-
-
 rule trinity_on_trimmed:
     input:
         forward  = FASTQ_DIR + "{sample}_R1_cor_trim_clean.fq.gz",
@@ -297,8 +296,8 @@ rule trinity_on_trimmed:
     benchmark:
         "benchmarks/{sample}.trinity_on_trimmed.txt"
     params:
-        adapters =  config["adapters_fasta"],
         outdir   =  FASTQ_DIR,
+        stranded_string =  config["stranded_string"],
         trinity  =  config["trinity"]
     threads: 14  # threads only works if --cores is set to the actual number of cores when running the snakemake
     # message: expand("Executing with {threads} threads on the following files {sample}.", sample=SAMPLES)
@@ -311,7 +310,8 @@ rule trinity_on_trimmed:
         --output 'trinity/'{wildcards.sample}_{TIMESTAMP}'.trinity' \
         --left   {input.forward}  \
         --right  {input.reverse} \
-        --normalize_reads  --normalize_max_read_cov 30 > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
+        --normalize_reads  --normalize_max_read_cov 30 \
+        {params.stranded_string} > ./logs/trinity/{wildcards.sample}_{TIMESTAMP}.shell.log 2> {log} && \
         cp trinity/{wildcards.sample}_{TIMESTAMP}.trinity/Trinity.fasta {output.assembly} && \
         sed -i 's/>TRINITY/>{wildcards.sample}_{TIMESTAMP}/' {output.assembly} 
         find  ./trinity/{wildcards.sample}_{TIMESTAMP}.trinity/ -type f -not -name 'Trinity.fasta' -not -name 'Trinity.fasta.gene_trans_map' -print0 | xargs -0 rm
@@ -358,12 +358,12 @@ rule basic_assembly_stats:
 #        --est_method RSEM --aln_method bowtie2 --trinity_mode --output_dir {output.out_RSEM} &>> {log}
 
 
-rule run_transdecoder:
+rule run_transdecoder_longORFs:
     input:
         assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
-        longest_pep = expand("transdecoder/{{sample}}_{T}_longest_orfs.pep", T=TIMESTAMP),
-        longest_cds = expand("transdecoder/{{sample}}_{T}_longest_orfs.cds", T=TIMESTAMP),
+        longest_pep = expand("transdecoder/{{sample}}_{T}.Trinity.fasta.transdecoder_dir/longest_orfs.pep", T=TIMESTAMP),
+        longest_cds = expand("transdecoder/{{sample}}_{T}.Trinity.fasta.transdecoder_dir/longest_orfs.cds", T=TIMESTAMP),
         length_pep  = expand("transdecoder/{{sample}}_{T}_longest_orfs.pep.length", T=TIMESTAMP),
         length_cds  = expand("transdecoder/{{sample}}_{T}_longest_orfs.cds.length", T=TIMESTAMP)
     threads: 1
@@ -372,17 +372,69 @@ rule run_transdecoder:
         H = HOME_DIR
     benchmark:
         "benchmarks/{sample}.run_transdecoder.txt"
+    log:
+        expand("logs/transdecoder/{{sample}}_{T}_longORFs.log", T=TIMESTAMP)
     shell:
         """
         cd transdecoder
-        TransDecoder.LongOrfs -m 100 -t {params.H}{input.assembly} &> /dev/null 
-        cp {wildcards.sample}_{params.T}.Trinity.fasta.transdecoder_dir/longest_orfs.pep {wildcards.sample}_{params.T}_longest_orfs.pep
-        cp {wildcards.sample}_{params.T}.Trinity.fasta.transdecoder_dir/longest_orfs.cds {wildcards.sample}_{params.T}_longest_orfs.cds
-        python {params.H}scripts/seq_length.py {wildcards.sample}_{params.T}_longest_orfs.pep > {params.H}transdecoder/{wildcards.sample}_{params.T}_longest_orfs.pep.length 
-        python {params.H}scripts/seq_length.py {wildcards.sample}_{params.T}_longest_orfs.cds > {params.H}transdecoder/{wildcards.sample}_{params.T}_longest_orfs.cds.length 
+        pyenv which TransDecoder.LongOrfs
+        TransDecoder.LongOrfs -m 100 -t {params.H}{input.assembly} &> ../{log} 
+        python {params.H}scripts/seq_length.py {params.H}{output.longest_pep} > {params.H}{output.length_pep} 
+        python {params.H}scripts/seq_length.py {params.H}{output.longest_cds} > {params.H}{output.length_cds}
         """
 
 
+
+rule run_pfam:
+    input:
+        longest_pep = expand("transdecoder/{{sample}}_{T}.Trinity.fasta.transdecoder_dir/longest_orfs.pep", T=TIMESTAMP),
+        longest_cds = expand("transdecoder/{{sample}}_{T}.Trinity.fasta.transdecoder_dir/longest_orfs.cds", T=TIMESTAMP),
+        length_pep  = expand("transdecoder/{{sample}}_{T}_longest_orfs.pep.length", T=TIMESTAMP),
+        length_cds  = expand("transdecoder/{{sample}}_{T}_longest_orfs.cds.length", T=TIMESTAMP)
+    output:
+        pfam = expand("transdecoder/{{sample}}_{T}.pfam.domtblout", T=TIMESTAMP)
+    threads: 14
+    params:
+        T = TIMESTAMP,
+        H = HOME_DIR,
+        pfam = config["pfam"]
+    benchmark:
+        "benchmarks/{sample}.run_pfam.txt"
+    log:
+        expand("logs/pfam/{{sample}}_{T}.pfam.log", T=TIMESTAMP)
+    shell:
+        """
+        hmmscan --cpu {threads} --domtblout {output.pfam} {params.pfam} {input.longest_pep} &> {log}
+        """
+
+
+rule run_transdecoder_predict:
+    input:
+        assembly = expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
+        pfam = expand("transdecoder/{{sample}}_{T}.pfam.domtblout", T=TIMESTAMP)
+    output:
+        pep = expand("transdecoder/{{sample}}_{T}.transdecoder.pep", T=TIMESTAMP),
+        cds = expand("transdecoder/{{sample}}_{T}.transdecoder.cds", T=TIMESTAMP),
+        pep_length = expand("transdecoder/{{sample}}_{T}.transdecoder.pep.length", T=TIMESTAMP),
+        cds_length = expand("transdecoder/{{sample}}_{T}.transdecoder.cds.length", T=TIMESTAMP)
+    threads: 1
+    params:
+        T = TIMESTAMP,
+        H = HOME_DIR
+    benchmark:
+        "benchmarks/{sample}.run_transdecoder.txt"
+    log:
+        expand("logs/transdecoder/{{sample}}_{T}_predict.log", T=TIMESTAMP)
+    shell:
+        """
+        cd transdecoder
+        TransDecoder.Predict  -t {params.H}{input.assembly} --retain_pfam_hits {params.H}{input.pfam} --single_best_only  &> ../{log} 
+        cd ..
+        mv transdecoder/{wildcards.sample}_{params.T}.Trinity.fasta.transdecoder.pep {output.pep}
+        mv transdecoder/{wildcards.sample}_{params.T}.Trinity.fasta.transdecoder.cds {output.cds}
+        python {params.H}scripts/seq_length.py {output.pep} > {output.pep_length} 
+        python {params.H}scripts/seq_length.py {output.cds} > {output.cds_length}
+        """
     
 
 
@@ -617,6 +669,7 @@ rule versions:
 
 rule collect_all_stats:
     input:
+        busco               =   expand(HOME_DIR + "busco/run_{sample}_{T}.busco/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("QC/{sample}_{T}_contig_dist.png", sample=SAMPLES, T=TIMESTAMP),
         forward_qc          = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
@@ -624,12 +677,14 @@ rule collect_all_stats:
         forward_trimmed_qc  = expand("QC/{sample}_R1_cor_trim_clean_fastqc.html", sample=SAMPLES),
         reverse_trimmed_qc  = expand("QC/{sample}_R2_cor_trim_clean_fastqc.html", sample=SAMPLES),
         assembly            = expand("rRNA/{sample}_{T}_rRNA.Trinity.fasta", sample=SAMPLES, T=TIMESTAMP),
-        basic = expand("assembly_stats/{sample}_{T}_N50.txt", sample=SAMPLES, T=TIMESTAMP),
-        salmon_quant = expand("expression/salmon/{sample}_{T}/quant.sf", sample=SAMPLES, T=TIMESTAMP),
-        ExN50  = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
-        longest_pep = expand("transdecoder/{sample}_{T}_longest_orfs.pep", sample=SAMPLES, T=TIMESTAMP),
-        longest_cds = expand("transdecoder/{sample}_{T}_longest_orfs.cds", sample=SAMPLES, T=TIMESTAMP),
-        mapping = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
+        basic               = expand("assembly_stats/{sample}_{T}_N50.txt", sample=SAMPLES, T=TIMESTAMP),
+        salmon_quant        = expand("expression/salmon/{sample}_{T}/quant.sf", sample=SAMPLES, T=TIMESTAMP),
+        ExN50               = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
+        pep                 = expand("transdecoder/{sample}_{T}.transdecoder.pep", sample=SAMPLES, T=TIMESTAMP),
+        cds                 = expand("transdecoder/{sample}_{T}.transdecoder.cds", sample=SAMPLES, T=TIMESTAMP),
+        pep_length = expand("transdecoder/{sample}_{T}.transdecoder.pep.length", sample=SAMPLES, T=TIMESTAMP),
+        cds_length = expand("transdecoder/{sample}_{T}.transdecoder.cds.length", sample=SAMPLES, T=TIMESTAMP),
+        mapping             = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
     output:
         a = "assembly_stats/All_stats_" + TIMESTAMP + ".txt",
         qc = "QC/All_qc.txt"
@@ -639,7 +694,7 @@ rule collect_all_stats:
         script = "scripts/collect_macpipe_stats.sh"
     shell:
         """
-        set -euxo pipefail
+        set -euo pipefail
         for i in {params.s}; do
 
             {params.script} "$i"_{params.T} > assembly_stats/"$i"_{params.T}_all_stats.txt
@@ -680,8 +735,8 @@ rule report:
         basic               = expand("assembly_stats/{sample}_{T}_N50.txt", sample=SAMPLES, T=TIMESTAMP),
         salmon_quant        = expand("expression/salmon/{sample}_{T}/quant.sf", sample=SAMPLES, T=TIMESTAMP),
         ExN50               = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
-        longest_pep         = expand("transdecoder/{sample}_{T}_longest_orfs.pep", sample=SAMPLES, T=TIMESTAMP),
-        longest_cds         = expand("transdecoder/{sample}_{T}_longest_orfs.cds", sample=SAMPLES, T=TIMESTAMP),
+        pep                 = expand("transdecoder/{sample}_{T}.transdecoder.pep", sample=SAMPLES, T=TIMESTAMP),
+        cds                 = expand("transdecoder/{sample}_{T}.transdecoder.cds", sample=SAMPLES, T=TIMESTAMP),
         mapping             = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
     output:
         report_name         = "report_" + TIMESTAMP + ".html"

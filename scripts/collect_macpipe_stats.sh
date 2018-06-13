@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -euxo pipefail
 
 # basic trinity stats
 N50_f="assembly_stats/"$1"_N50.txt"
@@ -35,13 +35,17 @@ transrate_stats=$( tail -n 1 $transrate_f | awk -F "," '{$1=""; print $0}' | sed
 transrate_header=$( head -n 1 $transrate_f | awk -F "," '{$1=""; print $0}' | sed 's/ /\\t/g')
 
 # transdecoder
-transdecoder_fp="transdecoder/"$1"_longest_orfs.pep.length"
+transdecoder_fp1="transdecoder/"$1"_longest_orfs.pep.length"
+transdecoder_fp2="transdecoder/"$1".transdecoder.pep.length"
 
-transdecoder_l=$( awk '{print $NF}' $transdecoder_fp | sort -n | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1< min) {min=$1}; total+=$1; count+=1} END {print total/count, min, max}' | sed 's/ /\\t/g' )
-transdecoder_c=$( wc -l "transdecoder/"$1"_longest_orfs.pep" | awk '{print $1}' | sed 's/ /\\t/g' )
 
-transdecoder_header="transdecoder_genes\ttransdecoder_mean_length\ttransdecoder_min_length\ttransdecoder_max_length"
-transdecoder_stats=$transdecoder_c"\t"$transdecoder_l
+transdecoder_l1=$( awk '{print $NF}' $transdecoder_fp1 | sort -n | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1< min) {min=$1}; total+=$1; count+=1} END {print total/count, min, max}' | sed 's/ /\\t/g' )
+transdecoder_c1=$( wc -l $transdecoder_fp1 | awk '{print $1}' | sed 's/ /\\t/g' )
+transdecoder_l2=$( awk '{print $NF}' $transdecoder_fp2 | sort -n | awk '{if(min==""){min=max=$1}; if($1>max) {max=$1}; if($1< min) {min=$1}; total+=$1; count+=1} END {print total/count, min, max}' | sed 's/ /\\t/g' )
+transdecoder_c2=$( wc -l $transdecoder_fp2 | awk '{print $1}' | sed 's/ /\\t/g' )
+
+transdecoder_header="transdecoder_longORFs_genes\ttransdecoder_longORFs_mean_length\ttransdecoder_longORFs_min_length\ttransdecoder_longORFs_max_length\ttransdecoder_oneORF_genes\ttransdecoder_oneORF_mean_length\ttransdecoder_oneORF_min_length\ttransdecoder_oneORF_max_length"
+transdecoder_stats=$transdecoder_c1"\t"$transdecoder_l1"\t"$transdecoder_c2"\t"$transdecoder_l2
 
 # mapping
 mapping_f="mapping/"$1"_snap_to_ref.txt"

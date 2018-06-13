@@ -5,7 +5,10 @@
 TIMESTAMP:      "dd"
 # decide if we want to map DO NOT LEAVE TRAILING SLASH
 map_yn: "y"    
-trimmomatic_string: ":2:30:10:8:TRUE LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:36"
+trimmomatic_string: ":2:30:10:8:TRUE LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 AVGQUAL:15 MINLEN:36"
+# if we have a stranded librariy we need to specify this for trinity like so --SS_lib_type RF / FR / R / F
+# stranded_string: "--SS_lib_type RF"
+stranded_string: ""
 # a hack to get transrate to run more efficently. several transrate prcesses are unable to realize there are more cores available
 transrate_cores:          28
 
@@ -17,6 +20,7 @@ rRNAdb:         "/home/scharer_group/dbs/rRNA/SILVA_128_LSURef_tax_silva.fasta"
 voucher_dir:    "/home/scharer_group/dbs/vouchers/"
 ref_4genes:     "/home/scharer_group/dbs/vouchers/Macrostomidae_4genes_db.fasta"
 ref_28S:        "/home/scharer_group/dbs/vouchers/Macrostomidae_28S.fasta"
+pfam:           "/home/scharer_group/dbs/pfam/Pfam-A.hmm"
 # list with one file name per line selecting vouchers in voucher_dir
 vouchers:       "vouchers.config"
 reference_snap: "/home/scharer_group/assemblies/maclig/genome/Maclig_3_7/snap_index"
