@@ -669,7 +669,7 @@ rule versions:
 
 rule collect_all_stats:
     input:
-        busco               =   expand(HOME_DIR + "busco/run_{sample}_{T}.busco/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
+        busco               = expand(HOME_DIR + "busco/run_{sample}_{T}.busco/short_summary_{sample}_{T}.busco.txt", sample=SAMPLES, T=TIMESTAMP),
         transrate_summary   = "transrate/summary/run_" + TIMESTAMP + "_assemblies.csv",
         assembly_plot       = expand("QC/{sample}_{T}_contig_dist.png", sample=SAMPLES, T=TIMESTAMP),
         forward_qc          = expand("QC/{sample}_R1_fastqc.html", sample=SAMPLES),
@@ -682,8 +682,8 @@ rule collect_all_stats:
         ExN50               = expand("assembly_stats/{sample}_{T}_ExN50.txt", sample=SAMPLES, T=TIMESTAMP),
         pep                 = expand("transdecoder/{sample}_{T}.transdecoder.pep", sample=SAMPLES, T=TIMESTAMP),
         cds                 = expand("transdecoder/{sample}_{T}.transdecoder.cds", sample=SAMPLES, T=TIMESTAMP),
-        pep_length = expand("transdecoder/{sample}_{T}.transdecoder.pep.length", sample=SAMPLES, T=TIMESTAMP),
-        cds_length = expand("transdecoder/{sample}_{T}.transdecoder.cds.length", sample=SAMPLES, T=TIMESTAMP),
+        pep_length          = expand("transdecoder/{sample}_{T}.transdecoder.pep.length", sample=SAMPLES, T=TIMESTAMP),
+        cds_length          = expand("transdecoder/{sample}_{T}.transdecoder.cds.length", sample=SAMPLES, T=TIMESTAMP),
         mapping             = expand("mapping/{sample}_{T}_snap_to_ref.txt", sample=SAMPLES, T=TIMESTAMP)
     output:
         a = "assembly_stats/All_stats_" + TIMESTAMP + ".txt",
