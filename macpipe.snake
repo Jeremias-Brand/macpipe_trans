@@ -444,6 +444,7 @@ rule run_transrate:
         forward  =  FASTQ_DIR + "{sample}_R1.fq.gz",
         reverse  =  FASTQ_DIR + "{sample}_R2.fq.gz"
     output:
+        expand("transrate/{{sample}}_{T}.transrate/ , T=TIMESTAMP),
         expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/good.{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP),
         expand("transrate/{{sample}}_{T}.transrate/assemblies.csv", T=TIMESTAMP),
         expand("transrate/{{sample}}_{T}.transrate/{{sample}}_{T}.Trinity/contigs.csv", T=TIMESTAMP)
@@ -558,7 +559,8 @@ rule busco:
     input:
         assembly =   expand("trinity/{{sample}}_{T}.Trinity.fasta", T=TIMESTAMP)
     output:
-        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP)
+        out      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/short_summary_{{sample}}_{T}.busco.txt", T=TIMESTAMP),
+        dir      =   expand(HOME_DIR + "busco/run_{{sample}}_{T}.busco/, T=TIMESTAMP)
     params:
         py3      =   config["py3"],
         BUSCO    =   config["BUSCO"],
