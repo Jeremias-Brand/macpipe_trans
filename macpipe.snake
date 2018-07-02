@@ -459,6 +459,7 @@ rule run_transrate:
         transrate =  config["transrate"],
         transrate_cores = config["transrate_cores"]
     threads: 7
+    priority: -10
     shell:
         """
         {params.transrate} --assembly {params.homeDir}{input.assembly} \
